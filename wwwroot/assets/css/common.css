@@ -1,0 +1,100 @@
+/* Color scheme */
+:root {
+	/* Colors */
+	--red: #a2040e;
+	--red-medium: #b84132;
+	--red-light: #cc6957;
+	--yellow: #e28d26;
+	--yellow-medium: #eb9f4e;
+	--yellow-light: #f3b271;
+	--brown: #651e15;
+	--brown-medium: #814236;
+	--brown-light: #9d655a;
+
+	--black: #000;
+	--white: #fff;
+	--gray: #d9d9d9;
+	--gray-light: #e7e6ef;
+	--background-color: #fafafa;
+
+	/* Fonts */
+    --title-font: "Poppins", sans-serif;
+    --body-font: "Open Sans", sans-serif;
+}
+
+/* Reset */
+html{
+    overflow-x: hidden;
+}
+
+body{
+    font-family: var(--body-font)!important;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--title-font)!important;
+}
+
+/* Base */
+/* Backgrounds */
+.bg-red {
+	background: var(--red);
+}
+
+.bg-red-medium {
+	background: var(--red-medium);
+}
+
+.bg-yellow {
+	background-color: var(--yellow);
+}
+
+/* Header */
+.rounded-3{
+    border-radius: 10px!important;
+}
+
+header nav .divider{
+    content: ' ';
+    width: 3px;
+    height: 100%;
+}
+
+header nav form .form-control{
+    font-size: 12px!important;
+}
+
+
+/* Input Search Icon */
+.has-search .form-control {
+	padding-left: 1rem;
+}
+
+.has-search .form-control-feedback {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	width: 4rem;
+	height: 3rem;
+	font-size: 1.2rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: #aaa;
+}
+
+/* Footer */
+footer .nav-item .nav-link{
+    color: var(--black)!important;
+}
+
+footer .nav-item .nav-link:hover{
+    color: rgba(0, 0, 0, 0.60)!important;
+}
+
+/* Responsivity */
+@media (max-width: 991px) {
+    footer #lists{
+        text-align: center!important;
+    }
+}
