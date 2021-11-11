@@ -23,8 +23,10 @@ namespace kuarasy.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Origin()
         {
+            // ViewBag.Message = "TESTANDO.";
+
             return View();
         }
 

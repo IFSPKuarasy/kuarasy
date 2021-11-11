@@ -1,60 +1,61 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kûarasy</title>
     @* Bootstrap *@
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     @* Icons *@
-    <link rel="stylesheet" href="~/assets/fonts/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/fonts/style.css" />
 
     @* Fonts *@
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="~/assets/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/css/common.css" />
 </head>
 
-<body>
-    <header>
+<body class="d-flex flex-column h-100">
+    <header id="header">
         
-        <nav class = "bg-red-medium navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
-            <div class = "container d-flex justify-content-end">
-                <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
-                    <li class="nav-item pe-3 ps-3"><a> Cadastrar </a></li>
-                    <span class = "bg-white divider"> </span>
-                    <li class="nav-item pe-3 ps-3"><a> Entrar </a> </li>
-                    <li class="nav-item"><i class = "icon-user"></i></li>   
-                </ul>
+        <div class = "bg-red-medium">
+            <div class = "container d-flex justify-content-end align-items-center">
+                    <a class = " text-white nav-link me-3 ms-3"> Cadastrar </a>
+                    <span class = "text-white bg-white divider"></span> 
+                    <a class = "text-white nav-link me-3 ms-3"> Entrar </a> 
+                    <i class = "text-white nav-link icon-user size-icons-sm"></i> 
             </div>
-        </nav>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container">
+
                 <a class="navbar-brand d-flex justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/assets/img/LogoKuarasy.png" alt="Logomarca do Kuarasy E-commerce" class = " img-fluid w-50 h-25">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarSupportedContent" aria-expanded="false" >
+                <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">             
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id = "navbarCollapse">
+                    <ul class="navbar-nav flex-grow-1 fw-bold">             
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                          <li class="nav-item dropdown">
+                         
+                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categorias
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Categoria1</a></li>
+                                <li><a class="dropdown-item" href="#">Categoria2</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </li>
+                         
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"> Produtos</a>
                         </li>
@@ -65,27 +66,27 @@
                 </div>
 
                 <form action="/" method="POST" class="d-flex flex-fill">
-                            <div class="input-group has-search d-flex flex-fill align-items-center rounded-3">
-                                <input class="form-control shadow-sm border border-3" type="search" placeholder="Pesquise por produtos, categorias e vendedores" aria-label="Search" name="inputSearch">
-                                <button class="btn bg-yellow" type="submit"> <i class = "icon-search">  </i> </button> 
+                            <div class="has-search d-flex flex-fill align-items-center me-5">
+                                <input class="form-control shadow-sm border border-2 body" type="search" placeholder= "Pesquise por produtos, categorias e vendedores" aria-label="Search" name="inputSearch">
+                                <button class="btn bg-yellow" type="submit"> <i class = "icon-search size-icons text-white">  </i> </button> 
                             </div>
                             
                 </form>
 
-                <i class = "icon-fluentCart"></i>
+                <a> <i class = "icon-fluentCart size-icons-lg"></i> </a>
                         
 
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<!-- Begin page content -->
 
- <footer class="footer pt-4">
+    @RenderBody()
+
+<!-- End page content -->
+
+ <footer class="footer mt-auto pt-3" id="footer">
     <div class="container">
       <div class="row footer-align d-flex justify-content-between align-items-center" id="lists">
         @* Figura *@
@@ -150,24 +151,39 @@
 
       </div>
 
-      <div class="row d-flex">
-        <hr class="bg-red">
-        
+    <hr class="bg-red">    
+      <div class="row g-2">
+          <div class="footer-info d-flex justify-content-between">
+          <div class="col col-sm d-flex justify-content-around">
+            <span>
+              &copy; 2021 IFSP <a href="https://github.com/IFSPKuarasy" target="_blank"> Equipe Bunka</a>
+            </span>
+            <span>
+              Todos os direitos reservados
+            </span>
+          </div>
+
+          <div class="col col-sm d-flex justify-content-end">
+            <a href="mailto:kuarasy@contato.com">kuarasy&#64contato.com</a>
+          </div>
+
+        </div>
       </div>
 
+      </div>
     </div>
-    @* Arrumar *@
-    <div class = "row">
-        <div class="container bg-red-medium">
-            <hr class="invisible">
-        </div>
-    </div>
+
+   <div class="footer-bar bg-red-medium"> </div>
 
   </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" language="jquery" src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <script type="text/javascript" language="javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+
+    <script type="text/javascript" language="javascript" src="~/assets/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
