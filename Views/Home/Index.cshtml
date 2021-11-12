@@ -5,14 +5,59 @@
 }
 
 <main role="main" class="flex-shrink-0" >
-    <div class="container">
-        <div class="image">
-        <img src="/assets/img/LogoKuarasy.png" alt="produto">
-        </div>
-        <div class="text">
-        <p>Os melhores artesanatos para voc&#234;&#33;</p>
-        <h2 class="title">Produtos artesanais j&#225; dispon&#237;veis. Confira&#33;</h2>
-        <button class="button" href="#">Comprar</button>
+    <div class="container my-5">
+        <div id="carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            @* Buttons *@
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            @* Body *@
+            <div class="carousel-inner">
+
+                <div class="carousel-item active" data-bs-interval="10000">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text">
+                            <h1>First slide label</h1>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
+                        <figure class="figure">
+                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="carousel-item" data-bs-interval="2000">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text">
+                            <h1>First slide label</h1>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
+                        <figure class="figure">
+                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text">
+                            <h1>First slide label</h1>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
+                        <figure class="figure">
+                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+           
         </div>
     </div>
 </main>
+
+
+
+@* Slider Js *@
+<script type="text/javascript" language="javascript" src="~/lib/bootstrap/js/carousel.js"></script>

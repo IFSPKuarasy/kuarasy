@@ -38,6 +38,10 @@ h1, h2, h3, h4, h5, h6{
     font-family: var(--title-font)!important;
 }
 
+a{
+	text-decoration: none!important;
+}
+
 /* Base */
 /* Backgrounds */
 .bg-red {
@@ -53,7 +57,6 @@ h1, h2, h3, h4, h5, h6{
 }
 
 /* Header */
-
 .divider{
     height: 20px;
     width: 2px;
@@ -134,5 +137,18 @@ footer .nav-item .nav-link:hover{
 @media (max-width: 991px) {
     footer #lists{
         text-align: center!important;
+    }
+}
+
+@media (max-width: 768px) {
+	nav .collapse #cart{
+		display: block !important;
+		/* text-align: center!important; */
+
+	}
+
+    nav .collapse #cart,
+	nav .collapse form {
+       	margin: 1rem!important;
     }
 }
