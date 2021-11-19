@@ -6,58 +6,86 @@
 
 <main role="main" class="flex-shrink-0" >
     <div class="container my-5">
-        <div id="carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        @* Header Carousel *@
+        <section id="carouselBanner" class="section carousel carousel-dark slide" data-bs-ride="carouselBanner">
             @* Buttons *@
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                @* <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> *@
+                @* <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="2" aria-label="Slide 3"></button> *@
             </div>
             @* Body *@
             <div class="carousel-inner">
-
+                
                 <div class="carousel-item active" data-bs-interval="10000">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="text">
-                            <h1>First slide label</h1>
-                            <p>Some representative placeholder content for the first slide.</p>
+                    <div class="row align-items-center justify-content-between ">
+                        <div class="col col-lg-6">
+                            <p>Os melhores artesanatos para você!</p>
+                            <h1 class="fw-bold">Produtos artesanais já disponíveis. Confira!</h1>
+                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar</a>
                         </div>
-                        <figure class="figure">
-                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
-                        </figure>
+                        <div class="col col-lg-5" id="figure">
+                            <figure class="figure">
+                                <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
+                            </figure>
+                        </div>
+                        
                     </div>
                 </div>
 
-                <div class="carousel-item" data-bs-interval="2000">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="text">
-                            <h1>First slide label</h1>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                        <figure class="figure">
-                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
-                        </figure>
-                    </div>
-                </div>
+            </div>
+           
+        </section>
 
-                <div class="carousel-item">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="text">
-                            <h1>First slide label</h1>
-                            <p>Some representative placeholder content for the first slide.</p>
+        @* Produtos em destaque *@
+        <section id="carouselProducts" class="section carousel carousel-dark slide" data-bs-ride="carouselProducts">
+            <h2 class="fw-bold text-center">Produtos em destaque</h2>
+            <div class="row container-fluid">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Basic carousel</h4>
+                        <div class="owl-carousel">
+                            <div class="item"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1557204140/banner_12.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1557204172/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1557204663/park-4174278_640.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1557204172/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1557204663/park-4174278_640.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
+                            <div class="item"> <img src="http://www.urbanui.com/fily/template/images/carousel/banner_2.jpg" alt="image" /> </div>
                         </div>
-                        <figure class="figure">
-                            <img src="~/assets/img/coruja_produto.png" class="figure-img img-fluid" alt="...">
-                        </figure>
                     </div>
                 </div>
             </div>
-           
         </div>
+            @* Previous *@
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducts" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            @* Next *@
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselProducts" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </section>
+
+
+        @* Promoções *@
+         <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+            <h2 class="fw-bold text-center">Promoções</h2>
+
+        </section>
+
+        @* Origens *@
+        <section class="section">
+            <h2 class="fw-bold text-center">Origens</h2>
+        </section>
     </div>
 </main>
 
 
 
-@* Slider Js *@
-<script type="text/javascript" language="javascript" src="~/lib/bootstrap/js/carousel.js"></script>
+<script type="text/javascript" language="javascript" src="~/assets/js/Home/index.js" asp-append-version="true"></script>

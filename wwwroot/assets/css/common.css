@@ -43,6 +43,11 @@ a{
 }
 
 /* Base */
+
+.section{
+    padding: 4.5rem  0;
+}
+
 /* Backgrounds */
 .bg-red {
 	background: var(--red);

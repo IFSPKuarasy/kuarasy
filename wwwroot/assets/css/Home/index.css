@@ -1,5 +1,46 @@
-
-.image{
-  position: relative;
+.section h2{
+  color: var(--red-medium)!important;
+  margin-bottom: 3.75rem;
 }
 
+.carousel-indicators button {
+  width: 10px!important;
+  height: 10px!important;
+  border-radius: 100%;
+  background-color: var(--red-medium)!important;
+}
+
+.carousel-inner .carousel-item #figure::before{
+    content:'';
+    position: absolute;
+    height:100%;
+    width: 100%;
+    background: #FAECD2;
+    border-radius: 100%;
+    clip-path: circle(50% at 50% 50%);
+    z-index: -1;
+}
+
+.carousel-inner .carousel-item .text p{
+  color: var(--brown-medium)!important;
+}
+
+/* Owl carousel */
+
+ .owl-carousel .item {
+     margin: 3px
+ }
+
+ .owl-carousel .item img {
+     display: block;
+     width: 100%;
+     height: auto
+ }
+
+ .owl-carousel .item {
+     margin: 3px
+ }
+
+ .owl-carousel {
+     margin-bottom: 15px
+ }
