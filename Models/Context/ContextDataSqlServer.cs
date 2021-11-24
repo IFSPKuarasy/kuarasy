@@ -132,7 +132,6 @@ namespace kuarasy.Models.Contexts
                     var peso = Convert.ToSingle(colunas[5]);
             
 
-
                     var produto = new Produto {Id = id, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso};
                     produtos.Add(produto);
                 }

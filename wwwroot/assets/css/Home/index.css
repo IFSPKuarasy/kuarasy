@@ -10,16 +10,6 @@
   background-color: var(--red-medium)!important;
 }
 
-.carousel-inner .carousel-item #figure::before{
-    content:'';
-    position: absolute;
-    height:100%;
-    width: 100%;
-    background: #FAECD2;
-    border-radius: 100%;
-    clip-path: circle(50% at 50% 50%);
-    z-index: -1;
-}
 
 .carousel-inner .carousel-item .text p{
   color: var(--brown-medium)!important;
