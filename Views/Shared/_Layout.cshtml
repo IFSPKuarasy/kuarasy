@@ -184,9 +184,31 @@
     <!-- Owl Carousel -->
     <script type="text/javascript" src="~/lib/owlcarousel/dist/owl.carousel.min.js"></script>
     <script>
-        $(document).ready(function(){
-        $(".owl-carousel").owlCarousel();
+       $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:15,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                479: {
+                    items: 1
+                },
+                768: {
+                    items: 2
+                },
+                979: {
+                    items: 3
+                },
+                1200: {
+                    items: 4
+                }
+            }
         });
+
+      
+
     </script> 
 
     <script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>

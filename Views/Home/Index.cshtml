@@ -26,7 +26,7 @@
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
-                                <img src="~/assets/img/coruja.png" class="figure-img img-fluid" alt="...">
+                                <img src="~/assets/img/home/coruja.png" class="figure-img img-fluid" alt="...">
                             </figure>
                         </div>
                         
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
-                                <img src="~/assets/img/mask.png" class="figure-img img-fluid" alt="...">
+                                <img src="~/assets/img/home/mask.png" class="figure-img img-fluid" alt="...">
                             </figure>
                         </div>
                         
@@ -52,13 +52,13 @@
                 <div class="carousel-item h-100" data-bs-interval="30000">
                     <div class="row align-items-center justify-content-between ">
                         <div class="col col-lg-6">
-                            <p>Entenda mais sobre a história dos produtos e seus vendedores.</p>
+                            <p>Entenda mais sobre a história dos produtos e seus vendedores</p>
                             <h1 class="fw-bold">Um espaço para troca de conhecimentos.</h1>
                             <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar agora</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
-                                <img src="~/assets/img/budha.png" class="figure-img img-fluid" alt="...">
+                                <img src="~/assets/img/home/budha.png" class="figure-img img-fluid" alt="...">
                             </figure>
                         </div>
                         
@@ -73,36 +73,48 @@
         <section id="carouselProducts" class="section" data-bs-ride="">
             <h2 class="fw-bold text-center">Produtos em destaque</h2>
                 <div class="owl-carousel owl-theme">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                    <div class="item card text-center border-0" style="width: 18rem;">
+                        @* Imagem do Produto *@
+                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4" alt="...">
                         <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            @* Nome do Produto*@
+                            <a class="card-text text-dark" asp-area="" asp-controller="Home" asp-action="Origin">Dançarino Bermandes</a>
+                            @* Preço *@
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
+                                R$3.250,00
+                            </h4>
                         </div>
                     </div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-                   
+                    
                 </div>
+             
         </section>
 
         @* Promoções *@
          <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
             <h2 class="fw-bold text-center">Promoções</h2>
-
+            <div class="owl-carousel owl-theme">
+                    <div class="card text-center border-0" style="width: 18rem;">
+                        @* Imagem do Produto *@
+                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4" alt="...">
+                        <div class="card-body">
+                            @* Nome do Produto*@
+                            <a class="card-text text-dark" asp-area="" asp-controller="Home" asp-action="Origin">Dançarino Bermandes</a>
+                            <p class="text-decoration-line-through text-secondary">R$3.700,00</p>
+                            @* Preço *@
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
+                                R$3.250,00
+                            </h4>
+                        </div>
+                    </div>
+                    
+            </div>
         </section>
 
         @* Origens *@
-        <section class="section">
+        <section class="section" id="origin">
             <h2 class="fw-bold text-center">Origens</h2>
             @* Cards *@
             <div class="row row-cols-1 row-cols-md-3 g-4 mx-4">
@@ -110,7 +122,7 @@
                 @* África *@
                 <div class="col">
                     <div class="card bg-white text-white h-100">
-                        <img src="~/assets/img/africa.png" class="card-img" alt="Imagem ilustrativa sobre o continente Africano">
+                        <img src="~/assets/img/home/africa.png" class="card-img" alt="Imagem ilustrativa sobre o continente Africano">
                         <div class="card-img-overlay d-flex align-items-end justify-content-center">
                             @* Título - variavel *@
                             <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Index">África</a></h3>
@@ -121,7 +133,7 @@
                 @* Ásia *@
                <div class="col">
                     <div class="card bg-white text-white h-100">
-                        <img src="~/assets/img/asia.png" class="card-img" alt="Imagem ilustrativa sobre o continente Asiatico">
+                        <img src="~/assets/img/home/asia.png" class="card-img" alt="Imagem ilustrativa sobre o continente Asiatico">
                         <div class="card-img-overlay d-flex align-items-end justify-content-center">
                             @* Título - variavel *@
                             <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Index">Ásia</a></h3>
@@ -129,14 +141,18 @@
                     </div>
                 </div>
 
+
                  @* America *@
+                 @* Ainda estou arrumando esse *@
                <div class="col">
                     <div class="card bg-white text-white h-100">
-                        <img src="~/assets/img/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
+                        <div class="card-overlay"></div>
+                        <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
                         <div class="card-img-overlay d-flex align-items-end justify-content-center">
                             @* Título - variavel *@
                             <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
                         </div>
+                        
                     </div>
                 </div>
 

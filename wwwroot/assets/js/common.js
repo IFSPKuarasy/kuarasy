@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Card jQuery
+// $(".section .owl-carousel .card").hover(
+//     function () {
+//         $('.owl-carousel .card #cart').css({
+// 					display: 'block',
+// 					opacity: '1',
+// 					transition: '2s'
+// 				})
+//     },
+//     function () {
+//         $('.owl-carousel .card #cart').css({ display: 'none', opacity: '0' })
+//     }
+// )
 
-// Write your JavaScript code.
+$('document').ready(function () {
+    $('.section .owl-carousel .owl-nav').removeClass('disabled')
+})
