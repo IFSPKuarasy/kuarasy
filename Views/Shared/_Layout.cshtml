@@ -65,12 +65,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action=""> Contato</a>
                         </li>
                     </ul>
-                    <form action="/" method="POST" class="d-flex flex-fill me-2">
-                                <div class="has-search d-flex flex-fill align-items-center">
-                                    <input class="form-control shadow-sm border border-2 body" type="search" placeholder= "Pesquise por produtos, categorias e vendedores" aria-label="Search" name="inputSearch">
-                                    <button class="btn bg-yellow" type="submit"> <span class = "icon-search size-icons text-white">  </span> </button> 
-                                </div>
-                                
+                      <form asp-controller="Produto" asp-action="index" method="get" class="d-flex flex-fill me-2" id="Pesquisa">
+                        <div class="has-search d-flex flex-fill align-items-center">
+                            <input class="form-control shadow-sm border border-2 body" type="search" placeholder="Pesquise por produtos, categorias e vendedores" aria-label="Search" name="InputSearch">
+                            <button class="btn bg-yellow" type="submit" form="Pesquisa"> <span class="icon-search size-icons text-white">  </span> </button>
+                        </div>
                     </form>
                     <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
                 </div>
@@ -172,7 +171,6 @@
     </div>
 
    <div class="footer-bar bg-red-medium"> </div>
-
   </footer>
 
     @* Bootstrap JS *@

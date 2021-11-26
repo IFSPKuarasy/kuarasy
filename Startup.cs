@@ -43,7 +43,7 @@ namespace kuarasy
             switch (datasource)
             {
                 case "Local":
-                    services.AddSingleton<IContextData, ContextDataFake>();
+                    //services.AddSingleton<IContextData, ContextDataFake>();
                     break;
                 case "SqlServer":
                     services.AddSingleton<IContextData, ContextDataSqlServer>();

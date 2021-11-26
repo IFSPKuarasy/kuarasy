@@ -1,4 +1,3 @@
-using kuarasy.Models.Dtos;
 using kuarasy.Models.Entidades;
 using System.Collections.Generic;
 
@@ -9,6 +8,7 @@ namespace kuarasy.Models.Contracts.Context
 		void CadastrarProduto(Produto produto);
 		List<Produto> ListarProduto();
 		Produto PesquisarProdutoPorId(int id);
+		List<Produto> PesquisarProduto(string inputSearch);
 		void AtualizarProduto(Produto produto);
 		void ExcluirProduto(int id);
 	}

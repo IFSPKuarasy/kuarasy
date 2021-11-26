@@ -1,5 +1,4 @@
 using kuarasy.Models.Contracts.Context;
-using kuarasy.Models.Dtos;
 using kuarasy.Models.Entidades;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace kuarasy.Models.Repositories
 {
-    public class ContextDataFake : IContextData
+    public class ContextDataFake  //IContextData
     {
         private static List<Produto> produtos;
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using kuarasy.Models.Contracts.Context;
 using kuarasy.Models.Contracts.Repositories;
-using kuarasy.Models.Dtos;
 using kuarasy.Models.Entidades;
 
 namespace kuarasy.Models.Repositories
@@ -39,6 +38,11 @@ namespace kuarasy.Models.Repositories
         public Produto PesquisarPorId(int id)
         {
             return _contextData.PesquisarProdutoPorId(id);
+        }
+
+        public List<Produto> Pesquisar(string inputSearch)
+        {
+            return _contextData.PesquisarProduto(inputSearch);
         }
     }
 }

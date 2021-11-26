@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using kuarasy.Models.Dtos;
 using kuarasy.Models.Contracts.Services;
 using kuarasy.Models.Contracts.Repositories;
+using kuarasy.Models.Entidades;
 
 namespace kuarasy.Models.Services{
 
@@ -15,12 +15,11 @@ namespace kuarasy.Models.Services{
             _produtoRepository = produtoRepository;
         }
 
-        public void Atualizar(ProdutoDto produto)
+        public void Atualizar(Produto produto)
         {
             try
             {
-                var objProduto = produto.ConverterParaEntidade();
-                _produtoRepository.Atualizar(objProduto );
+                _produtoRepository.Atualizar(produto);
             }
             catch (Exception)
             {
@@ -29,12 +28,11 @@ namespace kuarasy.Models.Services{
 
         }
 
-        public void Cadastrar(ProdutoDto produto)
+        public void Cadastrar(Produto produto)
         {
             try 
             {
-                var objProduto = produto.ConverterParaEntidade();
-                _produtoRepository.Cadastrar(objProduto);
+                _produtoRepository.Cadastrar(produto);
             }
             catch(Exception)
             {
@@ -54,17 +52,13 @@ namespace kuarasy.Models.Services{
             }
         }
 
-        public List<ProdutoDto> Listar()
+        public List<Produto> Listar()
         {
             try
             {
-                var produtosDto = new List<ProdutoDto>();
-                var produtos = _produtoRepository.Listar();
-                foreach(var item  in produtos)
-                {
-                    produtosDto.Add(item.ConverterParaDto());
-                }
-                return produtosDto;
+                var produtos = new List<Produto>();
+                produtos = _produtoRepository.Listar();
+                return produtos;
             }
             catch (Exception)
             {
@@ -72,12 +66,25 @@ namespace kuarasy.Models.Services{
             }
         }
 
-        public ProdutoDto PesquisarPorId(int id)
+        public List<Produto> Pesquisar(string inputSearch)
+        {
+            try
+            {
+                var produtos = _produtoRepository.Pesquisar(inputSearch);
+                return produtos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public Produto PesquisarPorId(int id)
         {
             try
             {
                 var produtos =  _produtoRepository.PesquisarPorId(id);
-                return produtos.ConverterParaDto();
+                return produtos;
             }
             catch (Exception)
             {
