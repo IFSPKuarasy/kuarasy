@@ -182,31 +182,38 @@
     <!-- Owl Carousel -->
     <script type="text/javascript" src="~/lib/owlcarousel/dist/owl.carousel.min.js"></script>
     <script>
+        $(document).ready(function (e) {
        $('.owl-carousel').owlCarousel({
             loop:true,
             margin:15,
             nav: true,
+            dots: false,
+            navText: ['<span aria-label="Previous">‹</span>','<span aria-label="Next">›</span>'],
+		    lazyLoad:true,
             responsive: {
                 0: {
-                    items: 1
+                    items: 1,
+                    nav:true
                 },
                 479: {
-                    items: 1
+                    items: 1,
+                    nav: true
                 },
                 768: {
-                    items: 2
+                    items: 2,
+                    nav: true
                 },
                 979: {
-                    items: 3
+                    items: 3,
+                    nav:true
                 },
                 1200: {
-                    items: 4
+                    items: 4,
+                    nav:true
                 }
             }
         });
-
-      
-
+      });
     </script> 
 
     <script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>

@@ -24,13 +24,13 @@
 
 .carousel-item figure.figure::before{
     content:'';
-    height: 60rem;
-    width: 60rem;
+    height: 60rem!important;
+    width: 60rem!important;
     clip-path: circle(100% at 100% 100%);
     background: #FAECD2;
     position: absolute;
     top: -8.3%;
-    left: 40%;
+    left: 45%!important;
     z-index: -1;
 }
 
@@ -48,7 +48,10 @@
 .owl-carousel .card #cart{
   display: none;
   opacity: 0;
-  transition: 2s;
+
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  -moz-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s
 }
 
 .owl-carousel .card,
@@ -62,7 +65,8 @@
   align-self: center!important;
 }
 
-.owl-carousel .card:hover{
+.owl-carousel .card:hover #cart{
+  cursor: pointer;
   display: block;
   opacity: 1;
 }
@@ -74,43 +78,79 @@
 }
 
 
-/* Owl carousel arrows */
- /* .carousel-wrap {
-    width: 1000px;
-    margin: auto;
-    position: relative;
-  }
-  .owl-carousel .owl-nav{
-    overflow: hidden;
-    height: 0px;
-  }
-
-  .owl-carousel .item {
-      text-align: center;
-  }
-  .owl-carousel .nav-btn{
-      height: 3rem;
-      position: absolute;
-      width: 2rem;
-      cursor: pointer;
-      top: 100px !important;
-  } */
+/* Owl carousel arrows  - Default option*/
+/* Rembember that it only works if you have more than 1 product */
+.owl-carousel .owl-nav button{width:25px; text-align:center; border:1px solid #ccc !important;}
 
  /* Origin cards overlay */
-#orgin.card.card-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    height: 99%;
+.content {
+    position: relative;
     width: 100%;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
+    height: 100%;
+    margin: auto;
+    overflow: hidden
+}
+
+.content .content-overlay {
+    background: rgba(92, 87, 69, 0.616);
+    opacity: 0; 
+}
+
+.content .content-overlay,
+.card-img-overlay{
+  cursor: pointer;
+
+  position:absolute;
+  height: 100%;
+  width: 100%;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  -moz-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s
+}
+
+.content-details {
+    position: absolute;
     opacity: 0;
+
+    text-align: center;
+    width: 100%;
+
+    top: 50%;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     -webkit-transition: all 0.4s ease-in-out 0s;
     -moz-transition: all 0.4s ease-in-out 0s;
     transition: all 0.4s ease-in-out 0s
 }
+
+/* hover effect */
+.content:hover .content-overlay {
+    opacity: 1
+}
+
+.content:hover .content-details {
+    top: 50%;
+    left: 50%;
+    opacity: 1
+}
+
+.content:hover .card-img-overlay{
+    top: -60%;
+}
+
+.fadeIn-bottom {
+    top: 80%
+}
+
 
 
 /* Responsivity */

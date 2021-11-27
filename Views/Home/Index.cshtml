@@ -36,8 +36,8 @@
                 <div class="carousel-item h-100" data-bs-interval="20000">
                     <div class="row align-items-center justify-content-between ">
                         <div class="col col-lg-6">
-                            <p>Confira aqui os artesanatos únicos de cada comunidade imigrante no Brasil!</p>
-                            <h1 class="fw-bold">Aprenda sobre outras culturas.</h1>
+                            <p>Confira aqui os artesanatos únicos das comunidades imigrantes brasileiras!</p>
+                            <h1 class="fw-bold">Aprenda mais sobre suas culturas</h1>
                             <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Veja as origens</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
@@ -53,7 +53,7 @@
                     <div class="row align-items-center justify-content-between ">
                         <div class="col col-lg-6">
                             <p>Entenda mais sobre a história dos produtos e seus vendedores</p>
-                            <h1 class="fw-bold">Um espaço para troca de conhecimentos.</h1>
+                            <h1 class="fw-bold">Um espaço para trocas culturais</h1>
                             <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar agora</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
@@ -73,6 +73,7 @@
         <section id="carouselProducts" class="section" data-bs-ride="">
             <h2 class="fw-bold text-center">Produtos em destaque</h2>
                 <div class="owl-carousel owl-theme">
+                    @* Produto *@
                     <div class="item card text-center border-0" style="width: 18rem;">
                         @* Imagem do Produto *@
                         <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4" alt="...">
@@ -86,7 +87,7 @@
                             </h4>
                         </div>
                     </div>
-                    
+
                 </div>
              
         </section>
@@ -121,38 +122,64 @@
 
                 @* África *@
                 <div class="col">
-                    <div class="card bg-white text-white h-100">
-                        <img src="~/assets/img/home/africa.png" class="card-img" alt="Imagem ilustrativa sobre o continente Africano">
-                        <div class="card-img-overlay d-flex align-items-end justify-content-center">
-                            @* Título - variavel *@
-                            <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Index">África</a></h3>
+                   <div class="content"> 
+                        <div class="card bg-white text-white h-100">
+                            <div class="content-overlay"></div>
+
+                            <img src="~/assets/img/home/africa.png" class="card-img" alt="Imagem ilustrativa sobre continente Africano">
+
+                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                                @* Título - variavel *@
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">África</a></h3>
+                            </div>
+                        </div>
+
+                        @* Lista de comunidades - variavel *@
+                        <div class="content-details fadeIn-bottom">
+                                <p class="content-text text-light"> Comunidade</p>
                         </div>
                     </div>
                 </div>
 
                 @* Ásia *@
-               <div class="col">
-                    <div class="card bg-white text-white h-100">
-                        <img src="~/assets/img/home/asia.png" class="card-img" alt="Imagem ilustrativa sobre o continente Asiatico">
-                        <div class="card-img-overlay d-flex align-items-end justify-content-center">
-                            @* Título - variavel *@
-                            <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Index">Ásia</a></h3>
+                <div class="col">
+                   <div class="content"> 
+                        <div class="card bg-white text-white h-100">
+                            <div class="content-overlay"></div>
+
+                            <img src="~/assets/img/home/asia.png" class="card-img" alt="Imagem ilustrativa sobre continente Asiatico">
+
+                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                                @* Título - variavel *@
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
+                            </div>
+                        </div>
+
+                        @* Lista de comunidades - variavel *@
+                       <div class="content-details fadeIn-bottom">
+                            <p class="content-text text-light"> Comunidade</p>
                         </div>
                     </div>
                 </div>
 
-
                  @* America *@
-                 @* Ainda estou arrumando esse *@
                <div class="col">
-                    <div class="card bg-white text-white h-100">
-                        <div class="card-overlay"></div>
-                        <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
-                        <div class="card-img-overlay d-flex align-items-end justify-content-center">
-                            @* Título - variavel *@
-                            <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                   <div class="content"> 
+                        <div class="card bg-white text-white h-100">
+                            <div class="content-overlay"></div>
+
+                            <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
+
+                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                                @* Título - variavel *@
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                            </div>
                         </div>
-                        
+
+                        @* Lista de comunidades - variavel *@
+                        <div class="content-details fadeIn-bottom">
+                            <p class="content-text text-light"> Comunidade</p>
+                        </div>
                     </div>
                 </div>
 
