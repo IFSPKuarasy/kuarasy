@@ -18,116 +18,7 @@ namespace kuarasy.Models.Contexts
         {
             _connection = connectionManager.GetConnection();
         }
-
-        public void CadastrarProduto(Produto produto)
-        {
-           try
-           {
-               _connection.Open();
-               var query = SqlManager.GetSql(TSql.CADASTRAR_PRODUTO);
-               var query2 = SqlManager.GetSql(TSql.CADASTRAR_TAMANHO);
-               var query3 = SqlManager.GetSql(TSql.ULTIMO_REGRISTO_TAMANHO);
-
-               var command = new SqlCommand(query, _connection);
-               var command2 = new SqlCommand(query2, _connection);
-               var command3 = new SqlCommand(query3, _connection);
-
-               //SALVANDO TAMAMANHO
-               command2.Parameters.Add("@altura", SqlDbType.Float).Value = produto.Altura;
-               command2.Parameters.Add("@largura", SqlDbType.Float).Value = produto.Largura;
-               command2.Parameters.Add("@comprimento", SqlDbType.Float).Value = produto.Comprimento;
-               command2.ExecuteNonQuery();
-
-                //BUSCANDO ULTIMO REGRISTRO DE TAMANHO NO BANCO PARA INSERIR NO PRODUTO
-                var dataset = new DataSet();
-                var adapter = new SqlDataAdapter(command3);
-                adapter.Fill(dataset);
-
-                var rows = dataset.Tables[0].Rows;
-                foreach (DataRow item in rows)
-                {
-                    var colunas = item.ItemArray;
-                    var id_tamanho = Convert.ToInt32((colunas[0]));
-                    command.Parameters.Add("@id_tamanho", SqlDbType.Int).Value = id_tamanho;
-                }
-
-                //SALVANDO PRODUTO
-               command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
-               command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
-               command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
-               command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
-               command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
-               command.Parameters.Add("@id_tipo", SqlDbType.Int).Value = produto.Id_tipo;
-               command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
-               
-                command.ExecuteNonQuery();
-
-                adapter = null;
-                dataset = null;
-            }
-           catch (Exception)
-           {
-               throw;
-           }
-           finally
-           {
-               if (_connection.State == ConnectionState.Open)
-                   _connection.Close();
-           }
-        }
-        public void AtualizarProduto(Produto produto)
-        {
-            try
-            {
-                _connection.Open();
-                var query = SqlManager.GetSql(TSql.ATUALIZAR_PRODUTO);
-
-                var command = new SqlCommand(query, _connection);
-
-                command.Parameters.Add("@id", SqlDbType.Int).Value = produto.Id;
-                command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
-                command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
-                command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
-                command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
-                command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
-
-                command.ExecuteNonQuery();
-
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (_connection.State == ConnectionState.Open)
-                    _connection.Close();
-            }
-        }
-        public void ExcluirProduto(int id)
-        {
-            try
-            {
-                _connection.Open();
-                var query = SqlManager.GetSql(TSql.EXCLUIR_PRODUTO);
-
-                var command = new SqlCommand(query, _connection);
-
-                command.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (_connection.State == ConnectionState.Open)
-                    _connection.Close();
-            }
-        }
+//PEGANDO TODOS OS PRODUTOS
         public List<Produto> ListarProduto()
         {
             var produtos = new List<Produto>();
@@ -181,6 +72,163 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
+
+//ETAPAS DE CADASTRAMENTO DE PRODUTO---------------
+        public void CadastrarProduto(Produto produto)
+        {
+           try
+           {
+               _connection.Open();
+               var query = SqlManager.GetSql(TSql.CADASTRAR_PRODUTO);
+               var query2 = SqlManager.GetSql(TSql.ULTIMO_REGRISTO_TAMANHO);
+
+
+                var command = new SqlCommand(query, _connection);
+               var command2 = new SqlCommand(query2, _connection);
+
+                //SALVANDO TAMANHO
+               CadastrarTamanho(produto);
+
+                //BUSCANDO ULTIMO REGRISTRO DE TAMANHO NO BANCO PARA INSERIR NO PRODUTO
+                var dataset = new DataSet();
+                var adapter = new SqlDataAdapter(command2);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+                    var id_tamanho = Convert.ToInt32((colunas[0]));
+                    command.Parameters.Add("@id_tamanho", SqlDbType.Int).Value = id_tamanho;
+                }
+
+                //SALVANDO PRODUTO
+               command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
+               command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
+               command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
+               command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
+               command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
+               command.Parameters.Add("@id_tipo", SqlDbType.Int).Value = produto.Id_tipo;
+               command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
+               
+                command.ExecuteNonQuery();
+                adapter = null;
+                dataset = null;
+
+                CadastrarOrigemProduto(produto);
+
+            }
+           catch (Exception)
+           {
+               throw;
+           }
+           finally
+           {
+               if (_connection.State == ConnectionState.Open)
+                   _connection.Close();
+           }
+        }
+        public void CadastrarOrigemProduto(Produto produto){
+                var query = SqlManager.GetSql(TSql.ULTIMO_REGRISTO_PRODUTO);
+                var query2 = SqlManager.GetSql(TSql.CADASTRAR_ORIGEM_PRODUTO);
+                var command = new SqlCommand(query, _connection);
+                var command2 = new SqlCommand(query2, _connection);
+                var dataset = new DataSet();
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+                var rows = dataset.Tables[0].Rows;
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+                    var id_produto = Convert.ToInt32((colunas[0]));
+                    command2.Parameters.Add("@id_produto", SqlDbType.Int).Value = id_produto;
+                    command2.Parameters.Add("@id_origem", SqlDbType.Int).Value = produto.Id_origem;
+                }                
+                command2.ExecuteNonQuery();
+                adapter = null;
+                dataset = null;
+        }
+
+        public void CadastrarTamanho(Produto produto){
+            var query = SqlManager.GetSql(TSql.CADASTRAR_TAMANHO);
+            var command = new SqlCommand(query, _connection);
+             //SALVANDO TAMAMANHO
+                command.Parameters.Add("@altura", SqlDbType.Float).Value = produto.Altura;
+               command.Parameters.Add("@largura", SqlDbType.Float).Value = produto.Largura;
+               command.Parameters.Add("@comprimento", SqlDbType.Float).Value = produto.Comprimento;
+               command.ExecuteNonQuery();
+        }
+
+//FIM DE ETAPAS DE CADASTRAMENTO DE PRODUTO----------
+
+        public void AtualizarProduto(Produto produto)
+        {
+            try
+            {
+                _connection.Open();
+                var query = SqlManager.GetSql(TSql.ATUALIZAR_PRODUTO);
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.Add("@id", SqlDbType.Int).Value = produto.Id;
+                command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
+                command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
+                command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
+                command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
+                command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
+
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
+
+//ETAPAS DE EXCLUSÃO DE PRODUTO------------------
+        public void ExcluirProduto(int id)
+        {
+            try
+            {
+                _connection.Open();
+                var query = SqlManager.GetSql(TSql.EXCLUIR_PRODUTO);
+                
+                var command = new SqlCommand(query, _connection);
+                
+                ExcluirOrigemProduto(id);
+
+                command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                command.ExecuteNonQuery();
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
+        public void ExcluirOrigemProduto(int id)
+        {
+            var query = SqlManager.GetSql(TSql.EXCLUIR_ORIGEM_PRODUTO);
+            var command = new SqlCommand(query, _connection);
+            command.Parameters.Add("@id_produto", SqlDbType.Int).Value = id;            
+            command.ExecuteNonQuery();
+        }
+//FIM DE ETAPAS DE EXCLUSÃO DE PRODUTO-----------
+
+
+//PESQUISANDO APENAS UM PRODUTO PELO ID
         public Produto PesquisarProdutoPorId(int id)
         {
             try
@@ -227,6 +275,8 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
+
+//PESQUISANDO PRODUTOS PELA BARRA DE PESQUISA
         public List<Produto> PesquisarProduto(string inputSearch)
         {
             
@@ -291,6 +341,7 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
+        
     }
 
 }

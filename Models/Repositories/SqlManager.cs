@@ -34,7 +34,18 @@ namespace kuarasy.Models.Repositories
                     sql = "SELECT (id_tamanho) FROM tamanho WHERE id_tamanho = (SELECT max(id_tamanho) FROM tamanho)";
                     break;
                 case TSql.PESQUISAR:
-                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p inner join tipo tp on p.id_tipo = tp.id_tipo WHERE @inputSearch in (p.nome, descricao)";
+                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p " +
+                    "inner join tipo tp on p.id_tipo = tp.id_tipo " +
+                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE @inputSearch in (p.nome, descricao, tp.nome, ct.nome)";
+                    break;
+                case TSql.ULTIMO_REGRISTO_PRODUTO:
+                    sql = "SELECT (id_produto) FROM produto WHERE id_produto = (SELECT max(id_produto) FROM produto)";
+                    break;
+                case TSql.CADASTRAR_ORIGEM_PRODUTO:
+                    sql = "insert into origem_produto (id_produto, id_origem) values (@id_produto, @id_origem)";
+                    break;
+                case TSql.EXCLUIR_ORIGEM_PRODUTO:
+                    sql = "delete origem_produto WHERE id_produto = @id_produto";
                     break;
             }
             return sql;
