@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.json
+# *.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -18,19 +18,19 @@
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
+# [Dd]ebug/
+# [Dd]ebugPublic/
+# [Rr]elease/
+# [Rr]eleases/
+# x64/
+# x86/
+# [Aa][Rr][Mm]/
+# [Aa][Rr][Mm]64/
+# bld/
+# [Bb]in/
+# [Oo]bj/
+# [Ll]og/
+# [Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -71,7 +71,7 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
-*.obj
+# *.obj
 *.iobj
 *.pch
 *.pdb
@@ -89,7 +89,7 @@ StyleCopReport.xml
 *.log
 *.vspscc
 *.vssscc
-.builds
+# .builds
 *.pidb
 *.svclog
 *.scc
@@ -184,18 +184,18 @@ publish/
 PublishScripts/
 
 # NuGet Packages
-*.nupkg
+# *.nupkg
 # NuGet Symbol Packages
-*.snupkg
+# *.snupkg
 # The packages folder can be ignored because of Package Restore
-**/[Pp]ackages/*
+# **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
-!**/[Pp]ackages/build/
+# !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
-*.nuget.props
-*.nuget.targets
+# *.nuget.props
+# *.nuget.targets
 
 # Microsoft Azure Build Output
 csx/
@@ -221,7 +221,7 @@ _pkginfo.txt
 !?*.[Cc]ache/
 
 # Others
-ClientBin/
+# ClientBin/
 ~$*
 *~
 *.dbmdl
@@ -330,7 +330,7 @@ OpenCover/
 ASALocalRun/
 
 # MSBuild Binary and Structured Log
-*.binlog
+# *.binlog
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
