@@ -1,48 +1,225 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - kuarasy</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"] | Kûarasy</title>
+    @* Bootstrap *@
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    @* Favicon *@
+    <link rel="shortcut icon" href="~/assets/img/sun.png" type="image/png">
+
+    @* Icons *@
+    <link rel="stylesheet" type="text/css" href="~/assets/fonts/style.css" />
+
+    @* Fonts *@
+    <link rel="preconnect" type="text/css" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" type="text/css" href="~/lib/owlcarousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/owlcarousel/dist/assets/owl.theme.default.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/assets/css/common.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+<body class="d-flex flex-column h-100">
+    <div class = "bg-red-medium">
+        <div class = "container d-flex justify-content-end align-items-center">
+                <a class = " text-white nav-link me-3 ms-3"> Cadastrar </a>
+                <span class = "text-white bg-white divider"></span> 
+                <a class = "text-white nav-link me-3 ms-3"> Entrar </a> 
+                <i class = "text-white nav-link icon-user size-icons-sm "></i> 
+        </div>
+    </div>
+    <header id="header">
+        
+        <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">kuarasy</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+              <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/assets/img/LogoKuarasy.png" alt="Logomarca do Kuarasy E-commerce" class = " img-fluid" style="max-width: 8rem!important">
+              </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" >
+                <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                    <ul class="navbar-nav mb-md-0 mx-3 fw-bold">             
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                         
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categorias
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="">Categoria1</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="" >Categoria2</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="List"> Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action=""> Contato</a>
                         </li>
                     </ul>
+                      <form asp-controller="Produto" asp-action="index" method="get" class="d-flex flex-fill me-2" id="Pesquisa">
+                        <div class="has-search d-flex flex-fill align-items-center">
+                            <input class="form-control shadow-sm border border-2 body" type="search" placeholder="Pesquise por produtos, categorias ou tipos" aria-label="Search" name="InputSearch">
+                            <button class="btn bg-yellow" type="submit" form="Pesquisa"> <span class="icon-search size-icons text-white">  </span> </button>
+                        </div>
+                    </form>
+                    <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
                 </div>
             </div>
         </nav>
     </header>
+
+<!-- Begin page content -->
+
+    @RenderBody()
+
+<!-- End page content -->
+
+ <footer class="footer mt-auto pt-3 border-top" id="footer">
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+      <div class="row footer-align d-flex justify-content-between align-items-center" id="lists">
+        @* Figura *@
+        <div class="col-md-auto footer-scale footer-order-1 text-center">
+          <figure class="figure">
+                <img src="~/assets/img/GuyandSun.png" class="figure-img img-fluid" alt="Homem sentado ao pôr do sol - Storyset.com ">
+            </figure>
+        </div>
+
+        <div class="col-lg-auto footer-order-2 mb-3">
+            <div class="row">
+                <div class="col">
+                    @* Atendimento - Lista *@
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                        <strong class="nav-link" asp-controller="" asp-action="">Atendimento</strong>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/IFSPKuarasy" target="_blank" >Entrar em contato</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="" asp-action="">Políticas do Kuarasy </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="" asp-action="">Termos de Uso</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    @* Mapa do site - Lista *@
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                        <strong class="nav-link" asp-controller="" asp-action="">Mapa do site</strong>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="" asp-action="">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="" asp-action="">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-controller="" asp-action="">Quem somos</a>
+                        </li>
+                    </ul>
+                </div>           
+            </div>
+
+        </div>
+
+        @* Logomarca *@
+        <div class="col-md-auto footer-order-3 text-center">
+              <figure class="figure">
+                <img src="~/assets/img/LogoKuarasy.png" class="figure-img img-fluid" alt="Logomarca do Kuarasy E-commerce">
+             </figure>
+        </div>
+
+      </div>
+
+    <hr class="bg-red">    
+      <div class="row g-2">
+          <div class="footer-info d-flex justify-content-between">
+          <div class="col col-sm d-flex justify-content-around">
+            <span>
+              &copy; 2021 IFSP <a href="https://github.com/IFSPKuarasy" target="_blank"> Equipe Bunka</a>
+            </span>
+            <span>
+              Todos os direitos reservados
+            </span>
+          </div>
+
+          <div class="col col-sm d-flex justify-content-end">
+            <a href="mailto:kuarasy@contato.com">kuarasy&#64contato.com</a>
+          </div>
+
+        </div>
+      </div>
+
+      </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - kuarasy - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+   <div class="footer-bar bg-red-medium"> </div>
+  </footer>
+
+    @* Bootstrap JS *@
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Owl Carousel -->
+    <script type="text/javascript" src="~/lib/owlcarousel/dist/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function (e) {
+       $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:15,
+            nav: true,
+            dots: false,
+            navText: ['<span aria-label="Previous">‹</span>','<span aria-label="Next">›</span>'],
+		    lazyLoad:true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav:true
+                },
+                479: {
+                    items: 2,
+                    nav: true
+                },
+                768: {
+                    items: 2,
+                    nav: true
+                },
+                979: {
+                    items: 3,
+                    nav:true
+                },
+                1200: {
+                    items: 4,
+                    nav:true
+                }
+            }
+        });
+      });
+    </script> 
+
+    <script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>
+    @* @await RenderSectionAsync("Scripts", required: false) *@
 </body>
 </html>

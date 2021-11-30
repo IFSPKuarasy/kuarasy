@@ -1,8 +1,239 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
+<link rel="stylesheet" type="text/css" href="~/assets/css/Home/index.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main role="main" class="flex-shrink-0" >
+    <div class="container my-5">
+        @* Header Carousel *@
+        <section id="carouselBanner" class="section carousel carousel-dark slide h-100" data-bs-ride="carousel">
+            @* Buttons *@
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> 
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            @* Body *@
+            <div class="carousel-inner h-100">
+                
+                <div class="carousel-item active h-100" data-bs-interval="10000">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col col-lg-6">
+                            <p>Os melhores artesanatos para você!</p>
+                            <h1 class="fw-bold">Produtos artesanais já disponíveis. Confira!</h1>
+                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                        </div>
+                        <div class="col col-lg-5 text-center" id="figure">
+                            <figure class="figure">
+                                <img src="~/assets/img/home/coruja.png" class="figure-img img-fluid" alt="...">
+                            </figure>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="carousel-item h-100" data-bs-interval="20000">
+                    <div class="row align-items-center justify-content-between ">
+                        <div class="col col-lg-6">
+                            <p>Confira aqui os artesanatos únicos das comunidades imigrantes brasileiras!</p>
+                            <h1 class="fw-bold">Aprenda mais sobre suas culturas</h1>
+                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Veja as origens</a>
+                        </div>
+                        <div class="col col-lg-5 text-center" id="figure">
+                            <figure class="figure">
+                                <img src="~/assets/img/home/mask.png" class="figure-img img-fluid" alt="...">
+                            </figure>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="carousel-item h-100" data-bs-interval="30000">
+                    <div class="row align-items-center justify-content-between ">
+                        <div class="col col-lg-6">
+                            <p>Entenda mais sobre a história dos produtos e seus vendedores</p>
+                            <h1 class="fw-bold">Um espaço para trocas culturais</h1>
+                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar agora</a>
+                        </div>
+                        <div class="col col-lg-5 text-center" id="figure">
+                            <figure class="figure">
+                                <img src="~/assets/img/home/budha.png" class="figure-img img-fluid" alt="...">
+                            </figure>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+           
+        </section>
+
+        @* Produtos em destaque *@
+        <section id="carouselProducts" class="section" data-bs-ride="">
+            <h2 class="fw-bold text-center">Produtos em destaque</h2>
+                <div class="owl-carousel owl-theme">
+                    @* Produto *@
+
+                    @foreach (var item in Model.ListProduto) {
+                    <div class="item card text-center border-0" style="width: 18rem;">
+                        @* Imagem do Produto *@
+                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
+                        <div class="card-body">
+                            @* Nome do Produto*@
+                            
+                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
+                            
+                            @* Preço *@
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                @{
+                                    string preco = "";
+                                    float x = item.Preco;
+                                    if (x % 1 == 0)
+                                        preco = "R$" + x.ToString() + ",00";
+                                    else
+                                        preco = "R$" + x.ToString();
+                                }   
+                                @preco
+                                
+                            </h4>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+             
+        </section>
+
+        @* Promoções *@
+         <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+            <h2 class="fw-bold text-center">Promoções</h2>
+            <div class="owl-carousel owl-theme">
+                    <div class="card text-center border-0" style="width: 18rem;">
+                        @* Imagem do Produto *@
+                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4 img-hover-zoom" alt="...">
+                        <div class="card-body">
+                            @* Nome do Produto*@
+                            <a class="card-text" asp-area="" id="nameLink" >Dançarino Bermandes</a>
+                            <p class="text-decoration-line-through text-secondary">R$3.700,00</p>
+                            @* Preço *@
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
+                                R$3.250,00
+                            </h4>
+                        </div>
+                    </div>
+                    
+            </div>
+        </section>
+
+        @* Origens *@
+        <section class="section" id="origin">
+            <h2 class="fw-bold text-center">Origens</h2>
+            @* Cards *@
+            <div class="row row-cols-1 row-cols-md-3 g-4 mx-4">
+
+                @* África *@
+                <div class="col">
+                   <div class="content"> 
+                        <div class="card bg-white text-white h-100">
+                            <div class="content-overlay"></div>
+
+                            <img src="~/assets/img/home/africa.png" class="card-img" alt="Imagem ilustrativa sobre continente Africano">
+
+                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                                @* Título - variavel *@
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">África</a></h3>
+                            </div>
+                        </div>
+
+                        @* Lista de comunidades - variavel *@
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "África")
+                               {
+                                   <p class="content-text text-light"> @item.Pais</p>
+                               }
+
+
+                           }
+                       }
+                   </div>
+                    </div>
+                </div>
+
+                @* Ásia *@
+                <div class="col">
+                   <div class="content"> 
+                        <div class="card bg-white text-white h-100">
+                            <div class="content-overlay"></div>
+
+                            <img src="~/assets/img/home/asia.png" class="card-img" alt="Imagem ilustrativa sobre continente Asiatico">
+
+                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                                @* Título - variavel *@
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
+                            </div>
+                        </div>
+
+                        @* Lista de comunidades - variavel *@
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "Ásia")
+                               {
+                                   <p class="content-text text-light"> @item.Pais</p>
+                               }
+
+
+                           }
+                       }
+                   </div>
+                    </div>
+                </div>
+
+                 @* America *@
+               <div class="col">
+                   <div class="content">
+                       <div class="card bg-white text-white h-100">
+                           <div class="content-overlay"></div>
+
+                           <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
+
+                           <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                               @* Título - variavel *@
+                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                           </div>
+                       </div>
+                       @* Lista de comunidades - variavel *@
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "América")
+                               {
+                               <p class="content-text text-light"> @item.Pais</p>
+                                   }
+
+
+                               }
+                        }
+
+                   </div>
+                   </div>
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+</main>
+
+
+<script type="text/javascript" language="javascript" src="~/assets/js/Home/index.js"></script>
+

@@ -1,0 +1,164 @@
+/* Color scheme */
+:root {
+	/* Colors */
+	--red: #a2040e;
+	--red-medium: #b84132;
+	--red-light: #cc6957;
+	--yellow: #e28d26;
+	--yellow-medium: #eb9f4e;
+	--yellow-light: #f3b271;
+	--brown: #651e15;
+	--brown-medium: #814236;
+	--brown-light: #9d655a;
+
+	--black: #000;
+	--white: #fff;
+	--gray: #d9d9d9;
+	--gray-light: #e7e6ef;
+	--background-color: #fafafa;
+
+	/* Fonts */
+    --title-font: "Poppins", sans-serif;
+    --body-font: "Open Sans", sans-serif;
+
+	/* Border-Radius*/
+	--radius-size: 0.625rem;
+}
+
+/* Reset */
+html{
+    overflow-x: hidden;
+}
+
+body{
+    font-family: var(--body-font)!important;
+	background-color: var(--background-color)!important;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--title-font)!important;
+}
+
+a{
+	text-decoration: none!important;
+}
+
+li{
+	list-style: none;
+}
+
+/* Base */
+
+.section{
+    padding: 4.5rem  0;
+}
+
+/* Backgrounds */
+.bg-red {
+	background: var(--red);
+}
+
+.bg-red-medium {
+	background: var(--red-medium);
+}
+
+.bg-yellow {
+	background-color: var(--yellow);
+}
+
+/* Header */
+.divider{
+    height: 20px;
+    width: 2px;
+}
+  
+.icon-fluentCart {
+	color: var(--red);
+}
+
+.size-icons-sm{
+	font-size: 1.5rem;
+}
+
+.size-icons{
+	font-size: 2rem;
+}
+
+.size-icons-lg{
+	font-size: 2.5rem;
+}
+
+.dropdown-item{
+	color: var(--brown);
+}
+
+/* Input Search Icon */
+.has-search .form-control {
+	height: 100%!important;
+	font-size: 12px!important;
+	border-radius: 10px 0px 0px 10px!important;
+}
+
+.has-search .form-control-feedback {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	width: 4rem;
+	height: 3rem;
+	font-size: 1.2rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: #aaa;
+}
+
+header form .btn{
+	border-radius: 0px 10px 10px 0px!important;
+}
+
+/* Footer */
+footer .nav-item .nav-link{
+    color: var(--black)!important;
+}
+
+footer .nav-item .nav-link:hover{
+    color: rgba(0, 0, 0, 0.60)!important;
+}
+
+.footer-bar{
+  height: 1.25rem;
+  margin-top: 1rem;
+}
+
+.footer-info span{
+	color: var(--brown);
+}
+
+.footer-info a{
+	color: var(--brown);
+	text-decoration: none;	
+}
+
+#footer-info hr{
+	height: 0.2rem;
+}
+
+/* Responsivity */
+@media (max-width: 991px) {
+    footer #lists{
+        text-align: center!important;
+    }
+}
+
+@media (max-width: 768px) {
+	nav .collapse #cart{
+		display: block !important;
+		/* text-align: center!important; */
+
+	}
+
+    nav .collapse #cart,
+	nav .collapse form {
+       	margin: 1rem!important;
+    }
+}

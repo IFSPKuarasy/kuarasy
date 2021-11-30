@@ -1,13 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using kuarasy.Models.Contexts;
+using kuarasy.Models.Contracts.Context;
+using kuarasy.Models.Contracts.Repositories;
+using kuarasy.Models.Contracts.Services;
+using kuarasy.Models.Repositories;
+using kuarasy.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace kuarasy
 {
@@ -24,6 +30,29 @@ namespace kuarasy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IProdutoService, ProdutoService>();
+
+            services.AddScoped<IOrigemRepository, OrigemRepository>();
+            services.AddScoped<IOrigemService, OrigemService>();
+            ConfigureDatasource(services);
+
+        }
+
+        public void ConfigureDatasource(IServiceCollection services)
+        {
+            var datasource = Configuration["DataSource"];
+            switch (datasource)
+            {
+                case "Local":
+                    //services.AddSingleton<IContextData, ContextDataFake>();
+                    break;
+                case "SqlServer":
+                    services.AddSingleton<IContextData, ContextDataSqlServer>();
+                    services.AddSingleton<IConnectionManager, ConnectionManager>();
+                    break;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
