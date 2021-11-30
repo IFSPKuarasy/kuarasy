@@ -38,49 +38,7 @@
   color: var(--brown-medium)!important;
 }
 
-/* Owl carousel Cards */
-.owl-carousel .card{
-  background-color: var(--background);
-  padding: 1.5rem 2.5rem 0.5rem 2.5rem;
-  margin-bottom: 2rem!important;
-}
 
-.owl-carousel .card #cart{
-  display: none;
-  opacity: 0;
-
-  -webkit-transition: all 0.5s ease-in-out 0s;
-  -moz-transition: all 0.5s ease-in-out 0s;
-  transition: all 0.5s ease-in-out 0s
-}
-
-.owl-carousel .card,
-.owl-carousel .card img{
-  border-radius: 0.625rem;
-}
-
-.owl-carousel .card img{
-  max-width: 20rem!important;
-  max-height: 20rem!important;
-  align-self: center!important;
-}
-
-.owl-carousel .card:hover #cart{
-  cursor: pointer;
-  display: block;
-  opacity: 1;
-}
-
-.owl-carousel .card:hover{
-  background-color: var(--white);
-  box-shadow: 5px 10px 18px rgba(0, 0, 0, 0.1);
-  transition: 0.5s;
-}
-
-
-/* Owl carousel arrows  - Default option*/
-/* Rembember that it only works if you have more than 1 product */
-.owl-carousel .owl-nav button{width:25px; text-align:center; border:1px solid #ccc !important;}
 
  /* Origin cards overlay */
 .content {
@@ -144,11 +102,11 @@
 }
 
 .content:hover .card-img-overlay{
-    top: -60%;
+    top: -75%;
 }
 
 .fadeIn-bottom {
-    top: 80%
+    top: 85%
 }
 
 
@@ -163,6 +121,5 @@
     max-height: 20rem!important;
     margin-top: 2rem;
   }
-
   
 }

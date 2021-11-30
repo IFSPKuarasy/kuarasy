@@ -7,6 +7,7 @@ namespace kuarasy.Models.Contracts.Context
 	{
 		void CadastrarProduto(Produto produto);
 		List<Produto> ListarProduto();
+		List<Origem> ListarOrigem();
 		Produto PesquisarProdutoPorId(int id);
 		List<Produto> PesquisarProduto(string inputSearch);
 		void AtualizarProduto(Produto produto);

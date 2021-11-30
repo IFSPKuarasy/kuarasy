@@ -1,5 +1,6 @@
-﻿<link rel="stylesheet" type="text/css" href="~/assets/css/Home/index.css" />
-
+﻿<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
+<link rel="stylesheet" type="text/css" href="~/assets/css/Home/index.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -74,19 +75,33 @@
             <h2 class="fw-bold text-center">Produtos em destaque</h2>
                 <div class="owl-carousel owl-theme">
                     @* Produto *@
+
+                    @foreach (var item in Model.ListProduto) {
                     <div class="item card text-center border-0" style="width: 18rem;">
                         @* Imagem do Produto *@
-                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4" alt="...">
+                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
-                            <a class="card-text text-dark" asp-area="" asp-controller="Home" asp-action="Origin">Dançarino Bermandes</a>
+                            
+                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
+                            
                             @* Preço *@
-                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
-                                R$3.250,00
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                @{
+                                    string preco = "";
+                                    float x = item.Preco;
+                                    if (x % 1 == 0)
+                                        preco = "R$" + x.ToString() + ",00";
+                                    else
+                                        preco = "R$" + x.ToString();
+                                }   
+                                @preco
+                                
                             </h4>
                         </div>
                     </div>
+                    }
 
                 </div>
              
@@ -98,10 +113,10 @@
             <div class="owl-carousel owl-theme">
                     <div class="card text-center border-0" style="width: 18rem;">
                         @* Imagem do Produto *@
-                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4" alt="...">
+                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4 img-hover-zoom" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
-                            <a class="card-text text-dark" asp-area="" asp-controller="Home" asp-action="Origin">Dançarino Bermandes</a>
+                            <a class="card-text" asp-area="" id="nameLink" >Dançarino Bermandes</a>
                             <p class="text-decoration-line-through text-secondary">R$3.700,00</p>
                             @* Preço *@
                             <h4 class="fw-bolder d-flex align-items-center justify-content-center">
@@ -135,9 +150,19 @@
                         </div>
 
                         @* Lista de comunidades - variavel *@
-                        <div class="content-details fadeIn-bottom">
-                                <p class="content-text text-light"> Comunidade</p>
-                        </div>
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "África")
+                               {
+                                   <p class="content-text text-light"> @item.Pais</p>
+                               }
+
+
+                           }
+                       }
+                   </div>
                     </div>
                 </div>
 
@@ -156,31 +181,51 @@
                         </div>
 
                         @* Lista de comunidades - variavel *@
-                       <div class="content-details fadeIn-bottom">
-                            <p class="content-text text-light"> Comunidade</p>
-                        </div>
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "Ásia")
+                               {
+                                   <p class="content-text text-light"> @item.Pais</p>
+                               }
+
+
+                           }
+                       }
+                   </div>
                     </div>
                 </div>
 
                  @* America *@
                <div class="col">
-                   <div class="content"> 
-                        <div class="card bg-white text-white h-100">
-                            <div class="content-overlay"></div>
+                   <div class="content">
+                       <div class="card bg-white text-white h-100">
+                           <div class="content-overlay"></div>
 
-                            <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
+                           <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
 
-                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
-                                @* Título - variavel *@
-                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
-                            </div>
-                        </div>
+                           <div class="card-img-overlay d-flex align-items-end justify-content-center">
+                               @* Título - variavel *@
+                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                           </div>
+                       </div>
+                       @* Lista de comunidades - variavel *@
+                   <div class="content-details fadeIn-bottom">
+                       @{
+                           foreach (var item in Model.ListOrigem)
+                           {
+                               @if (item.Continente == "América")
+                               {
+                               <p class="content-text text-light"> @item.Pais</p>
+                                   }
 
-                        @* Lista de comunidades - variavel *@
-                        <div class="content-details fadeIn-bottom">
-                            <p class="content-text text-light"> Comunidade</p>
-                        </div>
-                    </div>
+
+                               }
+                        }
+
+                   </div>
+                   </div>
                 </div>
 
             </div>

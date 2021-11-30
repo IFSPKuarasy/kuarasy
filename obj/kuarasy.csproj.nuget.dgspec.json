@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos\\kuarasy\\kuarasy.csproj": {}
+    "C:\\Users\\User\\Desktop\\Kuarasy\\kuarasy.csproj": {}
   },
   "projects": {
-    "C:\\Projetos\\kuarasy\\kuarasy.csproj": {
+    "C:\\Users\\User\\Desktop\\Kuarasy\\kuarasy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos\\kuarasy\\kuarasy.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\Kuarasy\\kuarasy.csproj",
         "projectName": "kuarasy",
-        "projectPath": "C:\\Projetos\\kuarasy\\kuarasy.csproj",
-        "packagesPath": "C:\\Users\\Jamilli\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos\\kuarasy\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\Kuarasy\\kuarasy.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\Kuarasy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Jamilli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

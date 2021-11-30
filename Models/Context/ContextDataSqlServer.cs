@@ -341,6 +341,58 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
+
+        public List<Origem> ListarOrigem(){
+            var origens = new List<Origem>();
+            try
+            {
+                _connection.Open();
+
+                var query = SqlManager.GetSql(TSql.LISTAR_ORIGEM);
+
+                var command = new SqlCommand(query, _connection);
+
+                var dataset = new DataSet();
+
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+
+
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+
+                    var id = Convert.ToInt32((colunas[0]));
+                    var pais = colunas[1].ToString();
+                    var continente = colunas[2].ToString();
+                    var descricao = colunas[3].ToString();
+
+                    var origem = new Origem
+                    {
+                        Id_origem = id,
+                        Pais = pais,
+                        Continente = continente,
+                        Descricao_origem = descricao,
+                    };
+                    origens.Add(origem);
+                }
+
+                adapter = null;
+                dataset = null;
+                return origens;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
         
     }
 

@@ -6,21 +6,37 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using kuarasy.Models;
+using kuarasy.Models.Contracts.Services;
+using kuarasy.Models.Entidades;
 
 namespace kuarasy.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProdutoService _produtoService;
+        private readonly IOrigemService _origemService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProdutoService produtoService, IOrigemService origemService, ILogger<HomeController> logger)
         {
+            _produtoService = produtoService;
+            _origemService = origemService;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                var model = new HomeIndexViewModel();
+                model.ListProduto = _produtoService.Listar();
+                model.ListOrigem = _origemService.Listar();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public IActionResult Origin()

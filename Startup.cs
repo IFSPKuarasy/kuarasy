@@ -33,6 +33,9 @@ namespace kuarasy
 
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoService, ProdutoService>();
+
+            services.AddScoped<IOrigemRepository, OrigemRepository>();
+            services.AddScoped<IOrigemService, OrigemService>();
             ConfigureDatasource(services);
 
         }

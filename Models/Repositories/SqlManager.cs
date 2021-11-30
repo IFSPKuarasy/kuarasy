@@ -36,7 +36,7 @@ namespace kuarasy.Models.Repositories
                 case TSql.PESQUISAR:
                     sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p " +
                     "inner join tipo tp on p.id_tipo = tp.id_tipo " +
-                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE @inputSearch in (p.nome, descricao, tp.nome, ct.nome)";
+                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%'";
                     break;
                 case TSql.ULTIMO_REGRISTO_PRODUTO:
                     sql = "SELECT (id_produto) FROM produto WHERE id_produto = (SELECT max(id_produto) FROM produto)";
@@ -46,6 +46,9 @@ namespace kuarasy.Models.Repositories
                     break;
                 case TSql.EXCLUIR_ORIGEM_PRODUTO:
                     sql = "delete origem_produto WHERE id_produto = @id_produto";
+                    break;
+                case TSql.LISTAR_ORIGEM:
+                    sql = "select * from origem";
                     break;
             }
             return sql;
