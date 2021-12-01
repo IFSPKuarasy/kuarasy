@@ -14,7 +14,8 @@ namespace kuarasy.Models.Contracts.Repositories
         List<Produto> Pesquisar(string inputSearch);
         void Atualizar(Produto produto);
         void Excluir(int id);
-
+        List<Tipo> ListarTipo(string area);
+        string Categoria(string tipo);
     }
 
 }

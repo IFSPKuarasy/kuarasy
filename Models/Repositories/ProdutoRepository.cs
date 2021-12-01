@@ -44,5 +44,13 @@ namespace kuarasy.Models.Repositories
         {
             return _contextData.PesquisarProduto(inputSearch);
         }
+        public List<Tipo> ListarTipo(string area)
+        {
+            return _contextData.ListarTipoDaCategoria(area);
+        }
+        public string Categoria(string tipo)
+        {
+            return _contextData.BuscarCategoria(tipo);
+        }
     }
 }

@@ -1,11 +1,61 @@
-﻿@model kuarasy.Models.Entidades.Produto
+﻿<link rel="stylesheet" type="text/css" href="~/assets/css/Produto/details.css" />
+@model kuarasy.Models.Entidades.Produto
 
 @{
     string nome = Model.Nome;
     ViewData["Title"] = nome;
 }
 
-<h1>Details</h1>
+<main role="main" class="flex-shrink-0" >
+    <div class="container my-5">
+        <section>
+
+            <div class="row">
+
+                <div class="col"> 
+                    <figure class="figure">
+                        <img src="~/assets/img/produtos/dancarino.png" class="figure-img img-fluid rounded-3 w-100 h-100" alt="Imagem do produto">
+                        <figcaption class="figure-caption text-center ">Nossos produtos são artesanais. Sendo assim, pequenas alterações nas cores, desenhos, tamanhos, pesos e formatos das peças podem ocorrer</figcaption>
+                    </figure>
+                </div>
+
+                <div class="col my-5" id="detail">
+                    <h2 class="fw-bolder">
+                        @Html.DisplayFor(model => model.Nome) 
+                    </h2> 
+                    <div class="row mt-5 mx-4">
+                        <div class="row align-items-center border rounded-3 py-3">
+                             <div class="col col-sm-4" id="preco">
+                                R$ @Html.DisplayFor(model => model.Preco) 
+                            </div>
+                            <div class="col col-sm-4" id="vendedor"> 
+                                de Rogério Gonzalez
+                            </div>
+                            <div class="col col-sm-3"> 
+                                <i class="icon-user"></i>
+                            </div>
+                        </div>
+                       
+                         <div class="row">
+                            <a class="btn bg-yellow text-light mb-3 rounded-3" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                        </div>
+                    </div>
+
+                   
+
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+</main>
+
+
+
+
+
+
 
 <div>
     <h4>ProdutoDto</h4>

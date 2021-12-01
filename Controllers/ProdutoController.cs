@@ -25,29 +25,52 @@ namespace kuarasy.Controllers
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
-        public IActionResult Index(string InputSearch)
+        public IActionResult Index(string InputSearch, string area, string tipo)
         {
+            var model = new HomeIndexViewModel();
             try
             {
-                var produtos = _produtoService.Pesquisar(InputSearch);
-                return View(produtos);
+                if (area != null)
+                {
+                    ViewBag.Categoria = area;
+                    model.ListTipo = _produtoService.ListarTipo(area);
+                    model.ListProduto = _produtoService.Pesquisar(area);
+                    return View(model);
+                }
+                if (InputSearch != null)
+                {
+                    ViewBag.Pesquisa = InputSearch;
+                    model.ListTipo = _produtoService.ListarTipo(InputSearch);
+                    if (model.ListTipo != null)
+                    {
+                        ViewBag.Categoria = InputSearch;
+                        ViewBag.Pesquisa = "";
+                    }
+                    model.ListProduto = _produtoService.Pesquisar(InputSearch);
+                    return View(model);
+                }
+                if(tipo != null)
+                {
+                    ViewBag.Categoria = _produtoService.Categoria(tipo);
+                    model.ListTipo = _produtoService.ListarTipo(ViewBag.Categoria);
+                    model.ListProduto = _produtoService.Pesquisar(tipo);
+                    return View(model);
+                }
+                else
+                {
+                    model.ListProduto = _produtoService.Listar();
+                    return View(model);
+                }
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
         public IActionResult List()
         {
-            try
-            {
-                var produtos = _produtoService.Listar();
-                return View(produtos);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return null;
         }
 
         public IActionResult Create()
@@ -68,7 +91,7 @@ namespace kuarasy.Controllers
             {
                 throw;
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
         private string UploadFile(Produto pd)
         {

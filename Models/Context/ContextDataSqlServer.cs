@@ -90,17 +90,10 @@ namespace kuarasy.Models.Contexts
                CadastrarTamanho(produto);
 
                 //BUSCANDO ULTIMO REGRISTRO DE TAMANHO NO BANCO PARA INSERIR NO PRODUTO
-                var dataset = new DataSet();
-                var adapter = new SqlDataAdapter(command2);
-                adapter.Fill(dataset);
 
-                var rows = dataset.Tables[0].Rows;
-                foreach (DataRow item in rows)
-                {
-                    var colunas = item.ItemArray;
-                    var id_tamanho = Convert.ToInt32((colunas[0]));
-                    command.Parameters.Add("@id_tamanho", SqlDbType.Int).Value = id_tamanho;
-                }
+                int id_tamanho = (Int32)command2.ExecuteScalar();
+                command.Parameters.Add("@id_tamanho", SqlDbType.Int).Value = id_tamanho;
+                
 
                 //SALVANDO PRODUTO
                command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
@@ -112,8 +105,6 @@ namespace kuarasy.Models.Contexts
                command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
                
                 command.ExecuteNonQuery();
-                adapter = null;
-                dataset = null;
 
                 CadastrarOrigemProduto(produto);
 
@@ -321,6 +312,7 @@ namespace kuarasy.Models.Contexts
                         Peso = peso,
                         Nome_tipo = nome_tipo,
                         Imagem = imagem
+
                     };
                     produtos.Add(produto);
                 }
@@ -393,7 +385,100 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-        
+
+        public List<Tipo> ListarTipoDaCategoria(string area)
+        {
+            var tipos = new List<Tipo>();
+            try
+            {
+                _connection.Open();
+
+                var query = SqlManager.GetSql(TSql.LISTAR_TIPO);
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.Add("@area", SqlDbType.VarChar).Value = area;
+                var dataset = new DataSet();
+
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+
+
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+
+                    var contagem_tipo = ContagemTipo(Convert.ToInt32(colunas[0]));
+                    var nome = colunas[1].ToString();
+                    var nome_categoria = colunas[2].ToString();
+
+                    var tipo = new Tipo()
+                    {
+                        Nome_tipo = nome,
+                        Nome_categoria = nome_categoria,
+                        Contagem_tipo = contagem_tipo
+                    };
+                    tipos.Add(tipo);
+                }
+
+                adapter = null;
+                dataset = null;
+                return tipos;
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
+
+        public int ContagemTipo(int id_tipo)
+        {
+            var query = SqlManager.GetSql(TSql.CONTAGEM_TIPO);
+
+            var command = new SqlCommand(query, _connection);
+
+            command.Parameters.Add("@id_tipo", SqlDbType.VarChar).Value = id_tipo;
+ 
+            int numero = (Int32)command.ExecuteScalar();
+            
+            return numero;
+
+        }
+
+        public string BuscarCategoria(string tipo)
+        {
+            try
+            {
+                _connection.Open();
+                var query = SqlManager.GetSql(TSql.BUSCAR_CATEGORIA);
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.Add("@tipo", SqlDbType.VarChar).Value = tipo;
+
+                string categoria = (command.ExecuteScalar()).ToString();
+
+                return categoria;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
     }
 
 }

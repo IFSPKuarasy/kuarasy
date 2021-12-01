@@ -12,6 +12,8 @@ namespace kuarasy.Models.Contracts.Context
 		List<Produto> PesquisarProduto(string inputSearch);
 		void AtualizarProduto(Produto produto);
 		void ExcluirProduto(int id);
+		List<Tipo> ListarTipoDaCategoria(string area);
+		string BuscarCategoria(string tipo);
 	}
 
 }

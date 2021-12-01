@@ -23,6 +23,7 @@ namespace kuarasy.Models.Entidades{
         public float Comprimento { get; set; }
         public string InputSearch { get; set; }
         public int Id_origem { get; set; }
+        public string Nome_origem { get; set; }
         public IFormFile ProfileImage { get; set; }
 
         public Produto()

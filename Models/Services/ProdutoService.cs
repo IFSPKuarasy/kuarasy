@@ -91,5 +91,30 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
+        public List<Tipo> ListarTipo(string area)
+        {
+            try
+            {
+                var tipos = _produtoRepository.ListarTipo(area);
+                return tipos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public string Categoria(string tipo)
+        {
+            try
+            {
+                var categoria = _produtoRepository.Categoria(tipo);
+                return categoria;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
 }

@@ -14,6 +14,9 @@ namespace kuarasy.Models.Enums
         ULTIMO_REGRISTO_TAMANHO,
         PESQUISAR,
         EXCLUIR_ORIGEM_PRODUTO,
+        LISTAR_TIPO,
+        CONTAGEM_TIPO,
+        BUSCAR_CATEGORIA,
         //INSERIR ORIGEM
         CADASTRAR_ORIGEM_PRODUTO,
         ULTIMO_REGRISTO_PRODUTO,

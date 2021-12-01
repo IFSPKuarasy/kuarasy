@@ -38,6 +38,15 @@ namespace kuarasy.Models.Repositories
                     "inner join tipo tp on p.id_tipo = tp.id_tipo " +
                     "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%'";
                     break;
+                case TSql.LISTAR_TIPO:
+                    sql = "select tp.id_tipo, tp.nome, ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria where ct.nome = @area";
+                    break;
+                case TSql.CONTAGEM_TIPO:
+                    sql = "select count(id_produto) from produto where id_tipo = @id_tipo";
+                    break;
+                case TSql.BUSCAR_CATEGORIA:
+                    sql = "select ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria where tp.nome = @tipo";
+                    break;
                 case TSql.ULTIMO_REGRISTO_PRODUTO:
                     sql = "SELECT (id_produto) FROM produto WHERE id_produto = (SELECT max(id_produto) FROM produto)";
                     break;
