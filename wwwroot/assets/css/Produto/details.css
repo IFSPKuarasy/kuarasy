@@ -1,7 +1,7 @@
 /* Base */
 figcaption{
-    font-size: 0.8rem!important;
-    padding: 1.5rem!important;
+    padding: 1rem 2rem!important;
+    max-width: 28rem!important;
 }
 
 h2{
@@ -10,13 +10,30 @@ h2{
 
 img{
     object-fit: contain!important;
-    max-width: 24rem;
-    max-height: 24rem;
+    max-width: 26rem!important;
+    max-height: 26rem!important;
 }
 
-.row>*{
-    padding-right: 0!important;
-    padding-left: 0!important;
+figure{
+    display: flex!important;
+    flex-direction: column;
+    align-items: center!important;
+    justify-content: center!important;
+}
+
+.figure img{
+    background-color: var(--white);
+}
+
+#info .nav-link,
+#history h3{
+  color: var(--red)!important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+#info .nav-link:hover,
+#history h3:hover{
+  color: var(--red-medium)!important;
 }
 
 .border{
@@ -29,7 +46,16 @@ img{
     font-size: 2rem!important;
 }
 
-#preco{
-    margin-left: 1rem;
-    font-size: 1.3rem;
+#detail a{
+    font-size: 1.5rem!important;
+}
+
+#detail .buy>*{
+    padding-right: 1rem!important;
+    padding-left: 1rem!important;
+}
+
+#description .text,
+#history .text{
+    text-align: justify!important;
 }

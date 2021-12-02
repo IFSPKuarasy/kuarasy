@@ -1,48 +1,95 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/assets/css/Produto/details.css" />
-@model kuarasy.Models.Entidades.Produto
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    string nome = Model.Nome;
+    string nome = Model.Produto.Nome;
     ViewData["Title"] = nome;
+    
 }
 
 <main role="main" class="flex-shrink-0" >
     <div class="container my-5">
         <section>
-
             <div class="row">
-
-                <div class="col"> 
+                <div class="col" id="image"> 
                     <figure class="figure">
-                        <img src="~/assets/img/produtos/dancarino.png" class="figure-img img-fluid rounded-3 w-100 h-100" alt="Imagem do produto">
-                        <figcaption class="figure-caption text-center ">Nossos produtos são artesanais. Sendo assim, pequenas alterações nas cores, desenhos, tamanhos, pesos e formatos das peças podem ocorrer</figcaption>
+                        <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid border rounded-3 w-100 h-100" alt="Imagem do produto">
+                        <figcaption class="figure-caption text-center">Nossos produtos são artesanais. Sendo assim, pequenas alterações nas cores, desenhos, tamanhos, pesos e formatos das peças podem ocorrer</figcaption>
                     </figure>
                 </div>
 
-                <div class="col my-5" id="detail">
+                <div class="col my-5 mx-3" id="detail">
                     <h2 class="fw-bolder">
-                        @Html.DisplayFor(model => model.Nome) 
+                        @Html.DisplayFor(model => model.Produto.Nome) 
                     </h2> 
-                    <div class="row mt-5 mx-4">
-                        <div class="row align-items-center border rounded-3 py-3">
-                             <div class="col col-sm-4" id="preco">
-                                R$ @Html.DisplayFor(model => model.Preco) 
-                            </div>
-                            <div class="col col-sm-4" id="vendedor"> 
-                                de Rogério Gonzalez
-                            </div>
-                            <div class="col col-sm-3"> 
-                                <i class="icon-user"></i>
-                            </div>
+                    <div class="row">
+                        <p class="col col-sm-auto fs-6 font-monospace"> CÓD:@Model.Produto.Id |</p>
+                        <p class="col col-sm-auto fs-6 font-monospace align ">Quantidade em estoque:@Model.Produto.Quantidade </p>
+                    </div>
+                    <div class="row mt-3 buy">
+                        <div class="row align-items-center">
+                            <p>por: </p>
+                            <div class="d-flex align-items-end">
+                                <h4 class="fw-bold fs-2 me-3" id="preco">
+                                    R$ @Html.DisplayFor(model => model.Produto.Preco) 
+                                </h4>
+                                <p> à vista</p>
+                            </div> 
+                                <p class="fs-6 fst-italic" style="color: var(--brown-medium);"> Compra disponível somente por cartão de crédito.</p>
                         </div>
                        
-                         <div class="row">
-                            <a class="btn bg-yellow text-light mb-3 rounded-3" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                         <div class="row mt-3">
+                            <a class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" asp-area="" asp-controller="" asp-action="">Comprar</a>
                         </div>
                     </div>
+                </div>
 
-                   
+            </div>
+        </section>
 
+        <section class= "my-5" id="info">
+            <div class="row">
+                <nav class="nav nav-pills flex-column flex-sm-row">
+                <a class="flex-fill nav-link ps-0" aria-current="page" href="#">
+                    <h3 class="fw-bolder text-decoration-underline">Informações</h3>
+                </a>
+                @* <a class="nav-link disabled" aria-current="page" href="#">
+                    <h3 class="fw-bolder">Avalie o produto</h3>
+                </a> *@
+                </nav>
+                 <div class="row ps-0 mt-4">
+                     <div class="col">
+                        <h4 class="fw-bolder">Ficha técnica</h4>
+                        <p class="text-uppercase">Origem: @Model.Origem.Pais </p> 
+                        <p class="text-uppercase">Continente: @Model.Origem.Continente </p>   
+                        <p class="text-uppercase">Tamanho &#40 LxPxA cm &#41: @Model.Produto.Altura x @Model.Produto.Largura x @Model.Produto.Comprimento </p> 
+                        <p class="text-uppercase">Peso &#40 kg &#41: @Model.Produto.Peso  </p> 
+                     </div>
+                    <div class="col" id="description">
+                        <h4 class="fw-bolder">Descrição</h4>
+                        <div class="text mt-2">
+                            @Html.DisplayFor(model => model.Produto.Descricao)
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="row ps-0 mt-5">
+                     <div class="col" id="history">
+                        <h3 class="fw-bolder text-decoration-underline">História do Produto</h3>
+                        <div class="text mt-2">
+                            @Html.DisplayFor(model => model.Produto.Descricao)
+                        </div>
+                    </div>
+                    <div class="col" id="image">
+                        <figure class="figure">
+                        <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                    </figure>
+                    </div>
+                </div>
+
+                 <div class="d-flex align-items-center justify-content-center my-4">
+                    @Html.ActionLink("Editar", "Edit", new { id = Model.Produto.Id }) |
+                    <a asp-action="List">Voltar para a lista</a>
                 </div>
 
             </div>
@@ -57,49 +104,4 @@
 
 
 
-<div>
-    <h4>ProdutoDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Quantidade)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Peso)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Peso)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @nome
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="List">Back to List</a>
-</div>
+

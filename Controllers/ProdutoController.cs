@@ -17,11 +17,13 @@ namespace kuarasy.Controllers
     public class ProdutoController : Controller
     {
         private readonly IProdutoService _produtoService;
+        private readonly IOrigemService _origemService;
         private readonly IWebHostEnvironment WebHostEnvironment;
 
-        public ProdutoController(IProdutoService produtoService, IWebHostEnvironment webHostEnvironment)
+        public ProdutoController(IProdutoService produtoService, IOrigemService origemService, IWebHostEnvironment webHostEnvironment)
         {
             _produtoService = produtoService;
+            _origemService = origemService;
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
@@ -140,13 +142,17 @@ namespace kuarasy.Controllers
         }
         public IActionResult Details(int? id)
         {
+           var model = new HomeIndexViewModel();
             if (id == null)
                 return NotFound();
 
-            var produto = _produtoService.PesquisarPorId(Convert.ToInt32(id));
-            if (produto == null)
+            model.Produto = _produtoService.PesquisarPorId(Convert.ToInt32(id));
+            if (model.Produto == null)
                 return NotFound();
-            return View(produto);
+
+            model.Origem = _origemService.Pesquisar(Convert.ToInt32(id));
+
+            return View(model);
         }
         public IActionResult Delete(int? id)
         {

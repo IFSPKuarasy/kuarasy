@@ -224,6 +224,7 @@ namespace kuarasy.Models.Contexts
         {
             try
             {
+                 _connection.Open();
                 Produto produto= null;
                 var query = SqlManager.GetSql(TSql.PESQUISAR_PRODUTO);
 
@@ -246,8 +247,16 @@ namespace kuarasy.Models.Contexts
                     var descricao = colunas[3].ToString();
                     var quantidade = Convert.ToInt32((colunas[4]));
                     var peso = Convert.ToSingle(colunas[5]);
+                    var imagem = colunas[6].ToString();
+                    var id_tamanho = Convert.ToInt32(colunas[7]);
+                    var altura = Convert.ToSingle(colunas[8]);
+                    var largura = Convert.ToSingle(colunas[9]);
+                    var comprimento = Convert.ToSingle(colunas[10]);
       
-                    produto = new Produto {Id = codigo, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso};
+                    produto = new Produto {Id = codigo, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Imagem = imagem, Id_tamanho = id_tamanho,
+                        Altura = altura,
+                        Largura = largura,
+                        Comprimento = comprimento};
                 }
 
                 adapter = null;
@@ -312,7 +321,6 @@ namespace kuarasy.Models.Contexts
                         Peso = peso,
                         Nome_tipo = nome_tipo,
                         Imagem = imagem
-
                     };
                     produtos.Add(produto);
                 }
@@ -468,6 +476,55 @@ namespace kuarasy.Models.Contexts
                 string categoria = (command.ExecuteScalar()).ToString();
 
                 return categoria;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
+        public Origem PesquisarOrigem(int id)
+        {
+            try
+            {
+                Origem origem = null;
+                _connection.Open();
+
+                var query = SqlManager.GetSql(TSql.PESQUISAR_ORIGEM);
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.Add("@id", SqlDbType.VarChar).Value = id;
+                var dataset = new DataSet();
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+
+                    var id_origem = Convert.ToInt32((colunas[0]));
+                    var pais = colunas[1].ToString();
+                    var continente = colunas[2].ToString();
+
+                    origem = new Origem
+                    {
+                        Id_origem = id_origem,
+                        Pais = pais,
+                        Continente = continente,
+                    };
+                }
+
+                adapter = null;
+                dataset = null;
+                return origem;
+
             }
             catch (Exception)
             {

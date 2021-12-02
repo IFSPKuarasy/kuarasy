@@ -21,6 +21,10 @@ namespace kuarasy.Models.Repositories
         {
             return _contextData.ListarOrigem();
         }
+        public Origem Pesquisar(int id)
+        {
+            return _contextData.PesquisarOrigem(id);
+        }
 
     }
 }

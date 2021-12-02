@@ -15,7 +15,7 @@ namespace kuarasy.Models.Repositories
                     sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p inner join tipo tp on p.id_tipo = tp.id_tipo";
                     break;
                 case TSql.PESQUISAR_PRODUTO:
-                    sql = "select * from produto where id_produto = @id";
+                    sql = "select id_produto, nome, preco, descricao, quantidade, peso, imagem, p.id_tamanho, tm.altura, tm.largura, tm.comprimento from produto p inner join tamanho tm on p.id_tamanho = tm.id_tamanho where id_produto = @id";
                     break;
                 case TSql.ATUALIZAR_PRODUTO:
                     sql = "update produto set nome = @nome, preco = @preco, descricao = @descricao, quantidade = @quantidade, peso = @peso from produto where id_produto = @id";
@@ -58,6 +58,9 @@ namespace kuarasy.Models.Repositories
                     break;
                 case TSql.LISTAR_ORIGEM:
                     sql = "select * from origem";
+                    break;
+                case TSql.PESQUISAR_ORIGEM:
+                    sql = "select op.id_origem, og.pais, og.continente from origem_produto op inner join origem og on op.id_origem = og.id_origem WHERE id_produto = @id";
                     break;
             }
             return sql;
