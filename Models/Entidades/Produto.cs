@@ -17,6 +17,7 @@ namespace kuarasy.Models.Entidades{
         public int Id_tipo { get; set; }
         public string Nome_tipo { get; set; }
         public string Imagem { get; set; }
+        public string Historia { get; set; }
         public int Id_tamanho { get; set; }
         public float Altura { get; set; }
         public float Largura { get; set; }

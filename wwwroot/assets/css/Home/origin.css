@@ -2,6 +2,9 @@
 :root {
 	--yellow: #e28d26;
     --yellow-light: #f3b271;
+    --red-medium: #b84132;
+    --black: #000;
+    --background-color: #fafafa;
 }
 
 .banner{
@@ -14,20 +17,88 @@
     max-width: 340px;
 }
 
-.accordion-button h2{
+.row.mb-0{
+    align-items: center;
+}
+
+.accordion-item{
+    margin: 5rem 0;
+}
+
+.accordion-button h1{
     color:  var(--yellow)!important;
 }
 
-.accordion-button:not(.collapsed)::before{
-    background-image: url("/wwwroot/assets/img/origin/sortdown.png");
+.accordion-button::after {
+    content: none;
 }
 
-.accordion-button::before {
+.accordion-button:not(.collapsed){
+    color: var(--yellow)!important;
+    background-color: #fff;
+}
+
+.accordion-button .icon-sort-down {
+    color: var(--yellow)!important;
+    font-size: 3.5rem;
     flex-shrink: 0;
-    width: 4rem;
-    height: 4rem;
-    margin-left: 0;
     margin-right: 2rem;
-    background-image: url("/wwwroot/assets/img/origin/sortdown.png");
-    background-size: 4rem;
-  }
+    transition: transform .35s ease-in-out;
+}
+
+.accordion-button:not(.collapsed) .icon-sort-down{
+    transform: rotate(-180deg);
+}
+
+.accordion-body {
+    padding: 4rem 0 0;
+    background: var(--background-color);
+}
+
+.information{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history p{
+    text-align: justify;
+    margin-top: 1rem;
+    width: 82vh;
+}
+
+.accordion-body .information h2{
+    color:  var(--black)!important;
+}
+
+.accordion-body h2{
+    color:  var(--red-medium)!important;
+}
+
+
+@media (max-width: 991.98px) {
+    .information{
+        flex-direction: column;
+    }
+    .history p{
+        margin-bottom: 2rem;
+    }
+ }
+
+@media (min-width: 992px) { 
+    .history p{
+        width: 66vh;
+    }
+}
+
+@media (min-width: 1200px) { 
+    .history p{
+        width: 70vh;
+    }
+}
+
+@media (min-width: 1400px) { .
+    .history p{
+        width: 70vh;
+    }
+ }

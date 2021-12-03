@@ -123,7 +123,7 @@ namespace kuarasy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, ")] Produto produto)
+        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, Historia")] Produto produto)
         {
             int? id = produto.Id;
             if (id == null)
@@ -132,7 +132,7 @@ namespace kuarasy.Controllers
             try
             {
                 _produtoService.Atualizar(produto);
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {

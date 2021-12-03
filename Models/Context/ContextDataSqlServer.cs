@@ -103,6 +103,7 @@ namespace kuarasy.Models.Contexts
                command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
                command.Parameters.Add("@id_tipo", SqlDbType.Int).Value = produto.Id_tipo;
                command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
+               command.Parameters.Add("@historia", SqlDbType.VarChar).Value = produto.Historia;
                
                 command.ExecuteNonQuery();
 
@@ -167,6 +168,7 @@ namespace kuarasy.Models.Contexts
                 command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
                 command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
                 command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
+                command.Parameters.Add("@historia", SqlDbType.VarChar).Value = produto.Historia;
 
                 command.ExecuteNonQuery();
 
@@ -252,11 +254,13 @@ namespace kuarasy.Models.Contexts
                     var altura = Convert.ToSingle(colunas[8]);
                     var largura = Convert.ToSingle(colunas[9]);
                     var comprimento = Convert.ToSingle(colunas[10]);
+                    var historia = colunas[11].ToString();
       
                     produto = new Produto {Id = codigo, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Imagem = imagem, Id_tamanho = id_tamanho,
                         Altura = altura,
                         Largura = largura,
-                        Comprimento = comprimento};
+                        Comprimento = comprimento,
+                        Historia = historia};
                 }
 
                 adapter = null;

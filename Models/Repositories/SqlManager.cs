@@ -15,17 +15,17 @@ namespace kuarasy.Models.Repositories
                     sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p inner join tipo tp on p.id_tipo = tp.id_tipo";
                     break;
                 case TSql.PESQUISAR_PRODUTO:
-                    sql = "select id_produto, nome, preco, descricao, quantidade, peso, imagem, p.id_tamanho, tm.altura, tm.largura, tm.comprimento from produto p inner join tamanho tm on p.id_tamanho = tm.id_tamanho where id_produto = @id";
+                    sql = "select id_produto, nome, preco, descricao, quantidade, peso, imagem, p.id_tamanho, tm.altura, tm.largura, tm.comprimento, p.historia from produto p inner join tamanho tm on p.id_tamanho = tm.id_tamanho where id_produto = @id";
                     break;
                 case TSql.ATUALIZAR_PRODUTO:
-                    sql = "update produto set nome = @nome, preco = @preco, descricao = @descricao, quantidade = @quantidade, peso = @peso from produto where id_produto = @id";
+                    sql = "update produto set nome = @nome, preco = @preco, descricao = @descricao, quantidade = @quantidade, peso = @peso, historia = @historia from produto where id_produto = @id";
                     break;
                 case TSql.EXCLUIR_PRODUTO:
                     sql = "delete from produto where id_produto = @id";
                     break;
                 case TSql.CADASTRAR_PRODUTO:
-                    sql = "insert into produto (nome, preco, descricao, quantidade, peso, id_tipo, imagem, id_tamanho) " +
-                        "values (@nome, @preco, @descricao, @quantidade, @peso, @id_tipo, @imagem, @id_tamanho)";
+                    sql = "insert into produto (nome, preco, descricao, quantidade, peso, id_tipo, imagem, id_tamanho, historia) " +
+                        "values (@nome, @preco, @descricao, @quantidade, @peso, @id_tipo, @imagem, @id_tamanho, @historia)";
                     break;
                 case TSql.CADASTRAR_TAMANHO:
                     sql = "insert into tamanho (altura, largura, comprimento) values (@altura, @largura, @comprimento)";

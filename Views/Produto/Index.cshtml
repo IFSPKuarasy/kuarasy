@@ -1,69 +1,115 @@
-﻿@model kuarasy.Models.Entidades.HomeIndexViewModel
+﻿<link rel="stylesheet" type="text/css" href="~/assets/css/Produto/index.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Produtos";
 }
 
-<div class="container">
-    <h1>@ViewBag.Pesquisa</h1>
 
-    @if (ViewBag.Categoria != null)
-    {
-        <h1>@ViewBag.Categoria</h1> 
-        <form id="Tipos" method="get" asp-action="Index">
-            @foreach (var item in Model.ListTipo)
+<div class="container my-5">
+
+    <div class="row">
+        <aside class="col col-md-3">
+            @if (ViewBag.Categoria != null)
             {
-                <input type="checkbox" id="tipo" name=Tipo value=@item.Nome_tipo onchange="document.getElementById('Tipos').submit()">
-                <label class="content-text" for=@item.Nome_tipo> @item.Nome_tipo  (@item.Contagem_tipo)</label><br>
+            <h4 class="text-capitalize fw-bold">@ViewBag.Categoria</h4> 
+            <form class="mx-3 my-3" id="Tipos" method="get" asp-action="Index">
+                @foreach (var item in Model.ListTipo)
+                {   
+                    <div class="my-2">
+                        <input type="checkbox" id="tipo" name=Tipo value=@item.Nome_tipo onchange="document.getElementById('Tipos').submit()">
+                        <label class="content-text" for=@item.Nome_tipo> @item.Nome_tipo  (@item.Contagem_tipo)</label><br>
+                    </div>
+                }
+            </form>
             }
-        </form>
-    }
+        </aside>
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Produto.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Produto.Nome)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Produto.Preco)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Produto.Imagem)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListProduto)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Preco)
-                    </td>
-                    <td>
-                        <img style="height:250px; width: 250px;" src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)">
-                    </td>
+    
+    
+        <main role="main" class="col flex-shrink-0" >
+            <div class="d-flex justify-content-end align-items-center mb-3 pe-3">
+                <a class="text-success" asp-action="Create">Novo produto + </a>
+            </div>
+            
+            <section class="row g-2 d-flex justify-content-between" id="productsList">
+                @foreach (var item in Model.ListProduto){
+                    <div class="card my-3 text-center border-0" style="width: 15rem;">
+                        @* Imagem do Produto *@
+                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
+                        <div class="card-body">
+                            @* Nome do Produto*@
+                            
+                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
+                            
+                            @* Preço *@
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                @{
+                                    string preco = "";
+                                    float x = item.Preco;
+                                    if (x % 1 == 0)
+                                        preco = "R$" + x.ToString() + ",00";
+                                    else
+                                        preco = "R$" + x.ToString();
+                                }   
+                                @preco
+                                
+                            </h4>
+                            <div class="row">
+                                <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</a>
+                                <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Deletar", "Delete", new { id = item.Id })</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </main>
 
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    </div>
 </div>
+
+@* <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Produto.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Produto.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Produto.Preco)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Produto.Imagem)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListProduto)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Preco)
+                            </td>
+                            <td>
+                                <img style="height:250px; width: 250px;" src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)">
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table> *@

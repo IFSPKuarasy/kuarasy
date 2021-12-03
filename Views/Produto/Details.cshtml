@@ -9,29 +9,46 @@
 
 <main role="main" class="flex-shrink-0" >
     <div class="container my-5">
-        <section>
-            <div class="row">
+        @* Produto *@
+        <section id="product">
+            <div class="row flex-column flex-md-row">
                 <div class="col" id="image"> 
                     <figure class="figure">
-                        <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid border rounded-3 w-100 h-100" alt="Imagem do produto">
+                        @* Imagem do produto *@
+                        <div class="img-hover-zoom">
+                            <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid border rounded-3 w-100 h-100" alt="Imagem do produto">
+                        </div>
                         <figcaption class="figure-caption text-center">Nossos produtos são artesanais. Sendo assim, pequenas alterações nas cores, desenhos, tamanhos, pesos e formatos das peças podem ocorrer</figcaption>
                     </figure>
                 </div>
-
+                
+                @* Informações básicas *@
                 <div class="col my-5 mx-3" id="detail">
+                    @* Nome do produto*@
                     <h2 class="fw-bolder">
                         @Html.DisplayFor(model => model.Produto.Nome) 
                     </h2> 
-                    <div class="row">
-                        <p class="col col-sm-auto fs-6 font-monospace"> CÓD:@Model.Produto.Id |</p>
-                        <p class="col col-sm-auto fs-6 font-monospace align ">Quantidade em estoque:@Model.Produto.Quantidade </p>
+                    <div class="row row-cols-auto">
+                        @* Código do produto *@
+                        <p class="col fs-6 font-monospace"> CÓD:@Model.Produto.Id </p>
+                        @* Estoque do produto *@
+                        <p class="col fs-6 font-monospace align ">Quantidade em estoque:@Model.Produto.Quantidade </p>
                     </div>
                     <div class="row mt-3 buy">
                         <div class="row align-items-center">
                             <p>por: </p>
-                            <div class="d-flex align-items-end">
+                            <div class="d-flex">
+                                @* Preço *@
                                 <h4 class="fw-bold fs-2 me-3" id="preco">
-                                    R$ @Html.DisplayFor(model => model.Produto.Preco) 
+                                @{
+                                    string preco = "";
+                                    float x = Model.Produto.Preco;
+                                    if (x % 1 == 0)
+                                        preco = "R$" + x.ToString() + ",00";
+                                    else
+                                        preco = "R$" + x.ToString();
+                                }@preco
+
                                 </h4>
                                 <p> à vista</p>
                             </div> 
@@ -39,6 +56,7 @@
                         </div>
                        
                          <div class="row mt-3">
+                             @* Comprar - adicionar ao carrinho *@
                             <a class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" asp-area="" asp-controller="" asp-action="">Comprar</a>
                         </div>
                     </div>
@@ -47,56 +65,64 @@
             </div>
         </section>
 
+        @* Informações *@
         <section class= "my-5" id="info">
-            <div class="row">
                 <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-fill nav-link ps-0" aria-current="page" href="#">
+                <a class="flex-fill nav-link ps-sm-0" aria-current="page" href="#">
                     <h3 class="fw-bolder text-decoration-underline">Informações</h3>
                 </a>
                 @* <a class="nav-link disabled" aria-current="page" href="#">
                     <h3 class="fw-bolder">Avalie o produto</h3>
                 </a> *@
                 </nav>
-                 <div class="row ps-0 mt-4">
-                     <div class="col">
+
+                 <div class="row flex-column flex-md-row mt-4" id="ficha">
+                     <div class="col mx-3 mx-md-0">
                         <h4 class="fw-bolder">Ficha técnica</h4>
                         <p class="text-uppercase">Origem: @Model.Origem.Pais </p> 
                         <p class="text-uppercase">Continente: @Model.Origem.Continente </p>   
                         <p class="text-uppercase">Tamanho &#40 LxPxA cm &#41: @Model.Produto.Altura x @Model.Produto.Largura x @Model.Produto.Comprimento </p> 
                         <p class="text-uppercase">Peso &#40 kg &#41: @Model.Produto.Peso  </p> 
                      </div>
-                    <div class="col" id="description">
-                        <h4 class="fw-bolder">Descrição</h4>
-                        <div class="text mt-2">
+
+                    <div class="col mt-4 mt-md-0" id="description">
+                        <h4 class="fw-bolder ms-3 ms-md-0">Descrição</h4>
+                        <div class="text mt-2 mx-3 mx-md-0">
                             @Html.DisplayFor(model => model.Produto.Descricao)
                         </div>
                     </div>
+
                  </div>
 
-                <div class="row ps-0 mt-5">
-                     <div class="col" id="history">
-                        <h3 class="fw-bolder text-decoration-underline">História do Produto</h3>
-                        <div class="text mt-2">
-                            @Html.DisplayFor(model => model.Produto.Descricao)
+                @* História *@
+                <div class="row flex-column flex-md-row mt-5" id="history">
+                     <div class="col">
+                        <h3 class="fw-bolder text-decoration-underline mx-3 mx-md-0">História do Produto</h3>
+                        <div class="text mt-2 mx-3 mx-md-0 text-more">
+                            @Html.DisplayFor(model => model.Produto.Historia)
                         </div>
+                        
                     </div>
-                    <div class="col" id="image">
-                        <figure class="figure">
-                        <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
-                    </figure>
+                    @* Imagem da origem do produto *@
+                    <div class="col mt-4 mt-md-0" id="image">
+                        <figure class="figure mx-3 mx-md-0">
+                            <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                        </figure>
                     </div>
                 </div>
 
                  <div class="d-flex align-items-center justify-content-center my-4">
-                    @Html.ActionLink("Editar", "Edit", new { id = Model.Produto.Id }) |
-                    <a asp-action="List">Voltar para a lista</a>
+                     @Html.ActionLink("Editar", "Edit", new { id = Model.Produto.Id }) | 
+                    
+                    <a class="nav-link" asp-action="Index">Voltar para a lista</a>
                 </div>
 
-            </div>
 
         </section>
     </div>
 </main>
+
+<script type="text/javascript" language="javascript" src="~/assets/js/Produto/details.js"></script>
 
 
 
