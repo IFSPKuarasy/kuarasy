@@ -10,5 +10,6 @@ namespace kuarasy.Models.Entidades{
         public string Pais { get; set; }
         public string Continente { get; set; }
         public string Descricao_origem { get; set; }
+        public string Imagem_origem { get; set; }  
 	}
 }

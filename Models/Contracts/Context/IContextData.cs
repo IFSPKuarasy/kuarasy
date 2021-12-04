@@ -14,7 +14,8 @@ namespace kuarasy.Models.Contracts.Context
 		void ExcluirProduto(int id);
 		List<Tipo> ListarTipoDaCategoria(string area);
 		string BuscarCategoria(string tipo);
-		Origem PesquisarOrigem(int id);
+		Origem PesquisarOrigemProduto(int id);
+		List<Produto> ListarProdutosOrigem(string continente);
 	}
 
 }

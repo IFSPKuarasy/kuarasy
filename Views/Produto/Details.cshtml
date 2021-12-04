@@ -2,6 +2,7 @@
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
+    decimal Novo_preco = 0;
     string nome = Model.Produto.Nome;
     ViewData["Title"] = nome;
     
@@ -36,22 +37,23 @@
                     </div>
                     <div class="row mt-3 buy">
                         <div class="row align-items-center">
+                        @if(Model.Produto.Desconto != 0){
+                            Novo_preco = Model.Produto.Preco - (Model.Produto.Preco * Model.Produto.Desconto);
+                            <p>De: </p>
+                            <p class="text-decoration-line-through text-secondary">@Model.Produto.Preco</p>
+                            }
                             <p>por: </p>
                             <div class="d-flex">
                                 @* Preço *@
+                                
                                 <h4 class="fw-bold fs-2 me-3" id="preco">
-                                @{
-                                    string preco = "";
-                                    float x = Model.Produto.Preco;
-                                    if (x % 1 == 0)
-                                        preco = "R$" + x.ToString() + ",00";
-                                    else
-                                        preco = "R$" + x.ToString();
-                                }@preco
+                                R$@Novo_preco.ToString("F")
 
                                 </h4>
+                               
                                 <p> à vista</p>
                             </div> 
+                        
                                 <p class="fs-6 fst-italic" style="color: var(--brown-medium);"> Compra disponível somente por cartão de crédito.</p>
                         </div>
                        
@@ -106,7 +108,7 @@
                     @* Imagem da origem do produto *@
                     <div class="col mt-4 mt-md-0" id="image">
                         <figure class="figure mx-3 mx-md-0">
-                            <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                            <img src="/assets/img/origin/comunidades/@Model.Origem.Imagem_origem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
                         </figure>
                     </div>
                 </div>

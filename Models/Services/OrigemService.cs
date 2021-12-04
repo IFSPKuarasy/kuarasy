@@ -40,6 +40,18 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
+        public List<Produto> ListarProdutos(string continente)
+        {
+            try
+            {
+                var produtos = _origemRepository.ListarProdutos(continente);
+                return produtos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         
     }
 }

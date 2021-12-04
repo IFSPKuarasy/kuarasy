@@ -22,6 +22,7 @@ namespace kuarasy.Models.Enums
         ULTIMO_REGRISTO_PRODUTO,
         //ORIGEM
         LISTAR_ORIGEM,
-        PESQUISAR_ORIGEM
+        PESQUISAR_ORIGEM,
+        LISTAR_PRODUTOS_ORIGEM
     }
 }

@@ -54,6 +54,11 @@ li{
 }
 
 /* Backgrounds */
+.bg-white{
+	--bs-bg-opacity: 1;
+    background-color: var(--white)!important;
+}
+
 .bg-red {
 	background: var(--red);
 }
@@ -117,6 +122,10 @@ header form .btn{
 }
 
 /* Footer */
+footer .footer{
+	background-color: var(--white)!important;
+}
+
 footer .nav-item .nav-link{
     color: var(--black)!important;
 }

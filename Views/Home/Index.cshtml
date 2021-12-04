@@ -3,6 +3,7 @@
 
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
+    decimal Novo_preco = 0;
     ViewData["Title"] = "Home";
 }
 
@@ -87,19 +88,21 @@
                             <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
                             
                             @* Preço *@
+                            @if(item.Desconto != 0){
+                                Novo_preco = item.Preco - (item.Preco * item.Desconto);
+                                <p class="text-decoration-line-through text-secondary">@item.Preco</p>
+                                <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                R$@Novo_preco.ToString("F")
+                            </h4>
+                            }
+                            else{
                             <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
                                 <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                @{
-                                    string preco = "";
-                                    float x = item.Preco;
-                                    if (x % 1 == 0)
-                                        preco = "R$" + x.ToString() + ",00";
-                                    else
-                                        preco = "R$" + x.ToString();
-                                }   
-                                @preco
+                                R$@item.Preco
                                 
                             </h4>
+                            }
                         </div>
                     </div>
                     }
@@ -112,21 +115,25 @@
          <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
             <h2 class="fw-bold text-center">Promoções</h2>
             <div class="owl-carousel owl-theme">
-                    <div class="card text-center border-0" style="width: 18rem;">
+                @foreach (var item in Model.ListProduto) {
+                    if(item.Desconto != 0){
+                       Novo_preco = item.Preco - (item.Preco * item.Desconto);
+                     <div class="card text-center border-0" style="width: 18rem;">
                         @* Imagem do Produto *@
-                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4 img-hover-zoom" alt="...">
+                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-hover-zoom" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
-                            <a class="card-text" asp-area="" id="nameLink" >Dançarino Bermandes</a>
-                            <p class="text-decoration-line-through text-secondary">R$3.700,00</p>
+                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
+                            <p class="text-decoration-line-through text-secondary">@item.Preco</p>
                             @* Preço *@
                             <h4 class="fw-bolder d-flex align-items-center justify-content-center">
                                 <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
-                                R$3.250,00
+                                R$@Novo_preco.ToString("F")
                             </h4>
                         </div>
                     </div>
-                    
+                        }
+                    }
             </div>
         </section>
 
@@ -146,7 +153,7 @@
 
                             <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                 @* Título - variavel *@
-                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">África</a></h3>
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="África" asp-controller="Home" asp-action="Origin">África</a></h3>
                             </div>
                         </div>
 
@@ -177,7 +184,7 @@
 
                             <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                 @* Título - variavel *@
-                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="Ásia" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
                             </div>
                         </div>
 
@@ -206,8 +213,9 @@
 
                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                @* Título - variavel *@
-                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="América" asp-controller="Home" asp-action="Origin">América</a></h3>
                            </div>
+
                        </div>
                        @* Lista de comunidades - variavel *@
                    <div class="content-details fadeIn-bottom">
@@ -222,7 +230,6 @@
 
                                }
                         }
-
                    </div>
                    </div>
                 </div>

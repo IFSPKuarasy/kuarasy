@@ -39,11 +39,13 @@ namespace kuarasy.Controllers
             }
         }
 
-        public IActionResult Origin()
+        public IActionResult Origin(string area)
         {
-            // ViewBag.Message = "TESTANDO.";
-
-            return View();
+            var model = new HomeIndexViewModel();
+            ViewBag.Continente = area; 
+            model.ListOrigem = _origemService.Listar();
+            model.ListProduto = _origemService.ListarProdutos(area);
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

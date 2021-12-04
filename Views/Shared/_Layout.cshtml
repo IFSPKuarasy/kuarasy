@@ -48,16 +48,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
 
-                    <ul class="navbar-nav mb-md-0 mx-3 fw-bold">             
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                    <ul class="navbar-nav mb-md-0 mx-3 fw-bold">    
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index"> Produtos</a>
+                        </li>         
                          
                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categorias
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategory">
                                 <li><a class="dropdown-item" asp-area="Vestuários" asp-controller="Produto" asp-action="Index">Vestuários</a></li>
                                 <li><a class="dropdown-item" asp-area="Instrumentos" asp-controller="Produto" asp-action="Index">Instrumentos</a></li>
                                 <li><a class="dropdown-item" asp-area="Decorações" asp-controller="Produto" asp-action="Index">Decorações</a></li>
@@ -66,12 +66,22 @@
                                 <li><a class="dropdown-item" asp-area="Aromaterapia" asp-controller="Produto" asp-action="Index">Aromaterapia</a></li>
                             </ul>
                         </li>
-                         
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index"> Produtos</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownOrigin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Origens
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrigin">
+                                <li><a class="dropdown-item" asp-area="América" asp-controller="Home" asp-action="Origin">América</a></li>
+                                <li><a class="dropdown-item" asp-area="Ásia" asp-controller="Home" asp-action="Origin">Ásia</a></li>
+                                <li><a class="dropdown-item" asp-area="África" asp-controller="Home" asp-action="Origin">África</a></li>
+
+                            </ul>
                         </li>
+                         
+                       
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action=""> Contato</a>
+                            <a class="nav-link text-dark" href="#footer"> Contato</a>
                         </li>
                     </ul>
                       <form asp-controller="Produto" asp-action="index" method="get" class="d-flex flex-fill me-2" id="Pesquisa">
@@ -92,7 +102,7 @@
 
 <!-- End page content -->
 
- <footer class="footer mt-auto pt-3 border-top bg-light" id="footer">
+ <footer class="footer mt-auto pt-3 border-top bg-white" id="footer">
     <div class="container">
       <div class="row footer-align d-flex justify-content-between align-items-center" id="lists">
         @* Figura *@
@@ -111,16 +121,13 @@
                         <strong class="nav-link" asp-controller="" asp-action="">Atendimento</strong>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">FAQ</a>
-                        </li>
-                        <li class="nav-item">
                         <a class="nav-link" href="https://github.com/IFSPKuarasy" target="_blank" >Entrar em contato</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" asp-controller="" asp-action="">Políticas do Kuarasy </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" asp-controller="" asp-action="">Termos de Uso</a>
+                        <a class="nav-link" href="https://github.com/IFSPKuarasy" target="_blank">Quem somos</a>
                         </li>
                     </ul>
                 </div>
@@ -139,9 +146,7 @@
                         <li class="nav-item">
                         <a class="nav-link" asp-controller="" asp-action="">Categorias</a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link" asp-controller="" asp-action="">Quem somos</a>
-                        </li>
+                        
                     </ul>
                 </div>           
             </div>

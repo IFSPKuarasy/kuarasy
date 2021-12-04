@@ -10,5 +10,6 @@ namespace kuarasy.Models.Contracts.Services
     {
         List<Origem> Listar();
         Origem Pesquisar(int id);
+        List<Produto> ListarProdutos(string continente);
     }
 }

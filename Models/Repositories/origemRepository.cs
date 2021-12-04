@@ -23,7 +23,11 @@ namespace kuarasy.Models.Repositories
         }
         public Origem Pesquisar(int id)
         {
-            return _contextData.PesquisarOrigem(id);
+            return _contextData.PesquisarOrigemProduto(id);
+        }
+         public List<Produto> ListarProdutos(string continente)
+        {
+            return _contextData.ListarProdutosOrigem(continente);
         }
 
     }

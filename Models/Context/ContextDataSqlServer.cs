@@ -44,15 +44,16 @@ namespace kuarasy.Models.Contexts
 
                     var id = Convert.ToInt32((colunas[0]));
                     var nome = colunas[1].ToString();
-                    var preco = Convert.ToSingle(colunas[2]);
+                    var preco = Convert.ToDecimal(colunas[2]);
                     var descricao = colunas[3].ToString();
                     var quantidade = Convert.ToInt32((colunas[4]));
                     var peso = Convert.ToSingle(colunas[5]);
                     var nome_tipo = colunas[6].ToString();
                     var imagem = colunas[7].ToString();
+                    var desconto = Convert.ToDecimal(colunas[8]);
 
                     var produto = new Produto {Id = id, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Nome_tipo = nome_tipo,
-                    Imagem = imagem};
+                    Imagem = imagem, Desconto = desconto};
                     produtos.Add(produto);
                 }
 
@@ -97,7 +98,7 @@ namespace kuarasy.Models.Contexts
 
                 //SALVANDO PRODUTO
                command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
-               command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
+               command.Parameters.Add("@preco", SqlDbType.Decimal).Value = produto.Preco;
                command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
                command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
                command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
@@ -151,7 +152,7 @@ namespace kuarasy.Models.Contexts
                command.ExecuteNonQuery();
         }
 
-//FIM DE ETAPAS DE CADASTRAMENTO DE PRODUTO----------
+//ATUALIZAÇÃO DE PRODUTO----------
 
         public void AtualizarProduto(Produto produto)
         {
@@ -162,14 +163,17 @@ namespace kuarasy.Models.Contexts
 
                 var command = new SqlCommand(query, _connection);
 
+                decimal desconto = produto.Desconto / 100;
+                
+
                 command.Parameters.Add("@id", SqlDbType.Int).Value = produto.Id;
                 command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
-                command.Parameters.Add("@preco", SqlDbType.Float).Value = produto.Preco;
+                command.Parameters.Add("@preco", SqlDbType.Decimal).Value = produto.Preco;
                 command.Parameters.Add("@descricao", SqlDbType.VarChar).Value = produto.Descricao;
                 command.Parameters.Add("@quantidade", SqlDbType.Int).Value = produto.Quantidade;
                 command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
                 command.Parameters.Add("@historia", SqlDbType.VarChar).Value = produto.Historia;
-
+                command.Parameters.Add("@desconto", SqlDbType.Decimal).Value = desconto;
                 command.ExecuteNonQuery();
 
 
@@ -218,7 +222,6 @@ namespace kuarasy.Models.Contexts
             command.Parameters.Add("@id_produto", SqlDbType.Int).Value = id;            
             command.ExecuteNonQuery();
         }
-//FIM DE ETAPAS DE EXCLUSÃO DE PRODUTO-----------
 
 
 //PESQUISANDO APENAS UM PRODUTO PELO ID
@@ -245,7 +248,7 @@ namespace kuarasy.Models.Contexts
 
                     var codigo = Convert.ToInt32(colunas[0]);
                     var nome = colunas[1].ToString();
-                    var preco = Convert.ToSingle(colunas[2]);
+                    var preco = Convert.ToDecimal(colunas[2]);
                     var descricao = colunas[3].ToString();
                     var quantidade = Convert.ToInt32((colunas[4]));
                     var peso = Convert.ToSingle(colunas[5]);
@@ -255,12 +258,14 @@ namespace kuarasy.Models.Contexts
                     var largura = Convert.ToSingle(colunas[9]);
                     var comprimento = Convert.ToSingle(colunas[10]);
                     var historia = colunas[11].ToString();
-      
+                    var desconto = Convert.ToDecimal(colunas[12]);
+
                     produto = new Produto {Id = codigo, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Imagem = imagem, Id_tamanho = id_tamanho,
                         Altura = altura,
                         Largura = largura,
                         Comprimento = comprimento,
-                        Historia = historia};
+                        Historia = historia,
+                        Desconto = desconto};
                 }
 
                 adapter = null;
@@ -308,7 +313,7 @@ namespace kuarasy.Models.Contexts
 
                     var id = Convert.ToInt32((colunas[0]));
                     var nome = colunas[1].ToString();
-                    var preco = Convert.ToSingle(colunas[2]);
+                    var preco = Convert.ToDecimal(colunas[2]);
                     var descricao = colunas[3].ToString();
                     var quantidade = Convert.ToInt32((colunas[4]));
                     var peso = Convert.ToSingle(colunas[5]);
@@ -345,7 +350,7 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-
+//LISTANDO AS ORIGENS
         public List<Origem> ListarOrigem(){
             var origens = new List<Origem>();
             try
@@ -372,6 +377,7 @@ namespace kuarasy.Models.Contexts
                     var pais = colunas[1].ToString();
                     var continente = colunas[2].ToString();
                     var descricao = colunas[3].ToString();
+                    var imagem = colunas[4].ToString();
 
                     var origem = new Origem
                     {
@@ -379,6 +385,7 @@ namespace kuarasy.Models.Contexts
                         Pais = pais,
                         Continente = continente,
                         Descricao_origem = descricao,
+                        Imagem_origem = imagem
                     };
                     origens.Add(origem);
                 }
@@ -397,7 +404,7 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-
+//LISTANDO TODOS TIPOS DA CATEGORIA
         public List<Tipo> ListarTipoDaCategoria(string area)
         {
             var tipos = new List<Tipo>();
@@ -451,7 +458,7 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-
+//CONTAGEM DE TIPOS
         public int ContagemTipo(int id_tipo)
         {
             var query = SqlManager.GetSql(TSql.CONTAGEM_TIPO);
@@ -465,7 +472,7 @@ namespace kuarasy.Models.Contexts
             return numero;
 
         }
-
+//BUSCANDO CATEGORIA
         public string BuscarCategoria(string tipo)
         {
             try
@@ -491,7 +498,8 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-        public Origem PesquisarOrigem(int id)
+//PESQUISAR ORIGEM
+        public Origem PesquisarOrigemProduto(int id)
         {
             try
             {
@@ -516,12 +524,14 @@ namespace kuarasy.Models.Contexts
                     var id_origem = Convert.ToInt32((colunas[0]));
                     var pais = colunas[1].ToString();
                     var continente = colunas[2].ToString();
+                    var imagem = colunas[3].ToString();
 
                     origem = new Origem
                     {
                         Id_origem = id_origem,
                         Pais = pais,
                         Continente = continente,
+                        Imagem_origem = imagem
                     };
                 }
 
@@ -540,6 +550,57 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-    }
+//LISTAR PRODUTOS PELA ORIGEM
+         public List<Produto> ListarProdutosOrigem(string continente)
+        {
+            var produtos = new List<Produto>();
+            try
+            {
+                _connection.Open();
 
+                var query = SqlManager.GetSql(TSql.LISTAR_PRODUTOS_ORIGEM);
+
+                var command = new SqlCommand(query, _connection);
+
+                command.Parameters.Add("@continente", SqlDbType.VarChar).Value = continente;
+
+                var dataset = new DataSet();
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+
+
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+
+                    var id = Convert.ToInt32((colunas[0]));
+                    var pais = colunas[1].ToString();
+                    var nome = colunas[2].ToString();
+                    var preco = Convert.ToDecimal(colunas[3]);
+                    var imagem = colunas[4].ToString();
+
+                    var produto = new Produto {Id = id, Nome = nome, Preco = preco, Imagem = imagem, Pais = pais};
+                    produtos.Add(produto);
+                }
+
+                adapter = null;
+                dataset = null;
+                return produtos; 
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
+    }
+   
 }
