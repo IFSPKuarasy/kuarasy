@@ -50,7 +50,7 @@
 
 
 /* Owl carousel arrows  - Default option*/
-/* Rembember that it only works if you have more than 1 product */
+/* Remember that it only works if you have more than 1 product */
 .owl-carousel .owl-nav button{
   width:1.55rem; text-align:center; 
   border:1px solid var(--red-light) !important;

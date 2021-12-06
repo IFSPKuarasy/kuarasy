@@ -1,8 +1,12 @@
 
 :root {
 	--yellow: #e28d26;
+    --yellow-medium: #eb9f4e;
     --yellow-light: #f3b271;
     --red-medium: #b84132;
+	--brown: #651e15;
+	--brown-medium: #814236;
+	--brown-light: #9d655a;
     --black: #000;
     --background-color: #fafafa;
 }
@@ -11,21 +15,42 @@
     background-color: var(--yellow-light);
 }
 
-.bg-red-medium h3{
+.row.mb-0{
+    align-items: center;
+}
+
+.row p{
+    text-align: justify;
+}
+
+.btn-origin{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-origin h3{
     font-weight: bold;
     font-size: calc(1rem + .6vw);
     max-width: 340px;
 }
 
-.row.mb-0{
-    align-items: center;
+.offcanvas-title {
+    font-weight: 600;
+    color: var(--red-medium);
+}
+
+#dropdownMenuButton {
+    background-color: var(--yellow-medium);
+    border-color: var(--yellow);
 }
 
 .accordion-item{
     margin: 5rem 0;
 }
 
-.accordion-button h1{
+.accordion-button h2{
     color:  var(--yellow)!important;
 }
 
@@ -34,7 +59,6 @@
 }
 
 .accordion-button:not(.collapsed){
-    color: var(--yellow)!important;
     background-color: #fff;
 }
 
@@ -64,7 +88,7 @@
 .history p{
     text-align: justify;
     margin-top: 1rem;
-    width: 82vh;
+    width: 100%;
 }
 
 .accordion-body .information h2{
@@ -76,6 +100,7 @@
 }
 
 
+/* Responsivity */
 @media (max-width: 991.98px) {
     .information{
         flex-direction: column;
@@ -85,20 +110,21 @@
     }
  }
 
-@media (min-width: 992px) { 
-    .history p{
-        width: 66vh;
+ @media (min-width: 992px) {
+    .history {
+        margin-right: 2.875rem;
+        width: 528px;
     }
 }
 
-@media (min-width: 1200px) { 
-    .history p{
-        width: 70vh;
+@media (min-width: 1200px) {
+    .history {
+        width: 618px;
     }
 }
 
-@media (min-width: 1400px) { 
-    .history p{
-        width: 70vh;
+@media (min-width: 1400px) {
+    .history {
+        width: 710px;
     }
- }
+}

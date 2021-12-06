@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit";
-
+    decimal porcentagem = (Model.Desconto*100); 
+    byte desconto = Convert.ToByte(porcentagem);
 }
 
 <div class="container my-5">
@@ -12,7 +13,7 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Nome" class="control-label"></label>
@@ -26,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Descricao" class="control-label"></label>
-                    <input asp-for="Descricao" class="form-control" />
+                    <textarea asp-for="Descricao" class="form-control"></textarea>
                     <span asp-validation-for="Descricao" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -40,13 +41,20 @@
                     <span asp-validation-for="Peso" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label> <br>
+                <img src="/productsImage/@Model.Imagem" style = "height:250px; width:250px" >
+                <input type="file" asp-for="ProfileImage" class="form-control" />
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                <input  asp-for="Imagem" class="form-control" style = "visibility: hidden;"/>
+                </div>
+                <div class="form-group">
                     <label asp-for="Historia" class="control-label"></label>
                     <textarea asp-for="Historia" class="form-control"></textarea>
                     <span asp-validation-for="Historia" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Desconto" class="control-label"></label>
-                    <input asp-for="Desconto" class="form-control" />
+                    <label class="control-label"> Desconto em %</label>
+                    <input asp-for="Desconto" value="@desconto" class="form-control" />
                     <span asp-validation-for="Desconto" class="text-danger"></span>
                 </div>
                 <div class="form-group">

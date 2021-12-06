@@ -65,6 +65,19 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
+         public int Contagem()
+        {
+            try
+            {
+                
+                int qtd = _produtoRepository.Contagem();
+                return qtd;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public List<Produto> Pesquisar(string inputSearch)
         {

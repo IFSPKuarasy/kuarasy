@@ -24,15 +24,30 @@
                 </form>
             </aside>
        }
-
-    
-    
         <main role="main" class="col flex-shrink-0" >
-            <div class="d-flex justify-content-end align-items-center mb-3 pe-3">
-                <a class="text-success" asp-action="Create">Novo produto + </a>
+            <div class="d-flex justify-content-end mx-3 my-3"> 
+                <a class="btn btn-success ms-3" asp-action="Create">Novo produto + </a>
             </div>
+
+            <ul class="nav nav-pills align-items-center justify-content-end mt-3 mx-3">
+                @if (ViewBag.Categoria == null){ 
+                    <li class="nav-item flex-grow-1">
+                        <strong class="font-monospace" asp-action="Create"> @ViewBag.QuantidadeProduto itens </strong>
+                    </li>
+                    }    
+                <li class="nav-item dropdown border bg-white">
+                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ordenar por: </a>
+                    <ul class="dropdown-menu text-dark">
+                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=asc&By=Name">A - Z</a></li>
+                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=desc&By=Name">Z - A</a></li>
+                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=asc&By=Preco">Menor Preço</a></li>
+                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=desc&By=Preco">Maior Preço</a></li>
+                    </ul>
+                </li>
+            </ul>
+           
             
-            <section class="row g-2 d-flex justify-content-start" id="productsList">
+            <section class="row g-2 d-flex justify-content-center justify-content-md-start" id="productsList">
                 @foreach (var item in Model.ListProduto){
                     <div class="card my-3 text-center border-0" style="width: 15rem;">
                         @* Imagem do Produto *@
@@ -57,15 +72,41 @@
                                 
                             </h4>
                             }
-                            <div class="row">
+                            <div class="row border">
                                 <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</a>
-                                <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Deletar", "Delete", new { id = item.Id })</a>
+                                <a class="col" asp-area="" id="nameLink" data-bs-toggle="modal" data-bs-target="#exampleModal"> @Html.ActionLink("Deletar", "Delete", new { id = item.Id })</a>
                             </div>
                         </div>
                     </div>
                 }
+
+                  <!-- Pagination Button -->
+                    <nav>
+                        <ul class="pagination justify-content-center">                        
+                        <li class="page-item">
+                            <a class="page-link"  aria-label="Previous" id="prev">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" > 
+                                1
+                            </a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" aria-label="Next" id="next">
+                            <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        </ul>
+                    </nav>
+
             </section>
         </main>
 
     </div>
 </div>
+
+

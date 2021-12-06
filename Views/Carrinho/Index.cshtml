@@ -1,0 +1,47 @@
+@model IEnumerable<kuarasy.Models.Entidades.Produto>
+@{
+    ViewData["Title"] = "Carrinho";
+    int quantidade = 1;
+}
+
+
+
+<main class="container my-5">
+    <h1>Carrinho de Compras</h1>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+               Produto
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <img style ="height:150px; width: 150px;" src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)">
+                <p> @Html.DisplayFor(modelItem => item.Nome)</p>
+                <p>@Html.DisplayFor(modelItem => item.Peso) KG</p>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @quantidade
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</main>

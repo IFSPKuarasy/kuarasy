@@ -27,7 +27,7 @@ namespace kuarasy.Controllers
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
-        public IActionResult Index(string InputSearch, string area, string tipo)
+        public IActionResult Index(string InputSearch, string area, string tipo, string Order, string By)
         {
             var model = new HomeIndexViewModel();
             try
@@ -37,18 +37,36 @@ namespace kuarasy.Controllers
                     ViewBag.Categoria = area;
                     model.ListTipo = _produtoService.ListarTipo(area);
                     model.ListProduto = _produtoService.Pesquisar(area);
+                    ViewBag.Filtro = "?area="+area+"&";
+                    if (Order == "desc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
+                    if (Order == "asc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
+                    if (Order == "desc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
+                    if (Order == "asc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
                     return View(model);
                 }
                 if (InputSearch != null)
                 {
                     ViewBag.Pesquisa = InputSearch;
                     model.ListTipo = _produtoService.ListarTipo(InputSearch);
+                    ViewBag.Filtro = "?InputSearch=" + InputSearch + "&";
                     if (model.ListTipo != null)
                     {
                         ViewBag.Categoria = InputSearch;
                         ViewBag.Pesquisa = "";
                     }
                     model.ListProduto = _produtoService.Pesquisar(InputSearch);
+                     if (Order == "desc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
+                    if (Order == "asc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
+                    if (Order == "desc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
+                    if (Order == "asc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
                     return View(model);
                 }
                 if(tipo != null)
@@ -56,11 +74,30 @@ namespace kuarasy.Controllers
                     ViewBag.Categoria = _produtoService.Categoria(tipo);
                     model.ListTipo = _produtoService.ListarTipo(ViewBag.Categoria);
                     model.ListProduto = _produtoService.Pesquisar(tipo);
+                     ViewBag.Filtro = "?Tipo=" + tipo + "&";
+                    if (Order == "desc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
+                    if (Order == "asc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
+                    if (Order == "desc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
+                    if (Order == "asc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
                     return View(model);
                 }
                 else
                 {
                     model.ListProduto = _produtoService.Listar();
+                    ViewBag.QuantidadeProduto = _produtoService.Contagem();
+                    ViewBag.Filtro = "?Tipo=" + tipo + "&";
+                    if (Order == "desc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
+                    if (Order == "asc" && By == "Name")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
+                    if (Order == "desc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
+                    if (Order == "asc" && By == "Preco")
+                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
                     return View(model);
                 }
             }
@@ -77,17 +114,21 @@ namespace kuarasy.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var area = "create";
+            var model = new HomeIndexViewModel();
+            model.ListOrigem = _origemService.Listar();
+            model.ListTipo = _produtoService.ListarTipo(area);
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Produto pd)
+        public IActionResult Create(HomeIndexViewModel pd)
         {
             try
             {
-                string stringFileName = UploadFile(pd);
-                pd.Imagem = stringFileName;
-                _produtoService.Cadastrar(pd);
+                string stringFileName = UploadFile(pd.Produto);
+                pd.Produto.Imagem = stringFileName;
+                _produtoService.Cadastrar(pd.Produto);
             }
             catch (Exception)
             {
@@ -108,6 +149,9 @@ namespace kuarasy.Controllers
                     pd.ProfileImage.CopyTo(fileStream);
                 }
             }
+            else{
+                fileName = pd.Imagem;
+            }
             return fileName;
         }
         public IActionResult Edit(int? id)
@@ -123,15 +167,17 @@ namespace kuarasy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, Historia, Desconto")] Produto produto)
+        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, ProfileImage, Imagem, Historia, Desconto")] Produto pd)
         {
-            int? id = produto.Id;
+            int? id = pd.Id;
             if (id == null)
                 return NotFound();
 
             try
             {
-                _produtoService.Atualizar(produto);
+                string stringFileName = UploadFile(pd);
+                pd.Imagem = stringFileName;
+                _produtoService.Atualizar(pd);
                 return RedirectToAction("Index");
             }
             catch (Exception)

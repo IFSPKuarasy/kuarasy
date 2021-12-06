@@ -7,6 +7,7 @@ namespace kuarasy.Models.Enums
         //RELACIONADO COM PRODUTO
         CADASTRAR_PRODUTO,
         LISTAR_PRODUTO,
+        CONTAGEM_PRODUTO,
         PESQUISAR_PRODUTO,
         ATUALIZAR_PRODUTO,
         EXCLUIR_PRODUTO,
@@ -14,7 +15,8 @@ namespace kuarasy.Models.Enums
         ULTIMO_REGRISTO_TAMANHO,
         PESQUISAR,
         EXCLUIR_ORIGEM_PRODUTO,
-        LISTAR_TIPO,
+        LISTAR_TIPOS,
+        LISTAR_TIPOS_CATEGORIA,
         CONTAGEM_TIPO,
         BUSCAR_CATEGORIA,
         //INSERIR ORIGEM

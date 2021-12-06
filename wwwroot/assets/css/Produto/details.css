@@ -42,17 +42,30 @@ figure{
     transform: scale(1.5);
 }
 
+#history #image .img-hover-shadow{
+    overflow: hidden; 
+}
+
+#history #image .img-hover-shadow img{
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+#history #image .img-hover-shadow:hover img{
+    border: 3px solid var(--yellow)!important;
+}
+
 /* Links */
-#info .nav-link,
+#info .link,
 #history h3,
-a{
+#history a,
+.read-more{
   color: var(--red)!important;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
-#info .nav-link:hover,
+#info .link:hover,
 #history h3:hover,
-a{
+.read-more:hover{
   color: var(--red-medium)!important;
 }
 

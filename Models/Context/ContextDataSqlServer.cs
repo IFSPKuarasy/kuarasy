@@ -41,7 +41,6 @@ namespace kuarasy.Models.Contexts
                 foreach (DataRow item in rows)
                 {
                     var colunas = item.ItemArray;
-
                     var id = Convert.ToInt32((colunas[0]));
                     var nome = colunas[1].ToString();
                     var preco = Convert.ToDecimal(colunas[2]);
@@ -73,6 +72,27 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
+        public int ContagemProduto()
+        {
+            try{
+            _connection.Open();
+            var query = SqlManager.GetSql(TSql.CONTAGEM_PRODUTO);
+
+            var command = new SqlCommand(query, _connection);
+ 
+            int qtd = (Int32)command.ExecuteScalar();
+            
+            return qtd;
+            }
+            catch(Exception){
+                throw;
+            }
+            finally{
+                  if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+
+        }
 
 //ETAPAS DE CADASTRAMENTO DE PRODUTO---------------
         public void CadastrarProduto(Produto produto)
@@ -95,6 +115,7 @@ namespace kuarasy.Models.Contexts
                 int id_tamanho = (Int32)command2.ExecuteScalar();
                 command.Parameters.Add("@id_tamanho", SqlDbType.Int).Value = id_tamanho;
                 
+                decimal  desconto = produto.Desconto/100;
 
                 //SALVANDO PRODUTO
                command.Parameters.Add("@nome", SqlDbType.VarChar).Value = produto.Nome;
@@ -105,6 +126,7 @@ namespace kuarasy.Models.Contexts
                command.Parameters.Add("@id_tipo", SqlDbType.Int).Value = produto.Id_tipo;
                command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
                command.Parameters.Add("@historia", SqlDbType.VarChar).Value = produto.Historia;
+               command.Parameters.Add("@desconto", SqlDbType.Decimal).Value = desconto;
                
                 command.ExecuteNonQuery();
 
@@ -174,6 +196,7 @@ namespace kuarasy.Models.Contexts
                 command.Parameters.Add("@peso", SqlDbType.Float).Value = produto.Peso;
                 command.Parameters.Add("@historia", SqlDbType.VarChar).Value = produto.Historia;
                 command.Parameters.Add("@desconto", SqlDbType.Decimal).Value = desconto;
+                command.Parameters.Add("@imagem", SqlDbType.VarChar).Value = produto.Imagem;
                 command.ExecuteNonQuery();
 
 
@@ -319,6 +342,7 @@ namespace kuarasy.Models.Contexts
                     var peso = Convert.ToSingle(colunas[5]);
                     var nome_tipo = colunas[6].ToString();
                     var imagem = colunas[7].ToString();
+                    var desconto = Convert.ToDecimal(colunas[8]);
 
                     var produto = new Produto
                     {
@@ -329,7 +353,8 @@ namespace kuarasy.Models.Contexts
                         Quantidade = quantidade,
                         Peso = peso,
                         Nome_tipo = nome_tipo,
-                        Imagem = imagem
+                        Imagem = imagem,
+                        Desconto = desconto
                     };
                     produtos.Add(produto);
                 }
@@ -410,10 +435,16 @@ namespace kuarasy.Models.Contexts
             var tipos = new List<Tipo>();
             try
             {
+                var query = "";
                 _connection.Open();
 
-                var query = SqlManager.GetSql(TSql.LISTAR_TIPO);
-
+                if(area == "create"){
+                    query = SqlManager.GetSql(TSql.LISTAR_TIPOS);
+                }
+                else
+                {
+                    query = SqlManager.GetSql(TSql.LISTAR_TIPOS_CATEGORIA);
+                }
                 var command = new SqlCommand(query, _connection);
 
                 command.Parameters.Add("@area", SqlDbType.VarChar).Value = area;
@@ -430,6 +461,7 @@ namespace kuarasy.Models.Contexts
                     var colunas = item.ItemArray;
 
                     var contagem_tipo = ContagemTipo(Convert.ToInt32(colunas[0]));
+                    var id_tipo = Convert.ToInt32(colunas[0]);
                     var nome = colunas[1].ToString();
                     var nome_categoria = colunas[2].ToString();
 
@@ -437,7 +469,8 @@ namespace kuarasy.Models.Contexts
                     {
                         Nome_tipo = nome,
                         Nome_categoria = nome_categoria,
-                        Contagem_tipo = contagem_tipo
+                        Contagem_tipo = contagem_tipo,
+                        Id_tipo = id_tipo
                     };
                     tipos.Add(tipo);
                 }

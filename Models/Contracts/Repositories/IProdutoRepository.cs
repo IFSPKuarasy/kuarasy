@@ -16,6 +16,7 @@ namespace kuarasy.Models.Contracts.Repositories
         void Excluir(int id);
         List<Tipo> ListarTipo(string area);
         string Categoria(string tipo);
+        int Contagem();
     }
 
 }

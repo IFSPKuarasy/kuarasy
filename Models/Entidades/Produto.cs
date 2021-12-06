@@ -27,6 +27,7 @@ namespace kuarasy.Models.Entidades{
         public string Nome_origem { get; set; }
         public string Pais { get; set; }
         public decimal Desconto { get; set; }
+        public int QtdProduto { get; set; }
         public IFormFile ProfileImage { get; set; }
 
         public Produto()
@@ -35,7 +36,7 @@ namespace kuarasy.Models.Entidades{
         }
         public Produto(int id, string nome, decimal preco, string descricao, int quantidade, float peso, int id_tipo, string nome_tipo, string imagem,
             int id_tamanho, float altura, float largura, float comprimento,
-            string inputSearch, string pais, decimal desconto)
+            string inputSearch, string pais, decimal desconto, int qtdProduto)
         {
             this.Id = id;
             this.Nome = nome;
@@ -52,6 +53,7 @@ namespace kuarasy.Models.Entidades{
             this.InputSearch = inputSearch;
             this.Pais = pais;
             this.Desconto  = desconto;
+            this.QtdProduto = qtdProduto;
         }
     }
 }

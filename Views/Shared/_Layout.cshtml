@@ -22,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="~/lib/owlcarousel/dist/assets/owl.theme.default.min.css">
 
     <link rel="stylesheet" type="text/css" href="~/assets/css/common.css" />
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/1000f9c287.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -54,7 +57,7 @@
                         </li>         
                          
                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categorias
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategory">
@@ -68,7 +71,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownOrigin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownOrigin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Origens
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrigin">
@@ -90,7 +93,7 @@
                             <button class="btn bg-yellow" type="submit" form="Pesquisa"> <span class="icon-search size-icons text-white">  </span> </button>
                         </div>
                     </form>
-                    <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
+                    <a id="cart" asp-action="Index" asp-controller="Carrinho" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Carrinho de Compras"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
                 </div>
             </div>
         </nav>

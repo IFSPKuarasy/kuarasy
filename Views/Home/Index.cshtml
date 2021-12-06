@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
+<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
 <link rel="stylesheet" type="text/css" href="~/assets/css/Home/index.css" />
 
 @model kuarasy.Models.Entidades.HomeIndexViewModel
@@ -73,7 +73,7 @@
         </section>
 
         @* Produtos em destaque *@
-        <section id="carouselProducts" class="section" data-bs-ride="">
+        <section id="carouselProducts" class="section">
             <h2 class="fw-bold text-center">Produtos em destaque</h2>
                 <div class="owl-carousel owl-theme">
                     @* Produto *@
@@ -112,7 +112,7 @@
         </section>
 
         @* Promoções *@
-         <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+         <section id="carouselPromotions" class="section">
             <h2 class="fw-bold text-center">Promoções</h2>
             <div class="owl-carousel owl-theme">
                 @foreach (var item in Model.ListProduto) {

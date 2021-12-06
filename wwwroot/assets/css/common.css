@@ -53,6 +53,7 @@ li{
     padding: 4.5rem  0;
 }
 
+
 /* Backgrounds */
 .bg-white{
 	--bs-bg-opacity: 1;
@@ -71,6 +72,14 @@ li{
 	background-color: var(--yellow);
 }
 
+.bg-yellow-medium {
+	background-color: var(--yellow-medium)!important;
+}
+
+.bg-yellow-light {
+	background-color: var(--yellow-light)!important;
+}
+
 /* Header */
 .divider{
     height: 20px;
@@ -79,6 +88,10 @@ li{
   
 .icon-fluentCart {
 	color: var(--red);
+}
+
+#cart:hover .icon-fluentCart{
+    transform: translateY(-8px);
 }
 
 .size-icons-sm{
@@ -93,8 +106,9 @@ li{
 	font-size: 2.5rem;
 }
 
+/* Links */
 .dropdown-item{
-	color: var(--brown);
+	color: var(--black)!important;
 }
 
 /* Input Search Icon */

@@ -16,6 +16,7 @@ namespace kuarasy.Models.Contracts.Context
 		string BuscarCategoria(string tipo);
 		Origem PesquisarOrigemProduto(int id);
 		List<Produto> ListarProdutosOrigem(string continente);
+		int ContagemProduto();
 	}
 
 }

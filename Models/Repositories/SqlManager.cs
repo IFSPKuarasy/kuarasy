@@ -14,18 +14,21 @@ namespace kuarasy.Models.Repositories
                 case TSql.LISTAR_PRODUTO:
                     sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p inner join tipo tp on p.id_tipo = tp.id_tipo";
                     break;
+                case TSql.CONTAGEM_PRODUTO:
+                    sql = "select count(id_produto) from produto";
+                    break;
                 case TSql.PESQUISAR_PRODUTO:
                     sql = "select id_produto, nome, preco, descricao, quantidade, peso, imagem, p.id_tamanho, tm.altura, tm.largura, tm.comprimento, p.historia, p.desconto from produto p inner join tamanho tm on p.id_tamanho = tm.id_tamanho where id_produto = @id";
                     break;
                 case TSql.ATUALIZAR_PRODUTO:
-                    sql = "update produto set nome = @nome, preco = @preco, descricao = @descricao, quantidade = @quantidade, peso = @peso, historia = @historia, desconto = @desconto from produto where id_produto = @id";
+                    sql = "update produto set nome = @nome, preco = @preco, descricao = @descricao, quantidade = @quantidade, peso = @peso, historia = @historia, desconto = @desconto, imagem = @imagem from produto where id_produto = @id";
                     break;
                 case TSql.EXCLUIR_PRODUTO:
                     sql = "delete from produto where id_produto = @id";
                     break;
                 case TSql.CADASTRAR_PRODUTO:
-                    sql = "insert into produto (nome, preco, descricao, quantidade, peso, id_tipo, imagem, id_tamanho, historia) " +
-                        "values (@nome, @preco, @descricao, @quantidade, @peso, @id_tipo, @imagem, @id_tamanho, @historia)";
+                    sql = "insert into produto (nome, preco, descricao, quantidade, peso, id_tipo, imagem, id_tamanho, historia, desconto) " +
+                        "values (@nome, @preco, @descricao, @quantidade, @peso, @id_tipo, @imagem, @id_tamanho, @historia, @desconto)";
                     break;
                 case TSql.CADASTRAR_TAMANHO:
                     sql = "insert into tamanho (altura, largura, comprimento) values (@altura, @largura, @comprimento)";
@@ -34,12 +37,15 @@ namespace kuarasy.Models.Repositories
                     sql = "SELECT (id_tamanho) FROM tamanho WHERE id_tamanho = (SELECT max(id_tamanho) FROM tamanho)";
                     break;
                 case TSql.PESQUISAR:
-                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem from produto p " +
+                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p " +
                     "inner join tipo tp on p.id_tipo = tp.id_tipo " +
                     "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%'";
                     break;
-                case TSql.LISTAR_TIPO:
+                case TSql.LISTAR_TIPOS_CATEGORIA:
                     sql = "select tp.id_tipo, tp.nome, ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria where ct.nome = @area";
+                    break;
+                case TSql.LISTAR_TIPOS:
+                    sql = "select tp.id_tipo, tp.nome, ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria";
                     break;
                 case TSql.CONTAGEM_TIPO:
                     sql = "select count(id_produto) from produto where id_tipo = @id_tipo";

@@ -16,5 +16,6 @@ namespace kuarasy.Models.Contracts.Services
         List<Produto> Pesquisar(string inputSearch);
         List<Tipo> ListarTipo(string area);
         string Categoria(string tipo);
+        int Contagem();
     }
 }

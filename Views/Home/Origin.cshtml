@@ -16,118 +16,141 @@
             @* America - Variavel Continente *@
             Conheça as comunidades da @continente!
           </h1>
-           <p class="my-4">
+          <p class="my-4">
                 A cultura é um dos bens mais importantes para humanidade, e é por isso que nesta página faremos junto com
                 você uma imersão cultural na história das comunidades imigrantes que queros que você conheça melhor. E é
                 isto que move o Kuarasy!
-            </p>
-          <a class="btn bg-red-medium text-light my-2" asp-area="" asp-controller="" asp-action="">
+          </p>
+          <a class="btn-origin bg-red-medium text-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" asp-area="" asp-controller="" asp-action="">
             <h3>Menu de Comunidades</h3>
           </a>
         </div>
       </div>
 
       <div class="col-sm my-2">
-      @if(continente == "América"){
-        <figure class="figure mb-0">
-          <img src="~/assets/img/origin/america.png" alt="" class="figure-img img-fluid mb-0">
-        </figure>
-      }
-      @if(continente == "Ásia"){
-        <figure class="figure mb-0">
-          <img src="~/assets/img/origin/asia.png" alt="" class="figure-img img-fluid mb-0">
-        </figure>
-      }
-      @if(continente == "África"){
-        <figure class="figure mb-0">
-          <img src="~/assets/img/origin/africa.png" alt="" class="figure-img img-fluid mb-0">
-        </figure>
-      }
+        @if(continente == "América"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/america.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
+        @if(continente == "Ásia"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/asia.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
+        @if(continente == "África"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/africa.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
       </div>
     </div>
   </div>
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu de Comunidades</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <figure class="figure mb-0">
+        <img src="~/assets/img/origin/comunidades.png" alt="" class="figure-img img-fluid mb-0">
+      </figure>
+      <div class="dropdown mt-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+          Selecione
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          @foreach (var item in Model.ListOrigem)
+          {
+            @if(item.Continente == continente){
+              <li><a class="dropdown-item" href = "#@item.Pais" >@item.Pais</a></li>
+            }
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  
 </section>
 
             
 
 <main role="main" class="flex-shrink-0 my-4">
   <div class="container">
- <div class="accordion accordion-flush" id="accordionFlushExample">
-     @foreach (var item in Model.ListOrigem)
-      {
-        @if(item.Continente == continente){
-          string heading = "flush-heading"+item.Pais;
-          string collapse1 = "#flush-collapse"+item.Pais;
-          string collapse2 = "flush-collapse"+item.Pais;
-          string id_pais = "#"+item.Pais;
-     
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        @foreach (var item in Model.ListOrigem)
+        {
+          @if(item.Continente == continente){
+            string heading = "flush-heading"+item.Pais;
+            string collapse1 = "#flush-collapse"+item.Pais;
+            string collapse2 = "flush-collapse"+item.Pais;
+            string id_pais = "#"+item.Pais;
+      
+            <div class="accordion-item" >
+              <div class="accordion-header" id=@heading>
+                <a href = @id_pais>
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=@collapse1 aria-expanded="false" aria-controls=@collapse2>
+                    <i class="icon-sort-down"></i>
 
-      <div class="accordion-item" >
-        <div class="accordion-header" id=@heading>
-          <a href = @id_pais>
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=@collapse1 aria-expanded="false" aria-controls=@collapse2>
-              <i class="icon-sort-down"></i>
-
-              <h1 class="fw-bold">Comunidades da @item.Pais</h1>
-            </button>
-          </a>
-        </div>
-
-        <div id=@collapse2 class="accordion-collapse collapse" aria-labelledby=@heading data-bs-parent="#accordionFlushExample" style="">
-          <div class="accordion-body" id=@item.Pais>
-          
-            <div class="information">
-              <div class="history">
-                <h2 id="title" class="fw-bold text-decoration-underline">
-                  Origens
-                </h2>
-                <p>
-                  @item.Descricao_origem
-                </p><p>
-              </p></div>
-
-              <figure class="figure mb-0">
-                <img src="/assets/img/origin/comunidades/@item.Imagem_origem" alt="" class="figure-img img-fluid mb-0">
-              </figure>
-            </div>
-
-            <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
-                <h2 class="fw-bold text-center">Compre seus produtos</h2>
-                <div class="owl-carousel owl-theme owl-loaded owl-drag owl-hidden">
-                        
-                  @foreach (var item2 in Model.ListProduto) {
-                    @if(item2.Pais == item.Pais){
-                      <div class="item card text-center border-0" style="width: 18rem;">
-                          @* Imagem do Produto *@
-                          <img src="/productsImage/@Html.DisplayFor(modelItem => item2.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
-                          <div class="card-body">
-                              @* Nome do Produto*@
-                              
-                              <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item2.Nome,"Details", "Produto", new { id = item2.Id })</a>
-                              
-                              @* Preço *@
-                              <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                  <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                  R$@item2.Preco
-                                  
-                              </h4>
-                          </div>
-                      </div>
-                      <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div>
-                      }
-                    }
-                
+                    <h2 class="fw-bold">@item.Pais</h2>
+                  </button>
+                </a>
               </div>
-            </section>
-          </div>
-        </div>
-  
-    </div>
 
-    
+              <div id=@collapse2 class="accordion-collapse collapse" aria-labelledby=@heading data-bs-parent="#accordionFlushExample" style="">
+                <div class="accordion-body" id=@item.Pais>
+                
+                  <div class="information">
+                    <div class="history">
+                      <h3 id="title" class="fw-bold text-decoration-underline">
+                        Origens
+                      </h3>
+                      <p>
+                        @item.Descricao_origem
+                      </p>
+                    </div>
+
+                    <figure class="figure mb-0">
+                      <img src="/assets/img/origin/comunidades/@item.Imagem_origem" alt="" class="figure-img img-fluid mb-0">
+                    </figure>
+                  </div>
+
+                  <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+                      <h2 class="fw-bold text-center">Compre seus produtos</h2>
+                      <div class="owl-carousel owl-theme owl-loaded owl-drag owl-hidden">
+                              
+                        @foreach (var item2 in Model.ListProduto) {
+                          @if(item2.Pais == item.Pais){
+                            <div class="item card text-center border-0" style="width: 18rem;">
+                                @* Imagem do Produto *@
+                                <img src="/productsImage/@Html.DisplayFor(modelItem => item2.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
+                                <div class="card-body">
+                                    @* Nome do Produto*@
+                                    
+                                    <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item2.Nome,"Details", "Produto", new { id = item2.Id })</a>
+                                    
+                                    @* Preço *@
+                                    <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                        <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                        R$@item2.Preco
+                                        
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div>
+                            }
+                          }
+                      
+                    </div>
+                  </section>
+                </div>
+              </div>
+        
+            </div>
+          }
         }
-    }
-    </div>
+      </div>
     </div>
   </div>
 </main>

@@ -35,6 +35,10 @@ namespace kuarasy.Models.Repositories
         {
             return _contextData.ListarProduto();
         }
+        public int Contagem()
+        {
+            return _contextData.ContagemProduto();
+        }
         public Produto PesquisarPorId(int id)
         {
             return _contextData.PesquisarProdutoPorId(id);
