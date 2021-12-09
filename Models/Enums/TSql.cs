@@ -8,6 +8,7 @@ namespace kuarasy.Models.Enums
         CADASTRAR_PRODUTO,
         LISTAR_PRODUTO,
         CONTAGEM_PRODUTO,
+        CONTAGEM_PRODUTO_PESQUISA,
         PESQUISAR_PRODUTO,
         ATUALIZAR_PRODUTO,
         EXCLUIR_PRODUTO,

@@ -3,7 +3,7 @@
 
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
-    decimal Novo_preco = 0;
+    decimal preco_antigo = 0;
     ViewData["Title"] = "Home";
 }
 
@@ -88,27 +88,24 @@
                             <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
                             
                             @* Preço *@
-                            @if(item.Desconto != 0){
-                                Novo_preco = item.Preco - (item.Preco * item.Desconto);
-                                <p class="text-decoration-line-through text-secondary">@item.Preco</p>
+                             @if(item.Desconto != 0){
+                                preco_antigo = (item.Preco + item.DescontoCheio);
+                                <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
                                 <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
                                 <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                R$@Novo_preco.ToString("F")
+                                R$@item.Preco.ToString("F")
                             </h4>
-                            }
-                            else{
+                            }else{
                             <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
                                 <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                R$@item.Preco
+                                R$@item.Preco.ToString("F")
                                 
                             </h4>
                             }
                         </div>
                     </div>
                     }
-
                 </div>
-             
         </section>
 
         @* Promoções *@
@@ -117,19 +114,26 @@
             <div class="owl-carousel owl-theme">
                 @foreach (var item in Model.ListProduto) {
                     if(item.Desconto != 0){
-                       Novo_preco = item.Preco - (item.Preco * item.Desconto);
                      <div class="card text-center border-0" style="width: 18rem;">
                         @* Imagem do Produto *@
                         <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-hover-zoom" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
                             <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
-                            <p class="text-decoration-line-through text-secondary">@item.Preco</p>
                             @* Preço *@
-                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
-                                R$@Novo_preco.ToString("F")
+                         @if(item.Desconto != 0){
+                                preco_antigo = (item.Preco + item.DescontoCheio);
+                                <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
+                                <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                R$@item.Preco.ToString("F")
                             </h4>
+                            }else{
+                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                R$@item.Preco.ToString("F")
+                            </h4>
+                            }
                         </div>
                     </div>
                         }

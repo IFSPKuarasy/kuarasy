@@ -8,15 +8,15 @@ namespace kuarasy.Models.Contracts.Repositories
 {
     public interface IProdutoRepository
     {
-        List<Produto> Listar();
+        List<Produto> Listar(int porPaginas, int paginaAtual, string Order, string By);
         void Cadastrar(Produto produto);
         Produto PesquisarPorId(int id);
-        List<Produto> Pesquisar(string inputSearch);
+        List<Produto> Pesquisar(string inputSearch, int porPaginas, int paginaAtual, string Order, string By);
         void Atualizar(Produto produto);
         void Excluir(int id);
         List<Tipo> ListarTipo(string area);
         string Categoria(string tipo);
-        int Contagem();
+        int Contagem(string inputSearch);
     }
 
 }

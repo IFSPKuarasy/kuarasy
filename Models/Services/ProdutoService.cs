@@ -52,12 +52,12 @@ namespace kuarasy.Models.Services{
             }
         }
 
-        public List<Produto> Listar()
+        public List<Produto> Listar(int porPaginas, int paginaAtual, string Order, string By)
         {
             try
             {
                 var produtos = new List<Produto>();
-                produtos = _produtoRepository.Listar();
+                produtos = _produtoRepository.Listar(porPaginas, paginaAtual, Order, By);
                 return produtos;
             }
             catch (Exception)
@@ -65,12 +65,12 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
-         public int Contagem()
+         public int Contagem(string inputSearch)
         {
             try
             {
                 
-                int qtd = _produtoRepository.Contagem();
+                int qtd = _produtoRepository.Contagem(inputSearch);
                 return qtd;
             }
             catch (Exception)
@@ -79,11 +79,11 @@ namespace kuarasy.Models.Services{
             }
         }
 
-        public List<Produto> Pesquisar(string inputSearch)
+        public List<Produto> Pesquisar(string inputSearch, int porPaginas, int paginaAtual, string Order, string By)
         {
             try
             {
-                var produtos = _produtoRepository.Pesquisar(inputSearch);
+                var produtos = _produtoRepository.Pesquisar(inputSearch, porPaginas, paginaAtual, Order, By);
                 return produtos;
             }
             catch (Exception)

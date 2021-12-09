@@ -29,7 +29,7 @@ namespace kuarasy.Controllers
             try
             {
                 var model = new HomeIndexViewModel();
-                model.ListProduto = _produtoService.Listar();
+                model.ListProduto = _produtoService.Listar(10, 0, "asc", "id_produto");
                 model.ListOrigem = _origemService.Listar();
                 return View(model);
             }

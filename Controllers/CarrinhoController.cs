@@ -26,7 +26,7 @@ namespace kuarasy.Controllers
 
         public IActionResult Index()
         {
-            var produtos = _produtoService.Listar();
+            var produtos = _produtoService.Listar(10, 1, "asc", "p.nome");
             return View(produtos);
         }
 

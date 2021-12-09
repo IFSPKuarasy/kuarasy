@@ -8,14 +8,21 @@ namespace kuarasy.Models.Repositories
         public static string GetSql(TSql tsql)
         {
             var sql = "";
-
+            var orderby = "preco"+" asc";
             switch(tsql)
             {  
                 case TSql.LISTAR_PRODUTO:
-                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p inner join tipo tp on p.id_tipo = tp.id_tipo";
+                    sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p inner join tipo tp on p.id_tipo = tp.id_tipo ORDER BY "+orderby+
+                            " OFFSET @offset ROWS"+
+                            " FETCH NEXT @porPaginas ROWS ONLY";
                     break;
                 case TSql.CONTAGEM_PRODUTO:
                     sql = "select count(id_produto) from produto";
+                    break;
+                case TSql.CONTAGEM_PRODUTO_PESQUISA:
+                    sql = "select count(p.id_produto) from produto p " +
+                    "inner join tipo tp on p.id_tipo = tp.id_tipo " +
+                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%'";
                     break;
                 case TSql.PESQUISAR_PRODUTO:
                     sql = "select id_produto, nome, preco, descricao, quantidade, peso, imagem, p.id_tamanho, tm.altura, tm.largura, tm.comprimento, p.historia, p.desconto from produto p inner join tamanho tm on p.id_tamanho = tm.id_tamanho where id_produto = @id";
@@ -39,7 +46,8 @@ namespace kuarasy.Models.Repositories
                 case TSql.PESQUISAR:
                     sql = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p " +
                     "inner join tipo tp on p.id_tipo = tp.id_tipo " +
-                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%'";
+                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%'+@inputSearch+'%' or tp.nome like '%'+@inputSearch+'%' or ct.nome like '%'+@inputSearch+'%' "+
+                    "Order by preco asc OFFSET @offset ROWS FETCH NEXT @porPaginas ROWS ONLY";
                     break;
                 case TSql.LISTAR_TIPOS_CATEGORIA:
                     sql = "select tp.id_tipo, tp.nome, ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria where ct.nome = @area";
@@ -69,9 +77,9 @@ namespace kuarasy.Models.Repositories
                     sql = "select op.id_origem, og.pais, og.continente, og.imagem_origem from origem_produto op inner join origem og on op.id_origem = og.id_origem WHERE id_produto = @id";
                     break;
                 case TSql.LISTAR_PRODUTOS_ORIGEM:
-                    sql = "select p.id_produto, og.pais, p.nome, p.preco, p.imagem from origem_produto op"+
-                     " inner join produto p on op.id_produto = p.id_produto" +
-                     " inner join origem og on op.id_origem = og.id_origem WHERE og.continente = @continente";
+                    sql = "select p.id_produto, og.pais, p.nome, p.preco, p.imagem, p.desconto from origem_produto op "+
+                    "inner join produto p on op.id_produto = p.id_produto "+
+                    "inner join origem og on op.id_origem = og.id_origem WHERE og.continente = @continente";
                     break;
             }
             return sql;

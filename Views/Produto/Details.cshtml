@@ -2,7 +2,7 @@
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    decimal Novo_preco = 0;
+    decimal preco_antigo = 0;
     string nome = Model.Produto.Nome;
     ViewData["Title"] = nome;
     
@@ -38,10 +38,10 @@
                     <div class="row mt-3 buy">
                         <div class="row align-items-center">
                         @if(Model.Produto.Desconto != 0){
-                            Novo_preco = Model.Produto.Preco - (Model.Produto.Preco * Model.Produto.Desconto);
+                            preco_antigo = (Model.Produto.Preco + Model.Produto.DescontoCheio);
                             <div class="d-flex align-items-center"> 
                                 <p>De: </p>
-                                <p class="ms-3 text-decoration-line-through text-secondary">@Model.Produto.Preco</p>
+                                <p class="ms-3 text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
                             </div>
                             
                              <p>por: </p>
@@ -49,7 +49,7 @@
                                     @* Preço *@
                                     
                                     <h4 class="fw-bold fs-2 me-3" id="preco">
-                                    R$@Novo_preco.ToString("F")
+                                    R$@Model.Produto.Preco.ToString("F")
 
                                     </h4>
                                 

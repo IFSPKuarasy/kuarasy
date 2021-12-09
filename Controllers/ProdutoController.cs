@@ -27,79 +27,69 @@ namespace kuarasy.Controllers
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
-        public IActionResult Index(string InputSearch, string area, string tipo, string Order, string By)
+        public IActionResult Index(string InputSearch, string area, string tipo, string Order, string By, int? pagina)
         {
             var model = new HomeIndexViewModel();
+            var all = "tudo";
             try
             {
+                var paginaAtual = 0;
+                if (pagina == null)
+                {
+                    paginaAtual = 1;
+                }
+                else
+                {
+                    paginaAtual = Convert.ToInt32(pagina);
+                }
+                ViewBag.paginaAtual = paginaAtual;
+                ViewBag.porPagina = 10;
+                ViewBag.Order = "Order=" + Order + "&By=" + By;
+                if (Order == null)
+                    ViewBag.Order = " ";
+
                 if (area != null)
                 {
                     ViewBag.Categoria = area;
-                    model.ListTipo = _produtoService.ListarTipo(area);
-                    model.ListProduto = _produtoService.Pesquisar(area);
+                    ViewBag.Order = Order;
                     ViewBag.Filtro = "?area="+area+"&";
-                    if (Order == "desc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
-                    if (Order == "asc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
-                    if (Order == "desc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
-                    if (Order == "asc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
+                    ViewBag.QtdProduto = _produtoService.Contagem(area);
+                    model.ListTipo = _produtoService.ListarTipo(area);
+                    model.ListProduto = _produtoService.Pesquisar(area, ViewBag.porPagina, paginaAtual, Order, By);
+
                     return View(model);
                 }
                 if (InputSearch != null)
                 {
                     ViewBag.Pesquisa = InputSearch;
-                    model.ListTipo = _produtoService.ListarTipo(InputSearch);
                     ViewBag.Filtro = "?InputSearch=" + InputSearch + "&";
+                    model.ListTipo = _produtoService.ListarTipo(InputSearch);
+                    ViewBag.QtdProduto = _produtoService.Contagem(InputSearch);
                     if (model.ListTipo != null)
                     {
                         ViewBag.Categoria = InputSearch;
                         ViewBag.Pesquisa = "";
                     }
-                    model.ListProduto = _produtoService.Pesquisar(InputSearch);
-                     if (Order == "desc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
-                    if (Order == "asc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
-                    if (Order == "desc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
-                    if (Order == "asc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
+                    model.ListProduto = _produtoService.Pesquisar(InputSearch, ViewBag.porPagina, paginaAtual, Order, By);
                     return View(model);
                 }
                 if(tipo != null)
                 {
                     ViewBag.Categoria = _produtoService.Categoria(tipo);
                     model.ListTipo = _produtoService.ListarTipo(ViewBag.Categoria);
-                    model.ListProduto = _produtoService.Pesquisar(tipo);
-                     ViewBag.Filtro = "?Tipo=" + tipo + "&";
-                    if (Order == "desc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
-                    if (Order == "asc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
-                    if (Order == "desc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
-                    if (Order == "asc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
+                    model.ListProduto = _produtoService.Pesquisar(tipo, ViewBag.porPagina, paginaAtual, Order, By);
+                    ViewBag.QtdProduto = _produtoService.Contagem(tipo);
+                    ViewBag.Filtro = "?Tipo=" + tipo + "&";
                     return View(model);
                 }
                 else
                 {
-                    model.ListProduto = _produtoService.Listar();
-                    ViewBag.QuantidadeProduto = _produtoService.Contagem();
-                    ViewBag.Filtro = "?Tipo=" + tipo + "&";
-                    if (Order == "desc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Nome);
-                    if (Order == "asc" && By == "Name")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Nome);
-                    if (Order == "desc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderByDescending(p => p.Preco);
-                    if (Order == "asc" && By == "Preco")
-                        model.ListProduto = model.ListProduto.OrderBy(p => p.Preco);
+                    ViewBag.Filtro = "?";
+                    ViewBag.QtdProduto = _produtoService.Contagem(all);
+                    model.ListProduto = _produtoService.Listar(ViewBag.porPagina, paginaAtual, Order, By);
                     return View(model);
                 }
+
             }
             catch (Exception)
             {

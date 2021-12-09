@@ -4,6 +4,7 @@
 @{
   ViewData["Title"] = "Origin";
   string continente = ViewBag.Continente;
+   decimal preco_antigo = 0;
 }
 
 
@@ -131,11 +132,20 @@
                                     <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item2.Nome,"Details", "Produto", new { id = item2.Id })</a>
                                     
                                     @* Preço *@
-                                    <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                        <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                        R$@item2.Preco
-                                        
-                                    </h4>
+                                    @if(item2.Desconto != 0){
+                                      preco_antigo = (item2.Preco + item2.DescontoCheio);
+                                      <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
+                                      <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                      <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                      R$@item2.Preco.ToString("F")
+                                  </h4>
+                                  }else{
+                                      <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                          <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                          R$@item2.Preco.ToString("F")
+                                          
+                                      </h4>
+                                  }
                                 </div>
                             </div>
                             <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div>

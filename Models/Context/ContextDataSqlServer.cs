@@ -19,16 +19,29 @@ namespace kuarasy.Models.Contexts
             _connection = connectionManager.GetConnection();
         }
 //PEGANDO TODOS OS PRODUTOS
-        public List<Produto> ListarProduto()
+        public List<Produto> ListarProduto(int porPaginas, int paginaAtual, string Order, string By)
         {
             var produtos = new List<Produto>();
             try
             {
                 _connection.Open();
 
-                var query = SqlManager.GetSql(TSql.LISTAR_PRODUTO);
+                 var offset = 0;
+                if (paginaAtual > 1)
+                {
+                    offset = (porPaginas * (paginaAtual - 1));
+                }
+                if(Order == null){
+                    Order = "asc";
+                    By = "p.nome";
+                }
+
+                var query = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p inner join tipo tp on p.id_tipo = tp.id_tipo ORDER BY "+By+" "+Order+
+                            " OFFSET "+ offset +" ROWS"+
+                            " FETCH NEXT "+ porPaginas +" ROWS ONLY";
 
                 var command = new SqlCommand(query, _connection);
+             
 
                 var dataset = new DataSet();
 
@@ -51,8 +64,8 @@ namespace kuarasy.Models.Contexts
                     var imagem = colunas[7].ToString();
                     var desconto = Convert.ToDecimal(colunas[8]);
 
-                    var produto = new Produto {Id = id, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Nome_tipo = nome_tipo,
-                    Imagem = imagem, Desconto = desconto};
+                    var produto = new Produto {Id = id, Nome = nome, Preco = preco - (preco * desconto), Descricao = descricao, Quantidade = quantidade, Peso = peso, Nome_tipo = nome_tipo,
+                    Imagem = imagem, Desconto = desconto, DescontoCheio = (preco * desconto)};
                     produtos.Add(produto);
                 }
 
@@ -72,15 +85,26 @@ namespace kuarasy.Models.Contexts
                     _connection.Close();
             }
         }
-        public int ContagemProduto()
+         public int ContagemProduto(string inputSearch)
         {
             try{
             _connection.Open();
-            var query = SqlManager.GetSql(TSql.CONTAGEM_PRODUTO);
+                int qtd = 0;
 
-            var command = new SqlCommand(query, _connection);
- 
-            int qtd = (Int32)command.ExecuteScalar();
+
+            if (inputSearch == "tudo") {
+                    var query = SqlManager.GetSql(TSql.CONTAGEM_PRODUTO);
+                    var command = new SqlCommand(query, _connection);
+                    qtd = (Int32)command.ExecuteScalar();
+                }
+                else
+                {
+                    var query = SqlManager.GetSql(TSql.CONTAGEM_PRODUTO_PESQUISA);
+                    var command = new SqlCommand(query, _connection);
+                    command.Parameters.Add("@inputSearch", SqlDbType.VarChar).Value = inputSearch;
+                    qtd = (Int32)command.ExecuteScalar();
+                }
+                
             
             return qtd;
             }
@@ -91,7 +115,6 @@ namespace kuarasy.Models.Contexts
                   if (_connection.State == ConnectionState.Open)
                     _connection.Close();
             }
-
         }
 
 //ETAPAS DE CADASTRAMENTO DE PRODUTO---------------
@@ -283,12 +306,13 @@ namespace kuarasy.Models.Contexts
                     var historia = colunas[11].ToString();
                     var desconto = Convert.ToDecimal(colunas[12]);
 
-                    produto = new Produto {Id = codigo, Nome = nome, Preco = preco, Descricao = descricao, Quantidade = quantidade, Peso = peso, Imagem = imagem, Id_tamanho = id_tamanho,
+                    produto = new Produto {Id = codigo, Nome = nome, Preco = preco - (preco * desconto), Descricao = descricao, Quantidade = quantidade, Peso = peso, Imagem = imagem, Id_tamanho = id_tamanho,
                         Altura = altura,
                         Largura = largura,
                         Comprimento = comprimento,
                         Historia = historia,
-                        Desconto = desconto};
+                        Desconto = desconto,
+                        DescontoCheio = (preco * desconto)};
                 }
 
                 adapter = null;
@@ -309,7 +333,7 @@ namespace kuarasy.Models.Contexts
         }
 
 //PESQUISANDO PRODUTOS PELA BARRA DE PESQUISA
-        public List<Produto> PesquisarProduto(string inputSearch)
+        public List<Produto> PesquisarProduto(string inputSearch, int porPaginas, int paginaAtual, string Order, string By)
         {
             
             var produtos = new List<Produto>();
@@ -317,11 +341,25 @@ namespace kuarasy.Models.Contexts
             {
                 _connection.Open();
 
-                var query = SqlManager.GetSql(TSql.PESQUISAR);
+                var offset = 0;
+                if (paginaAtual > 1)
+                {
+                    offset = (porPaginas * (paginaAtual - 1));
+                }
+                if(Order == null){
+                    Order = "asc";
+                    By = "p.nome";
+                }
+
+                var query = "select p.id_produto, p.nome, preco, descricao, quantidade, peso, tp.nome, imagem, p.desconto from produto p " +
+                    "inner join tipo tp on p.id_tipo = tp.id_tipo " +
+                    "inner join categoria ct on tp.id_categoria = ct.id_categoria WHERE p.nome like '%"+inputSearch+"%' or tp.nome like '%"+inputSearch+"%' or ct.nome like '%"+inputSearch+"%'  "+
+                    "Order by "+By+" "+Order+" OFFSET "+ offset +" ROWS FETCH NEXT "+ porPaginas +" ROWS ONLY";
 
                 var command = new SqlCommand(query, _connection);
+        
+                
 
-                command.Parameters.Add("@inputSearch", SqlDbType.VarChar).Value = inputSearch;
                 var dataset = new DataSet();
 
                 var adapter = new SqlDataAdapter(command);
@@ -348,13 +386,14 @@ namespace kuarasy.Models.Contexts
                     {
                         Id = id,
                         Nome = nome,
-                        Preco = preco,
+                        Preco = preco - (preco * desconto),
                         Descricao = descricao,
                         Quantidade = quantidade,
                         Peso = peso,
                         Nome_tipo = nome_tipo,
                         Imagem = imagem,
-                        Desconto = desconto
+                        Desconto = desconto,
+                        DescontoCheio = (preco * desconto)
                     };
                     produtos.Add(produto);
                 }
@@ -613,15 +652,16 @@ namespace kuarasy.Models.Contexts
                     var nome = colunas[2].ToString();
                     var preco = Convert.ToDecimal(colunas[3]);
                     var imagem = colunas[4].ToString();
+                    var desconto = Convert.ToDecimal(colunas[5]);
 
-                    var produto = new Produto {Id = id, Nome = nome, Preco = preco, Imagem = imagem, Pais = pais};
+                    var produto = new Produto {Id = id, Nome = nome, Preco = preco - (preco * desconto), Imagem = imagem, Pais = pais, Desconto = desconto,
+                    DescontoCheio = (preco * desconto)};
                     produtos.Add(produto);
                 }
 
                 adapter = null;
                 dataset = null;
                 return produtos; 
-
 
             }
             catch (Exception)

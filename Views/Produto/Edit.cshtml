@@ -4,6 +4,7 @@
     ViewData["Title"] = "Edit";
     decimal porcentagem = (Model.Desconto*100); 
     byte desconto = Convert.ToByte(porcentagem);
+    decimal preco_antigo = (Model.Preco + Model.DescontoCheio);
 }
 
 <div class="container my-5">
@@ -22,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Preco" class="control-label"></label>
-                    <input asp-for="Preco" class="form-control" />
+                    <input asp-for="Preco" value='@preco_antigo.ToString("F")' class="form-control" />
                     <span asp-validation-for="Preco" class="text-danger"></span>
                 </div>
                 <div class="form-group">
