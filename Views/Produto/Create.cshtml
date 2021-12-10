@@ -2,101 +2,125 @@
 @{
     ViewData["Title"] = "Create";
 }
-<div class ="container">
-<h1>Create</h1>
+<div class ="container my-5">
 
-<h4>ProdutoDto</h4>
+<h1>Cadastrar</h1>
+
+<h4>Produto</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Produto.Nome" class="control-label"></label>
-                <input asp-for="Produto.Nome" class="form-control" />
-                <span asp-validation-for="Produto.Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Preco" class="control-label"></label>
-                <input asp-for="Produto.Preco" class="form-control" />
-                <span asp-validation-for="Produto.Preco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Descricao" class="control-label"></label>
-                <textarea asp-for="Produto.Descricao" class="form-control"></textarea>
-                <span asp-validation-for="Produto.Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Quantidade" class="control-label"></label>
-                <input asp-for="Produto.Quantidade" class="form-control" />
-                <span asp-validation-for="Produto.Quantidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Peso" class="control-label"></label>
-                <input asp-for="Produto.Peso" class="form-control" />
-                <span asp-validation-for="Produto.Peso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <select id="Produto.Id_tipo" name="Produto.Id_tipo" class="form-select" aria-label="Default select example">
-                    <option selected>Selecione o tipo</option>
-                    @foreach (var item in Model.ListTipo)
-                    {
-                    <option value='@item.Id_tipo' >@item.Nome_tipo</option>
-                    }
-                </select>
-                <span asp-validation-for="Produto.Id_tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.ProfileImage" class="control-label"></label>
-                <input type="file" asp-for="Produto.ProfileImage" class="form-control" />
-                <span asp-validation-for="Produto.ProfileImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Altura" class="control-label"></label>
-                <input asp-for="Produto.Altura" class="form-control" />
-                <span asp-validation-for="Produto.Altura" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Largura" class="control-label"></label>
-                <input asp-for="Produto.Largura" class="form-control" />
-                <span asp-validation-for="Produto.Largura" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Produto.Comprimento" class="control-label"></label>
-                <input asp-for="Produto.Comprimento" class="form-control" />
-                <span asp-validation-for="Produto.Comprimento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Origem" class="control-label"></label>
-                <select id="Produto.Id_origem" name="Produto.Id_origem" class="form-select" aria-label="Default select example">
-                    <option selected>Selecione a origem</option>
-                    @foreach (var item in Model.ListOrigem)
-                    {
-                    <option value='@item.Id_origem' >@item.Pais</option>
-                    }
-                </select>
-                <span asp-validation-for="Produto.Id_origem" class="text-danger"></span>
-            </div>
-               <div class="form-group">
-                <label asp-for="Produto.Historia" class="control-label"></label>
-                <textarea  asp-for="Produto.Historia" class="form-control" ></textarea>
-                <span asp-validation-for="Produto.Historia" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-                <label asp-for="Produto.Desconto" class="control-label"></label>
-                <input asp-for="Produto.Desconto" value='0' class="form-control" />
-                <span asp-validation-for="Produto.Desconto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+ <form asp-action="Create" method="post" enctype="multipart/form-data">
+<div class="row d-flex justify-content-evenly">
+   
+            <div class="col-md-4">
+                
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mt-3">
+                        <label asp-for="Produto.Nome" class="control-label"></label>
+                        <input asp-for="Produto.Nome" class="form-control" />
+                        <span asp-validation-for="Produto.Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                    <label asp-for="Produto.Preco" class="control-label"></label>
+                        <div class="input-group mb-3">
+                        
+                            <span class="input-group-text">R$</span>
+                            <input asp-for="Produto.Preco" type="text" class="form-control" aria-label="Amount (to the nearest real)">
+                            <span class="input-group-text">.00</span>
+                            <span asp-validation-for="Produto.Preco" class="text-danger"></span>
+                        </div>
+                    </div>
+                
+                    <div class="form-group mt-3">
+                        <label asp-for="Produto.Descricao" class="control-label"></label>
+                        <textarea asp-for="Produto.Descricao" class="form-control"></textarea>
+                        <span asp-validation-for="Produto.Descricao" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Produto.Quantidade" class="control-label"></label>
+                        <input asp-for="Produto.Quantidade" class="form-control" />
+                        <span asp-validation-for="Produto.Quantidade" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Produto.Peso" class="control-label"></label>
+                        <input asp-for="Produto.Peso" class="form-control" />
+                        <span asp-validation-for="Produto.Peso" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Tipo" class="control-label"></label>
+                        <select id="Produto.Id_tipo" name="Produto.Id_tipo" class="form-select" aria-label="Default select example">
+                            <option selected>Selecione o tipo</option>
+                            @foreach (var item in Model.ListTipo)
+                            {
+                            <option value='@item.Id_tipo' >@item.Nome_tipo</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Produto.Id_tipo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="control-label"> Imagem do Produto</label>
+                        <div class="input-group mb-3">
+                            <input type="file" asp-for="Produto.ProfileImage" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            <span asp-validation-for="Produto.ProfileImage" class="text-danger"></span>
+                        </div>
 
+                    </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group  mt-3 row d-flex justify-content-around">
+                        <div class = "col-md-3">
+                               <label asp-for="Produto.Altura" class="control-label"></label>
+                            <input asp-for="Produto.Altura" class="form-control" />
+                            <span asp-validation-for="Produto.Altura" class="text-danger"></span>
+                        </div>
+
+                          <div class = "col-md-3">
+                         <label asp-for="Produto.Largura" class="control-label"></label>
+                            <input asp-for="Produto.Largura" class="form-control" />
+                            <span asp-validation-for="Produto.Largura" class="text-danger"></span>
+                        </div>
+
+                          <div class = "col-md-3">
+                          <label asp-for="Produto.Comprimento" class="control-label"></label>
+                            <input asp-for="Produto.Comprimento" class="form-control" />
+                            <span asp-validation-for="Produto.Comprimento" class="text-danger"></span>
+                        </div>
+                </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Origem" class="control-label"></label>
+                        <select id="Produto.Id_origem" name="Produto.Id_origem" class="form-select" aria-label="Default select example">
+                            <option selected>Selecione a origem</option>
+                            @foreach (var item in Model.ListOrigem)
+                            {
+                            <option value='@item.Id_origem' >@item.Pais</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Produto.Id_origem" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Produto.Historia" class="control-label"></label>
+                        <textarea  asp-for="Produto.Historia" class="form-control" ></textarea>
+                        <span asp-validation-for="Produto.Historia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                    <label asp-for="Produto.Desconto" class="control-label"></label>
+                        <div class="input-group mb-3">
+                        
+                            <span class="input-group-text">%</span>
+                            <input asp-for="Produto.Desconto" value='0' type="Number" class="form-control" aria-label="Amount (to the nearest real)">
+                            <span asp-validation-for="Produto.Desconto" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+                    </div>              
+            </div>
+  
+</div>
+  </form>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 <div class ="container">
 

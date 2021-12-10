@@ -103,23 +103,28 @@
                 <div class="accordion-body" id=@item.Pais>
                 
                   <div class="information">
-                    <div class="history">
-                      <h3 id="title" class="fw-bold text-decoration-underline">
-                        Origens
-                      </h3>
-                      <p>
-                        @item.Descricao_origem
-                      </p>
+                       <div class="row flex-column flex-md-row mt-5" id="history">
+                     <div class="col">
+                        <h3 class="fw-bolder text-decoration-underline mx-3 mx-md-0">Origens</h3>
+                        <div class="text mt-2 mx-3 mx-md-0 text-more">
+                          @item.Descricao_origem
+                        </div>
+                        
                     </div>
-
-                    <figure class="figure mb-0">
-                      <img src="/assets/img/origin/comunidades/@item.Imagem_origem" alt="" class="figure-img img-fluid mb-0">
-                    </figure>
+                    @* Imagem da origem do produto *@
+                    <div class="col mt-4 mt-md-0" id="image">
+                        <figure class="figure mx-3 mx-md-0">
+                            <div class="img-hover-shadow">
+                                <img src="/assets/img/origin/comunidades/@item.Imagem_origem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
                   </div>
 
-                  <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+                  <section id="carouselProducts" class="section">
                       <h2 class="fw-bold text-center">Compre seus produtos</h2>
-                      <div class="owl-carousel owl-theme owl-loaded owl-drag owl-hidden">
+                      <div class="owl-carousel owl-theme d-flex flex-column justify-content-around">
                               
                         @foreach (var item2 in Model.ListProduto) {
                           @if(item2.Pais == item.Pais){
@@ -148,7 +153,6 @@
                                   }
                                 </div>
                             </div>
-                            <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div>
                             }
                           }
                       
@@ -164,3 +168,5 @@
     </div>
   </div>
 </main>
+
+<script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>

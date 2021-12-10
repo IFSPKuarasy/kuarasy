@@ -77,10 +77,10 @@
                          <div class="row mt-3">
                              @* Comprar - adicionar ao carrinho *@
                              @if(Model.Produto.Quantidade == 0 ){
-                                    <a class="pe-none btn bg-secondary text-light mb-3 rounded-3 fw-bolder shadow" asp-area="" asp-controller="" asp-action="">Fora de estoque</a>
+                                    <a class="pe-none btn bg-secondary text-light mb-3 rounded-3 fw-bolder shadow">Fora de estoque</a>
                              }
                              else{
-                                  <a class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                                  <a class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" asp-area="@Model.Produto.Id" asp-controller="Carrinho" asp-action="Index">Comprar</a>
                              }
                             
                         </div>
@@ -106,7 +106,7 @@
                         <h4 class="fw-bolder">Ficha técnica</h4>
                         <p class="text-uppercase">Origem: @Model.Origem.Pais </p> 
                         <p class="text-uppercase">Continente: @Model.Origem.Continente </p>   
-                        <p class="text-uppercase">Tamanho &#40 LxPxA cm &#41: @Model.Produto.Altura x @Model.Produto.Largura x @Model.Produto.Comprimento </p> 
+                        <p class="text-uppercase">Tamanho &#40 AxLxC cm &#41: @Model.Produto.Altura x @Model.Produto.Largura x @Model.Produto.Comprimento </p> 
                         <p class="text-uppercase">Peso &#40 kg &#41: @Model.Produto.Peso  </p> 
                      </div>
 

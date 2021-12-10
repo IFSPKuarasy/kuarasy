@@ -61,12 +61,12 @@
                                 Novo_preco = (item.Preco + item.DescontoCheio);
                                 <p class="text-decoration-line-through text-secondary">@Novo_preco.ToString("F")</p>
                                 <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho" > <i class = "icon-fluentCart size-icons-lg"></i> </a>
                                 R$@item.Preco.ToString("F")
                             </h4>
                             }else{
                             <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
                                 R$@item.Preco.ToString("F")
                                 
                             </h4>
@@ -93,24 +93,25 @@
                         @if (paginaAtual != 1) {
                         <li class="page-item">
                             <a class="page-link" aria-label="Previous" id="prev" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@voltarPag">
-                                <span aria-hidden="true">&laquo;</span>
+                                <span aria-hidden="true">Anterior</span>
                             </a>
                         </li>
                         }
-
-                       @for (int i = 1; i <= totalPag; i++)
+                        @for (int i = 1; i <= totalPag; i++)
                         { 
-                        <li class="page-item">
-                            <a class="page-link" href="@ViewBag.Filtro&@ViewBag.Order&pagina=@i">
-                                @i
-                            </a>
-                        </li>
+                            <li class="page-item">
+                                <a class="page-link" href="@ViewBag.Filtro&@ViewBag.Order&pagina=@i">
+                                    @i
+                                </a>
+                            </li>
                         }
+                    
+                       
 
                         @if (paginaAtual != totalPag) {
                         <li class="page-item">
                             <a class="page-link" aria-label="Next" id="next" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@proximaPag">
-                                <span aria-hidden="true">&raquo;</span>
+                                <span aria-hidden="true">Próximo</span>
                             </a>
                         </li>
                         }

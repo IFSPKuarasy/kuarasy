@@ -25,7 +25,7 @@
                         <div class="col col-lg-6">
                             <p>Os melhores artesanatos para você!</p>
                             <h1 class="fw-bold">Produtos artesanais já disponíveis. Confira!</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -41,7 +41,7 @@
                         <div class="col col-lg-6">
                             <p>Confira aqui os artesanatos únicos das comunidades imigrantes brasileiras!</p>
                             <h1 class="fw-bold">Aprenda mais sobre suas culturas</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Veja as origens</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="América" asp-controller="Home" asp-action="Origin">Veja as origens</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -57,7 +57,7 @@
                         <div class="col col-lg-6">
                             <p>Entenda mais sobre a história dos produtos e seus vendedores</p>
                             <h1 class="fw-bold">Um espaço para trocas culturais</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar agora</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar agora</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -170,7 +170,6 @@
                                {
                                    <p class="content-text text-light"> @item.Pais</p>
                                }
-
 
                            }
                        }

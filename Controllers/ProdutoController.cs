@@ -44,15 +44,15 @@ namespace kuarasy.Controllers
                 }
                 ViewBag.paginaAtual = paginaAtual;
                 ViewBag.porPagina = 10;
-                ViewBag.Order = "Order=" + Order + "&By=" + By;
+                ViewBag.Order = "Order=" + Order + "&By=" + By+"";
                 if (Order == null)
                     ViewBag.Order = " ";
 
                 if (area != null)
                 {
+                    ViewBag.porPagina = 8;
                     ViewBag.Categoria = area;
-                    ViewBag.Order = Order;
-                    ViewBag.Filtro = "?area="+area+"&";
+                    ViewBag.Filtro = "?area="+area+"";
                     ViewBag.QtdProduto = _produtoService.Contagem(area);
                     model.ListTipo = _produtoService.ListarTipo(area);
                     model.ListProduto = _produtoService.Pesquisar(area, ViewBag.porPagina, paginaAtual, Order, By);
@@ -61,8 +61,9 @@ namespace kuarasy.Controllers
                 }
                 if (InputSearch != null)
                 {
+                    ViewBag.porPagina = 8;
                     ViewBag.Pesquisa = InputSearch;
-                    ViewBag.Filtro = "?InputSearch=" + InputSearch + "&";
+                    ViewBag.Filtro = "?InputSearch=" + InputSearch + "";
                     model.ListTipo = _produtoService.ListarTipo(InputSearch);
                     ViewBag.QtdProduto = _produtoService.Contagem(InputSearch);
                     if (model.ListTipo != null)
@@ -75,11 +76,12 @@ namespace kuarasy.Controllers
                 }
                 if(tipo != null)
                 {
+                    ViewBag.porPagina = 8;
                     ViewBag.Categoria = _produtoService.Categoria(tipo);
                     model.ListTipo = _produtoService.ListarTipo(ViewBag.Categoria);
                     model.ListProduto = _produtoService.Pesquisar(tipo, ViewBag.porPagina, paginaAtual, Order, By);
                     ViewBag.QtdProduto = _produtoService.Contagem(tipo);
-                    ViewBag.Filtro = "?Tipo=" + tipo + "&";
+                    ViewBag.Filtro = "?Tipo=" + tipo + "";
                     return View(model);
                 }
                 else
@@ -204,7 +206,7 @@ namespace kuarasy.Controllers
         public IActionResult Delete([Bind("Id")] Produto produto)
         {
             _produtoService.Excluir(produto.Id);
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
 
         }
     }

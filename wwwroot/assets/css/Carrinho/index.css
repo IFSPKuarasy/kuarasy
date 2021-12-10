@@ -1,0 +1,42 @@
+h2{
+    color: var(--red);
+}
+
+.title,
+.subtotal{
+    font-size: 1.25rem;
+}
+
+.title{
+    color: var(--yellow)!important;
+}
+
+.title:hover{
+    color: var(--yellow-light)!important;
+}
+
+
+.card-body a{
+    color: var(--black)!important;
+}
+
+.card-body a:is(:hover, :focus) {
+    opacity: 0.6;
+}
+
+td.number{
+    color: var(--brown)!important;
+}
+
+td img{
+  border-radius: 0.625rem;
+  max-width: 5rem!important;
+  height: 5rem!important;
+  align-self: center!important;
+  object-fit: cover!important;
+  object-position: center!important;
+}
+
+.subtotal{
+    color: var(--red)!important;
+}

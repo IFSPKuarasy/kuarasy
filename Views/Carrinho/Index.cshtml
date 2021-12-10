@@ -1,4 +1,5 @@
-@model IEnumerable<kuarasy.Models.Entidades.Produto>
+<link rel="stylesheet" type="text/css" href="~/assets/css/Carrinho/index.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
     ViewData["Title"] = "Carrinho";
     int quantidade = 1;
@@ -6,42 +7,266 @@
 
 
 
-<main class="container my-5">
-    <h1>Carrinho de Compras</h1>
-        <table class="table">
-    <thead>
-        <tr>
-            <th>
-               Produto
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                Total
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <img style ="height:150px; width: 150px;" src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)">
-                <p> @Html.DisplayFor(modelItem => item.Nome)</p>
-                <p>@Html.DisplayFor(modelItem => item.Peso) KG</p>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                @quantidade
-            </td>
-        </tr>
+<div class="container my-5">
+    <div class="row">
+        <main role="main" class="col flex-shrink-0">
+            @* Resumo dos itens *@
+            <h2 class="fw-bolder"> Carrinho de Compras</h2>
+            <div class="table-responsive">
+                <table class="table table-borderless my-4">
+                    <thead class="my-4">
+                        <tr>
+                            <th scope="row">
+                                <p class="fw-bolder title">Produto</p>
+                            </th>
+
+                            <th scope="row">
+                                <p class="fw-bolder title">
+                                   @Html.DisplayNameFor(model => model.Produto.Quantidade) 
+                                </p>
+                            </th>
+                            <th scope="row">
+                                <p class="fw-bolder title">
+                                    Valor
+                                </p>
+                            </th>
+                            <th scope="row"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            <tr class="border-bottom border-brown">
+                                <td id="productInfo">
+                                    <div class="my-3">
+                                        <div class="row flex-column flex-md-row align-items-center g-2">
+                                            <div class="col col-md-2">
+                                                @* Imagem do Produto *@
+                                                <img src="/productsImage/@Model.Produto.Imagem"
+                                                class="card-img mb-4 img-fluid" alt="Imagem do produto">
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title fw-bolder">@Html.ActionLink(Model.Produto.Nome,"Details",
+                                                    "Produto", new { id = Model.Produto.Id })</h5>
+                                                    <div class="row flex-column">
+                                                        <div class="col">
+                                                            <p><small>Tamanho &#40 AxLxC cm &#41: Altura x Largura x
+                                                                    Comprimento </small></p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="number fw-bold" id="productQuantity">
+                                    <div class="my-3 btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-yellow" id="menos">-</button>
+                                        <button type="button" class="btn btn-yellow" id="qtd"> @quantidade</button>
+                                        <button type="button" class="btn btn-yellow" id="mais">+</button>
+                                       
+                                    </div>
+                                </td>
+
+                                <td class="number fw-bold" id="productTotal" colspan="2">
+                                    <div class="my-3" id="preco">
+                                        R$@Model.Produto.Preco.ToString("F")
+                                    </div>
+                                    <input id = "precoValue"  class = "invisible">
+                                </td>
+
+                                <td>
+                                    <div class="my-3">
+                                        <a class="text-danger" href=""><i class="fas fa-minus-square"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                    </tbody>
+
+
+                    <tfoot class="border-top border-brown">
+                        <tr>
+                            <td colspan="2">
+                                <a class="btn btn-red my-3" asp-area="" asp-controller="Produto"
+                                    asp-action="Index">Comprar mais</a>
+                            </td>
+                            <td></td>
+                            <td class="subtotal fw-bold"> Subtotal: </td>
+                            <td class="subtotal fw-bold" id="subtotal">
+                                R$169,99
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-end mx-3 my-3">
+                <a class="btn btn-yellow ms-3" asp-area="" asp-controller="Carrinho" asp-action="Pagamento">Finalizar compra</a>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script type="text/javascript" /*src="~/assets/js/Carrinho/index.js"*/> 
+var quantidade = 1
+qtdSelector = document.querySelector("#qtd")
+precoSelector = document.querySelector("#preco")
+precoValue = document.getElementById("#precoValue").value
+menos = document.querySelector("#menos")
+mais = document.querySelector("#mais")
+
+menos.addEventListener("click", function(){
+    quantidade = quantidade - 1;
+    qtdSelector.innerHTML = quantidade;
+    precoSelector.innerHTML = precoValue.value * quantidade
+})
+mais.addEventListener("click", function(){
+    quantidade = quantidade + 1;
+    qtdSelector.innerHTML = quantidade;
+    //precoSelector.innerHTML = precoValue.value * quantidade
+    console.log(precoValue)
+})
+
+// Todo
+/*const Storage = {
+	get() {
+		return JSON.parse(localStorage.getItem('tomatorolist:tasks')) || []
+	},
+
+	set(tasks) {
+		localStorage.setItem('tomatorolist:tasks', JSON.stringify(tasks))
+	}
 }
-    </tbody>
-</table>
-</main>
+
+const Task = {
+	all: Storage.get(),
+
+	add(task) {
+		Task.all.push(task)
+
+		App.reload()
+	},
+	taskDone() {
+		if (document.querySelector('#todo li input').checked == true) {
+			document
+				.querySelector('.list-group-item')
+				.style.setProperty('text-decoration', 'line-through', '!important')
+		} else {
+			document.querySelector('#todo li input').checked = false
+		}
+	},
+	remove(index) {
+		Task.all.splice(index, 1)
+		App.reload()
+	}
+}
+
+const DOM = {
+	tasksContainer: document.querySelector('#todo #data-list ul'),
+
+	addTask(task, index) {
+		const li = document.createElement('li')
+		li.innerHTML = DOM.innerHTMLTask(task, index)
+		li.dataset.index = index
+
+		DOM.tasksContainer.appendChild(li)
+	},
+
+	innerHTMLTask(task, index) {
+		const html = `
+		
+			<li class="list-group-item d-flex
+					justify-content-between
+					align-items-center
+					border-start-0 border-top-0 border-end-0 border-bottom
+					rounded-0
+					mb-2">
+					<div class="todoText d-flex align-items-center">
+						<input class="
+								form-check-input
+								me-2
+								bg-danger
+								border-danger
+							"
+							type="checkbox"
+							onchange="Task.taskDone()"
+						/>
+						${task.description}
+					</div>
+					<span
+						href=" "
+						data-mdb-toggle="tooltip"
+						title="Remove item"
+						onclick="Task.remove(${index})">
+						<i class="fas fa-times text-danger"></i>
+					</span>
+		</li>
+
+		`
+		
+		return html
+	},
+	clearTasks() {
+		DOM.tasksContainer.innerHTML = ''
+	}
+}
+
+const Form = {
+	description: document.querySelector('input#description'),
+
+	getValues() {
+		return {
+			description: Form.description.value
+		}
+	},
+
+	validateFields() {
+		const description = Form.getValues()
+
+		if (description.trim() === '') {
+			throw new Error('Por favor, preencha todos os campos')
+		}
+	},
+
+	formatValues() {
+		let description = Form.getValues()
+
+		return description
+	},
+
+	clearFields() {
+		Form.description.value = ''
+	},
+
+	submit(event) {
+		event.preventDefault()
+
+		try {
+			const task = Form.formatValues()
+
+			Task.add(task)
+			Form.clearFields()
+		} catch (error) {
+			alert(error.message)
+		}
+	}
+}
+
+const App = {
+	init() {
+		Task.all.forEach(DOM.addTask)
+		Storage.set(Task.all)
+
+	},
+	reload() {
+		DOM.clearTasks()
+		App.init()
+	}
+}
+
+App.init()*/
+</script>

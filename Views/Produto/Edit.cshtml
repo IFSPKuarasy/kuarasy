@@ -2,70 +2,75 @@
 
 @{
     ViewData["Title"] = "Edit";
-    decimal porcentagem = (Model.Desconto*100); 
+    decimal porcentagem = (Model.Desconto * 100);
     byte desconto = Convert.ToByte(porcentagem);
     decimal preco_antigo = (Model.Preco + Model.DescontoCheio);
 }
 
 <div class="container my-5">
-    <h1>Edit</h1>
+    <h1>Editar</h1>
 
-    <h4>ProdutoDto</h4>
+    <h4>Produto @Model.Id</h4>
     <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="row d-flex justify-content-evenly">
+            <div class="col-md-4">
+
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label asp-for="Nome" class="control-label"></label>
                     <input asp-for="Nome" class="form-control" />
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label asp-for="Preco" class="control-label"></label>
                     <input asp-for="Preco" value='@preco_antigo.ToString("F")' class="form-control" />
                     <span asp-validation-for="Preco" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label asp-for="Descricao" class="control-label"></label>
                     <textarea asp-for="Descricao" class="form-control"></textarea>
                     <span asp-validation-for="Descricao" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label asp-for="Quantidade" class="control-label"></label>
                     <input asp-for="Quantidade" class="form-control" />
                     <span asp-validation-for="Quantidade" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label asp-for="Peso" class="control-label"></label>
                     <input asp-for="Peso" class="form-control" />
                     <span asp-validation-for="Peso" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                <label asp-for="ProfileImage" class="control-label"></label> <br>
-                <img src="/productsImage/@Model.Imagem" style = "height:250px; width:250px" >
-                <input type="file" asp-for="ProfileImage" class="form-control" />
-                <span asp-validation-for="ProfileImage" class="text-danger"></span>
-                <input  asp-for="Imagem" class="form-control" style = "visibility: hidden;"/>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Historia" class="control-label"></label>
-                    <textarea asp-for="Historia" class="form-control"></textarea>
-                    <span asp-validation-for="Historia" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                 <div class="form-group mt-3">
                     <label class="control-label"> Desconto em %</label>
                     <input asp-for="Desconto" value="@desconto" class="form-control" />
                     <span asp-validation-for="Desconto" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label class="control-label">Imagem do produto</label> <br>
+                    <img src="/productsImage/@Model.Imagem" style="height:250px; width:250px" class = "mb-3">
+                    <input type="file" asp-for="ProfileImage" class="form-control" />
+                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                    <input asp-for="Imagem" class="form-control" style="visibility: hidden;" />
                 </div>
-            </form>
+                <div class="form-group mt-3">
+                    <label asp-for="Historia" class="control-label"></label>
+                    <textarea asp-for="Historia" class="form-control"></textarea>
+                    <span asp-validation-for="Historia" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group mt-3">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Voltar</a>
     </div>
 </div>

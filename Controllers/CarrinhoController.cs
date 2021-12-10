@@ -24,14 +24,24 @@ namespace kuarasy.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? area)
         {
-            var produtos = _produtoService.Listar(10, 1, "asc", "p.nome");
-            return View(produtos);
+           var model = new HomeIndexViewModel();
+            if (area == null)
+                return View();
+
+            model.Produto = _produtoService.PesquisarPorId(Convert.ToInt32(area));
+            if (model.Produto == null)
+                return NotFound();
+
+            model.Origem = _origemService.Pesquisar(Convert.ToInt32(area));
+
+            return View(model);
         }
 
         public IActionResult Pagamento()
         {
+            
             return View();
         }
     }

@@ -80,6 +80,50 @@ li{
 	background-color: var(--yellow-light)!important;
 }
 
+/* Borders */
+.border-brown{
+	border-color: var(--brown-light)!important;
+}
+
+/* Buttons */
+/* Yellow */
+.btn-yellow {
+  color: #fff;
+  background-color: var(--yellow-medium)!important;
+  border-color: var(--yellow);
+}
+.btn-yellow:hover {
+  color: #fff;
+  background-color: var(--yellow-light);
+  border-color: var(--yellow-medium);
+}
+
+.btn-check:focus + .btn-yellow, .btn-yellow:focus {
+  color: #fff;
+  background-color: var(--yellow-light);
+  border-color: var(--yellow-medium);
+  box-shadow: 0 0 0 0.1rem var(--yellow);
+}
+/* Red */
+.btn-red {
+  color: #fff;
+  background-color: var(--red-medium)!important;
+  border-color: var(--red);
+}
+.btn-red:hover {
+  color: #fff;
+  background-color: var(--red-light);
+  border-color: var(--red-medium);
+}
+
+.btn-check:focus + .btn-red, .btn-red:focus {
+  color: #fff;
+  background-color: var(--red-light);
+  border-color: var(--red-medium);
+  box-shadow: 0 0 0 0.1rem var(--red);
+}
+
+
 /* Header */
 .divider{
     height: 20px;
@@ -87,11 +131,16 @@ li{
 }
   
 .icon-fluentCart {
+	cursor: pointer;
 	color: var(--red);
 }
 
-#cart:hover .icon-fluentCart{
-    transform: translateY(-8px);
+#cart{
+    transition: color 0.25s ease-in-out;
+}
+
+#cart:hover{
+    transform: translateY(-3px);
 }
 
 .size-icons-sm{
@@ -105,12 +154,15 @@ li{
 .size-icons-lg{
 	font-size: 2.5rem;
 }
-
 /* Links */
 .dropdown-item{
 	color: var(--black)!important;
 }
-
+.dropdown-item:focus,
+.dropdown-item:hover{
+	color: var(--white)!important;
+	background-color: var(--red-light)!important;
+}
 /* Input Search Icon */
 .has-search .form-control {
 	height: 100%!important;
