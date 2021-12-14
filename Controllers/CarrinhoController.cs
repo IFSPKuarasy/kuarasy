@@ -27,9 +27,12 @@ namespace kuarasy.Controllers
         public IActionResult Index(int? area)
         {
            var model = new HomeIndexViewModel();
-            if (area == null)
+            if (area == null){
+                ViewBag.Id = 1;
                 return View();
-
+            }
+            else{
+            ViewBag.Id = area;
             model.Produto = _produtoService.PesquisarPorId(Convert.ToInt32(area));
             if (model.Produto == null)
                 return NotFound();
@@ -37,6 +40,7 @@ namespace kuarasy.Controllers
             model.Origem = _origemService.Pesquisar(Convert.ToInt32(area));
 
             return View(model);
+            }
         }
 
         public IActionResult Pagamento()
