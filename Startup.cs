@@ -36,6 +36,9 @@ namespace kuarasy
 
             services.AddScoped<IOrigemRepository, OrigemRepository>();
             services.AddScoped<IOrigemService, OrigemService>();
+
+            services.AddScoped<ICompraRepository, CompraRepository>();
+            services.AddScoped<ICompraService, CompraService>();
             ConfigureDatasource(services);
 
         }
@@ -49,7 +52,9 @@ namespace kuarasy
                     //services.AddSingleton<IContextData, ContextDataFake>();
                     break;
                 case "SqlServer":
+                    services.AddSingleton<IContextDataCompra, ContextDataSqlServerCompra>();
                     services.AddSingleton<IContextData, ContextDataSqlServer>();
+                    services.AddSingleton<IContextDataOrigem, ContextDataSqlServerOrigem>();
                     services.AddSingleton<IConnectionManager, ConnectionManager>();
                     break;
             }

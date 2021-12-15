@@ -16,11 +16,13 @@ namespace kuarasy.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProdutoService _produtoService;
         private readonly IOrigemService _origemService;
+        private readonly ICompraService _compraService;
 
-        public CarrinhoController(IProdutoService produtoService, IOrigemService origemService, ILogger<HomeController> logger)
+        public CarrinhoController(IProdutoService produtoService, IOrigemService origemService, ICompraService compraService, ILogger<HomeController> logger)
         {
             _produtoService = produtoService;
             _origemService = origemService;
+            _compraService = compraService;
             _logger = logger;
         }
 
@@ -45,8 +47,21 @@ namespace kuarasy.Controllers
 
         public IActionResult Pagamento()
         {
-            
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+         public IActionResult Pagamento([Bind("Observacao, Valor_total , Data_entrega, Id_produtos")] Compra compra)
+        {
+            try
+            {
+                _compraService.Cadastrar(compra);
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

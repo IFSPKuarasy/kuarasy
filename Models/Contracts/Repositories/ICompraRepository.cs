@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using kuarasy.Models.Entidades;
 
-namespace kuarasy.Models.Contracts.Services
+namespace kuarasy.Models.Contracts.Repositories
 {
-	public interface IOrigemService
+    public interface ICompraRepository
     {
-        List<Origem> Listar();
+        void Cadastrar(Compra compra);
     }
+
 }

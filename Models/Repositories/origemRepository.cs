@@ -10,24 +10,23 @@ namespace kuarasy.Models.Repositories
 {
     public class OrigemRepository : IOrigemRepository
     {
-        private readonly IContextData _contextData;
+        private readonly IContextDataOrigem _contextDataOrigem;
 
-        public OrigemRepository(IContextData contextData)
+        public OrigemRepository(IContextDataOrigem contextDataOrigem)
         {
-            _contextData = contextData;
+            _contextDataOrigem = contextDataOrigem;
         }
-
         public List<Origem> Listar()
         {
-            return _contextData.ListarOrigem();
+            return _contextDataOrigem.ListarOrigem();
         }
         public Origem Pesquisar(int id)
         {
-            return _contextData.PesquisarOrigemProduto(id);
+            return _contextDataOrigem.PesquisarOrigemProduto(id);
         }
          public List<Produto> ListarProdutos(string continente)
         {
-            return _contextData.ListarProdutosOrigem(continente);
+            return _contextDataOrigem.ListarProdutosOrigem(continente);
         }
 
     }

@@ -1,9 +1,9 @@
 using kuarasy.Models.Enums;
 using System.Collections.Generic;
 
-namespace kuarasy.Models.Repositories
+namespace kuarasy.Models.SqlManager
 {
-    public class SqlManager
+    public class SqlManagerProduto
     {
         public static string GetSql(TSql tsql)
         {
@@ -40,7 +40,7 @@ namespace kuarasy.Models.Repositories
                 case TSql.CADASTRAR_TAMANHO:
                     sql = "insert into tamanho (altura, largura, comprimento) values (@altura, @largura, @comprimento)";
                     break;
-                case TSql.ULTIMO_REGRISTO_TAMANHO:
+                case TSql.ULTIMO_REGISTRO_TAMANHO:
                     sql = "SELECT (id_tamanho) FROM tamanho WHERE id_tamanho = (SELECT max(id_tamanho) FROM tamanho)";
                     break;
                 case TSql.PESQUISAR:
@@ -61,7 +61,7 @@ namespace kuarasy.Models.Repositories
                 case TSql.BUSCAR_CATEGORIA:
                     sql = "select ct.nome from tipo tp inner join categoria ct on tp.id_categoria = ct.id_categoria where tp.nome = @tipo";
                     break;
-                case TSql.ULTIMO_REGRISTO_PRODUTO:
+                case TSql.ULTIMO_REGISTRO_PRODUTO:
                     sql = "SELECT (id_produto) FROM produto WHERE id_produto = (SELECT max(id_produto) FROM produto)";
                     break;
                 case TSql.CADASTRAR_ORIGEM_PRODUTO:
@@ -69,17 +69,6 @@ namespace kuarasy.Models.Repositories
                     break;
                 case TSql.EXCLUIR_ORIGEM_PRODUTO:
                     sql = "delete origem_produto WHERE id_produto = @id_produto";
-                    break;
-                case TSql.LISTAR_ORIGEM:
-                    sql = "select * from origem";
-                    break;
-                case TSql.PESQUISAR_ORIGEM:
-                    sql = "select op.id_origem, og.pais, og.continente, og.imagem_origem from origem_produto op inner join origem og on op.id_origem = og.id_origem WHERE id_produto = @id";
-                    break;
-                case TSql.LISTAR_PRODUTOS_ORIGEM:
-                    sql = "select p.id_produto, og.pais, p.nome, p.preco, p.imagem, p.desconto from origem_produto op "+
-                    "inner join produto p on op.id_produto = p.id_produto "+
-                    "inner join origem og on op.id_origem = og.id_origem WHERE og.continente = @continente";
                     break;
             }
             return sql;
