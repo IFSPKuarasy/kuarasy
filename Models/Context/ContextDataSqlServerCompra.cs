@@ -38,10 +38,14 @@ namespace kuarasy.Models.Contexts
 
                 command.ExecuteNonQuery();
 
-                string[] produtos = compra.Id_produtos.Split(',');
-                for(int i=0; i<produtos.Length-1; i++){
-                    CadastrarProduto(produtos[i]);
+                string[] id_produtos = compra.Id_produtos.Split(',');
+                string[] quantidadeComprado = compra.QuantidadeComprado.Split(',');
+                string[] quantidade = compra.Quantidade.Split(',');
+                for(int i=0; i<id_produtos.Length-1; i++){
+                    CadastrarProduto(id_produtos[i]);
+                    AtualizarEstoque(quantidadeComprado[i], id_produtos[i], quantidade[i]);
                 }
+                
             }
             catch (Exception)
             {
@@ -71,6 +75,17 @@ namespace kuarasy.Models.Contexts
             var command = new SqlCommand(query, _connection);
             int id_compra = (Int32)command.ExecuteScalar();
             return id_compra;
+        }
+
+        public void AtualizarEstoque(string quantidadeComprado, string id_produto, string quantidade){
+            var query = SqlManagerCompra.GetSql(TSql.ATUALIZAR_ESTOQUE);
+            var command = new SqlCommand(query, _connection);
+            int quantidadeAntiga = Convert.ToInt32(quantidade);
+            int quantidadeCompra = Convert.ToInt32(quantidadeComprado);
+            command.Parameters.Add("@quantidade", SqlDbType.Int).Value = quantidadeAntiga - quantidadeCompra;
+            command.Parameters.Add("@id_produto", SqlDbType.Int).Value = Convert.ToInt32(id_produto);
+
+            command.ExecuteNonQuery();
         }
     }
 

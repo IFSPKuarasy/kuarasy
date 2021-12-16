@@ -12,7 +12,8 @@ namespace kuarasy.Models.Entidades{
         public string Valor_total { get; set; }
         public DateTime Data_entrega { get; set; }  
         public string Id_produtos { get; set; }
-        public int QuantidadeComprado { get; set; }
+        public string QuantidadeComprado { get; set; }
+        public string Quantidade { get; set; }
           
 	}
 }

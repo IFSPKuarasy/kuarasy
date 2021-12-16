@@ -19,6 +19,9 @@ namespace kuarasy.Models.SqlManager
                 case TSql.ULTIMO_REGISTRO_COMPRA:
                     sql = "SELECT (id_compra) FROM compra WHERE id_compra = (SELECT max(id_compra) FROM compra)";
                     break;
+                case TSql.ATUALIZAR_ESTOQUE:
+                    sql = "update produto set quantidade = @quantidade where id_produto = @id_produto";
+                    break;
             }
             return sql;
         }

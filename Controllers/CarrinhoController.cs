@@ -51,7 +51,7 @@ namespace kuarasy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public IActionResult Pagamento([Bind("Observacao, Valor_total , Data_entrega, Id_produtos")] Compra compra)
+         public IActionResult Pagamento([Bind("Observacao, Valor_total , Data_entrega, QuantidadeComprado, Quantidade, Id_produtos")] Compra compra)
         {
             try
             {

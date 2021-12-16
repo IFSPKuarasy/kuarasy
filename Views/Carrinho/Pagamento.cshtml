@@ -163,10 +163,11 @@
                 </form>
               
                 <form asp-action="Pagamento" method="post">
-                    <div class = "d-none">
+                    <div class = "">
                         <textarea asp-for="Observacao" id="nome" class="form-control"></textarea>
                         <input asp-for="Valor_total" id="total"  class="form-control"/>
                         <input asp-for="QuantidadeComprado" id="quantidadeComprado" class="form-control" />
+                        <input asp-for="Quantidade" id="quantidade" class="form-control" />
                         <input asp-for="Id_produtos" id="idProduto" class="form-control" />
                     </div>
                      <div class="row  my-3">
@@ -207,10 +208,9 @@
             Produto.all.forEach(produto => {
                 document.getElementById('nome').value += produto.nome+": "+produto.quantidadePadrao+"\n"
                 document.getElementById('total').value = Utils.formatCurrency(Produto.total())
-                document.getElementById('quantidadeComprado').value = produto.quantidadePadrao
+                document.getElementById('quantidadeComprado').value += produto.quantidadePadrao+","
                 document.getElementById('idProduto').value += produto.id+","
-
-                
+                document.getElementById('quantidade').value += produto.quantidade+","       
 			})
         },
         total() {
