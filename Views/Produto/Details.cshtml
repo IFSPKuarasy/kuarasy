@@ -2,7 +2,7 @@
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    decimal preco_antigo = 0;
+    decimal preco_padrao = 0;
     string nome = Model.Produto.Nome;
     ViewData["Title"] = nome;
     
@@ -38,12 +38,12 @@
                     <div class="row mt-3 buy">
                         <div class="row align-items-center">
                         @if(Model.Produto.Desconto != 0){
-                            preco_antigo = (Model.Produto.Preco + Model.Produto.DescontoCheio);
+                            preco_padrao = (Model.Produto.Preco + Model.Produto.DescontoCheio);
                             <div class="d-flex align-items-center"> 
                                 <p>De: </p>
-                                <p class="ms-3 text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
+                                <p class="ms-3 text-decoration-line-through text-secondary">@preco_padrao.ToString("F")</p>
                             </div>
-                            
+                        }
                              <p>por: </p>
                                 <div class="d-flex">
                                     @* Preço *@
@@ -55,22 +55,7 @@
                                 
                                     <p> à vista</p>
                                 </div> 
-                            }
-                            else{
-                                <p>por: </p>
-                                <div class="d-flex">
-                                    @* Preço *@
-                                    
-                                    <h4 class="fw-bold fs-2 me-3" id="preco">
-                                    R$@Model.Produto.Preco.ToString("F")
-
-                                    </h4>
-                                
-                                    <p> à vista</p>
-                                </div> 
-                            }
-                           
-                        
+                            
                                 <p class="fs-6 fst-italic" style="color: var(--brown-medium);"> Compra disponível somente por cartão de crédito.</p>
                         </div>
                        

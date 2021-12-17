@@ -22,8 +22,8 @@
                 você uma imersão cultural na história das comunidades imigrantes que queros que você conheça melhor. E é
                 isto que move o Kuarasy!
           </p>
-          <a class="btn-origin bg-red-medium text-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" asp-area="" asp-controller="" asp-action="">
-            <h3>Menu de Comunidades</h3>
+          <a class="btn-origin bg-red-medium text-light rounded-3 text-center col-md-7" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <h3 class = "mb-0 pt-2 pb-2"> Menu de Comunidades</h3>
           </a>
         </div>
       </div>
@@ -57,19 +57,16 @@
       <figure class="figure mb-0">
         <img src="~/assets/img/origin/comunidades.png" alt="" class="figure-img img-fluid mb-0">
       </figure>
-      <div class="dropdown mt-4">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-          Selecione
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+        <ul class="list-group mt-5" aria-labelledby="dropdownMenuButton">
           @foreach (var item in Model.ListOrigem)
           {
             @if(item.Continente == continente){
-              <li><a class="dropdown-item" href = "#@item.Pais" >@item.Pais</a></li>
+              <li class="text-center"><a class="dropdown-item mb-3" href = "#@item.Pais" ><h2 class = "mb-0">@item.Pais</h2></a></li>
             }
           }
         </ul>
-      </div>
+
     </div>
   </div>
   

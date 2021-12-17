@@ -31,6 +31,24 @@ namespace kuarasy.Controllers
         {
             var model = new HomeIndexViewModel();
             var all = "tudo";
+            switch(By)
+            {  
+                case "preco":
+                    if(Order == "asc")
+                        ViewBag.ordem = "Menor Preço";
+                    else
+                        ViewBag.ordem = "Maior Preço";
+                    break;
+                 case "p.nome":
+                    if(Order == "asc")
+                        ViewBag.ordem = "A - Z";
+                    else
+                        ViewBag.ordem = "Z - A";
+                    break;
+                case "desconto":
+                        ViewBag.ordem = "Desconto";
+                        break;
+            }
             try
             {
                 var paginaAtual = 0;
@@ -66,13 +84,17 @@ namespace kuarasy.Controllers
                     ViewBag.Filtro = "?InputSearch=" + InputSearch + "";
                     model.ListTipo = _produtoService.ListarTipo(InputSearch);
                     ViewBag.QtdProduto = _produtoService.Contagem(InputSearch);
-                    if (model.ListTipo != null)
-                    {
+              
                         ViewBag.Categoria = InputSearch;
                         ViewBag.Pesquisa = "";
-                    }
+                  
                     model.ListProduto = _produtoService.Pesquisar(InputSearch, ViewBag.porPagina, paginaAtual, Order, By);
-                    return View(model);
+                    if(model.ListProduto.Any()){
+                        return View(model);
+                    }
+                       return NotFound();
+                    
+                        
                 }
                 if(tipo != null)
                 {
@@ -82,7 +104,10 @@ namespace kuarasy.Controllers
                     model.ListProduto = _produtoService.Pesquisar(tipo, ViewBag.porPagina, paginaAtual, Order, By);
                     ViewBag.QtdProduto = _produtoService.Contagem(tipo);
                     ViewBag.Filtro = "?Tipo=" + tipo + "";
-                    return View(model);
+                    if(model.ListProduto.Any()){
+                        return View(model);
+                    }
+                       return NotFound();
                 }
                 else
                 {

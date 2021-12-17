@@ -10,6 +10,7 @@
 	--brown: #651e15;
 	--brown-medium: #814236;
 	--brown-light: #9d655a;
+	--light: #FAECD2;
 
 	--black: #000;
 	--white: #fff;
@@ -68,6 +69,10 @@ li{
 	background: var(--red-medium);
 }
 
+.bg-red-light {
+	background: var(--red-light);
+}
+
 .bg-yellow {
 	background-color: var(--yellow);
 }
@@ -78,6 +83,10 @@ li{
 
 .bg-yellow-light {
 	background-color: var(--yellow-light)!important;
+}
+
+.bg-light{
+	background-color: var(--light)!important;
 }
 
 /* Borders */

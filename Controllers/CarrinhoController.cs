@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using kuarasy.Models;
 using kuarasy.Models.Contracts.Services;
 using kuarasy.Models.Entidades;
+using System.Net.Mail;
+using System.Net;
+
 
 namespace kuarasy.Controllers
 {
@@ -56,11 +59,52 @@ namespace kuarasy.Controllers
             try
             {
                 _compraService.Cadastrar(compra);
+                SendMail();
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+         public bool SendMail()
+        {
+            try
+            {
+                // Estancia da Classe de Mensagem
+                MailMessage _mailMessage = new MailMessage();
+                // Remetente
+                _mailMessage.From = new MailAddress("kuarasyOficial@gmail.com");
+
+                // Destinatario seta no metodo abaixo
+
+                //Contrói o MailMessage
+                _mailMessage.CC.Add("kaiky.br34@gmail.com");
+                _mailMessage.Subject = "Teste Thiago";
+                _mailMessage.IsBodyHtml = true;
+                _mailMessage.Body = "<b>Olá Tudo bem ??</b><p>Teste Parágrafo</p>";
+
+                //CONFIGURAÇÃO COM PORTA
+                SmtpClient _smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32("587"));
+
+                //CONFIGURAÇÃO SEM PORTA
+                // SmtpClient _smtpClient = new SmtpClient(UtilRsource.ConfigSmtp);
+
+                // Credencial para envio por SMTP Seguro (Quando o servidor exige autenticação)
+                _smtpClient.UseDefaultCredentials = false;
+                _smtpClient.Credentials = new NetworkCredential("kuarasyOficial@gmail.com", "KuarasyAGJKL2021");
+
+                _smtpClient.EnableSsl = true;
+
+                _smtpClient.Send(_mailMessage);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

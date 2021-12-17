@@ -2,7 +2,9 @@
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    decimal Novo_preco = 0;
+    decimal preco_padrao = 0;
+    string invisible = "";
+    string invisible2 = "";
     ViewData["Title"] = "Produtos";
 }
 
@@ -30,20 +32,21 @@
                 <a class="btn btn-success ms-3" asp-action="Create">Novo produto + </a>
             </div>
 
-            <ul class="nav nav-pills align-items-center justify-content-end mt-3 mx-3">
+            <ul class="nav nav-pills align-items-center justify-content-end mt-3 mx-3" id="Ordernation">
                 @if (ViewBag.Categoria == null){
                     <li class="nav-item flex-grow-1">
                         <strong class="font-monospace" asp-action="Create"> @ViewBag.QtdProduto itens </strong>
                     </li>
                 }
+               <p class = "stringOrdanation mb-0 me-2">Ordernar por:</p> 
                 <li class="nav-item dropdown border bg-white">
-                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ordenar por: </a>
+                    <a class="nav-link dropdown-toggle text-dark "  data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">@ViewBag.ordem </a>
                     <ul class="dropdown-menu text-dark">
-                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=asc&By=p.nome">A - Z</a></li>
-                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=desc&By=p.nome">Z - A</a></li>
-                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=asc&By=preco">Menor Preço</a></li>
-                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=desc&By=preco">Maior Preço</a></li>
-                        <li><a class="dropdown-item" href="@ViewBag.Filtro&Order=desc&By=desconto">Desconto</a></li>
+                        <li><a class="dropdown-item" onclick = "RescueConfig.SalvarOrdem('A - Z')" href="@ViewBag.Filtro&Order=asc&By=p.nome">A - Z</a></li>
+                        <li><a class="dropdown-item" onclick = "RescueConfig.SalvarOrdem('Z - A')" href="@ViewBag.Filtro&Order=desc&By=p.nome">Z - A</a></li>
+                        <li><a class="dropdown-item" onclick = "RescueConfig.SalvarOrdem('Menor Preço')" href="@ViewBag.Filtro&Order=asc&By=preco">Menor Preço</a></li>
+                        <li><a class="dropdown-item" onclick = "RescueConfig.SalvarOrdem('Maior Preço')" href="@ViewBag.Filtro&Order=desc&By=preco">Maior Preço</a></li>
+                        <li><a class="dropdown-item" onclick = "RescueConfig.SalvarOrdem('Desconto')" href="@ViewBag.Filtro&Order=desc&By=desconto">Desconto</a></li>
                     </ul>
                 </li>
             </ul>
@@ -59,19 +62,19 @@
                             
                             @* Preço *@
                             @if(item.Desconto != 0){
-                                Novo_preco = (item.Preco + item.DescontoCheio);
-                                <p class="text-decoration-line-through text-secondary">@Novo_preco.ToString("F")</p>
-                                <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho" > <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                R$@item.Preco.ToString("F")
-                            </h4>
-                            }else{
-                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                R$@item.Preco.ToString("F")
-                                
-                            </h4>
+                                preco_padrao = (item.Preco + item.DescontoCheio);
+                                <p class="text-decoration-line-through text-secondary">@preco_padrao.ToString("F")</p>
                             }
+                                <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                    @if(item.Quantidade <1){
+                                        <a id="cart"  > <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                    }
+                                    else{
+                                        <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho" > <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                    }
+                                R$@item.Preco.ToString("F")
+                                </h4>
+                            
                             <div class="row border">
                                 <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</a>
                                 <a class="col" asp-area="" id="nameLink" data-bs-toggle="modal" data-bs-target="#exampleModal"> @Html.ActionLink("Deletar", "Delete", new { id = item.Id })</a>
@@ -90,32 +93,42 @@
                         if (ViewBag.QtdProduto % ViewBag.PorPagina != 0)
                              totalPag = totalPag + 1;
                     }
-                    <ul class="pagination justify-content-center">
-                        @if (paginaAtual != 1) {
+                    <ul class="pagination justify-content-evenly">
+                        @{if (paginaAtual == 1) {
+                            invisible = "opacity-0";
+                            }
+                        }
                         <li class="page-item">
-                            <a class="page-link" aria-label="Previous" id="prev" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@voltarPag">
+                            <a class = "btn buttonPagination rounded-3 page-link @invisible" aria-label="Previous" id="prev" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@voltarPag">
                                 <span aria-hidden="true">Anterior</span>
                             </a>
                         </li>
-                        }
+                        
+                        <li class="page-item d-flex justify-content-center">
                         @for (int i = 1; i <= totalPag; i++)
                         { 
-                            <li class="page-item">
-                                <a class="page-link" href="@ViewBag.Filtro&@ViewBag.Order&pagina=@i">
+                            <a class="page-link border-0 bg-transparent" href="@ViewBag.Filtro&@ViewBag.Order&pagina=@i">
+                                @if(paginaAtual == i){
+                                    <u>@i</u>
+                                }
+                                else
                                     @i
-                                </a>
-                            </li>
+                            </a>
                         }
+                         </li>
                     
                        
 
-                        @if (paginaAtual != totalPag) {
+                        @{if (paginaAtual == totalPag) {
+                            invisible2 = "opacity-0";
+                            }
+                        }
                         <li class="page-item">
-                            <a class="page-link" aria-label="Next" id="next" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@proximaPag">
+                            <a class = "btn buttonPagination rounded-3 page-link @invisible2" aria-label="Next" id="next" href ="@ViewBag.Filtro&@ViewBag.Order&pagina=@proximaPag">
                                 <span aria-hidden="true">Próximo</span>
                             </a>
                         </li>
-                        }
+                       
                     </ul>
                 </nav>
 
@@ -124,5 +137,6 @@
 
     </div>
 </div>
+
 
 
