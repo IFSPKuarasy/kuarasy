@@ -26,6 +26,19 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
+
+          public Compra PesquisarCompra()
+        {
+            try
+            {           
+                Compra compra = _compraRepository.PesquisarCompra(); 
+                return compra;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         
     }
 }

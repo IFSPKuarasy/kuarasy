@@ -9,6 +9,7 @@ namespace kuarasy.Models.Contracts.Repositories
     public interface ICompraRepository
     {
         void Cadastrar(Compra compra);
+        Compra PesquisarCompra();
     }
 
 }

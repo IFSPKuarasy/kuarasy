@@ -87,6 +87,52 @@ namespace kuarasy.Models.Contexts
 
             command.ExecuteNonQuery();
         }
+
+        public Compra PesquisarCompraId(){
+            try
+            {
+                _connection.Open();
+                Compra compra = null;
+                var query = SqlManagerCompra.GetSql(TSql.PESQUISAR_COMPRA);
+
+                var command = new SqlCommand(query, _connection);
+                command.Parameters.Add("@id_compra", SqlDbType.Int).Value = UltimoRegristoCompra();
+
+                var dataset = new DataSet();
+                var adapter = new SqlDataAdapter(command);
+                adapter.Fill(dataset);
+
+                var rows = dataset.Tables[0].Rows;
+
+                foreach (DataRow item in rows)
+                {
+                    var colunas = item.ItemArray;
+
+                    var codigo = Convert.ToInt32(colunas[0]);
+                    var observacao = colunas[1].ToString();
+                    var valor_total = colunas[2].ToString();
+                    var data_entrega = Convert.ToDateTime(colunas[3]);
+                    var data_compra = Convert.ToDateTime(colunas[4]);
+
+                    compra = new Compra {Id_compra = codigo, Observacao = observacao, Valor_total = valor_total, Data_entrega = data_entrega, Data_compra = data_compra};
+                }
+
+                adapter = null;
+                dataset = null;
+                return compra;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+        }
     }
+
 
 }

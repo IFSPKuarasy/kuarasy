@@ -6,6 +6,7 @@ namespace kuarasy.Models.Contracts.Context
 	public interface IContextDataCompra
 	{
 		void CadastrarCompra(Compra compra);
+		Compra PesquisarCompraId();
 	}
 
 }

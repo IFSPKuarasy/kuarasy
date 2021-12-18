@@ -20,5 +20,9 @@ namespace kuarasy.Models.Repositories
         {
             _contextDataCompra.CadastrarCompra(compra);
         }
+        public Compra PesquisarCompra()
+        {
+            return _contextDataCompra.PesquisarCompraId();
+        }
     }
 }

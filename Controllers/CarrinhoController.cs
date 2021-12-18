@@ -54,12 +54,13 @@ namespace kuarasy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public IActionResult Pagamento([Bind("Observacao, Valor_total , Data_entrega, QuantidadeComprado, Quantidade, Id_produtos")] Compra compra)
+         public IActionResult Pagamento([Bind("Observacao, Valor_total , Data_entrega, QuantidadeComprado, Quantidade, Id_produtos")] Compra post)
         {
             try
             {
-                _compraService.Cadastrar(compra);
-                SendMail();
+                _compraService.Cadastrar(post);
+                Compra compra = _compraService.PesquisarCompra();
+                SendMail(compra);
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -68,7 +69,7 @@ namespace kuarasy.Controllers
             }
         }
 
-         public bool SendMail()
+         public bool SendMail(Compra compra)
         {
             try
             {
@@ -77,14 +78,13 @@ namespace kuarasy.Controllers
                 // Remetente
                 _mailMessage.From = new MailAddress("kuarasyOficial@gmail.com");
 
-                // Destinatario seta no metodo abaixo
-
+                string body = System.IO.File.ReadAllText("wwwroot/assets/html/Email.htm");
+                body = body.Replace("#Id_compra#", compra.Id_compra.ToString()).Replace("#Nome#", "Kaiky").Replace("#Total#",compra.Valor_total);
                 //Contrói o MailMessage
                 _mailMessage.CC.Add("kaiky.br34@gmail.com");
-                _mailMessage.Subject = "Teste Thiago";
+                _mailMessage.Subject = "Confirmação de compra";
                 _mailMessage.IsBodyHtml = true;
-                _mailMessage.Body = "<b>Olá Tudo bem ??</b><p>Teste Parágrafo</p>";
-
+                _mailMessage.Body = body;
                 //CONFIGURAÇÃO COM PORTA
                 SmtpClient _smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32("587"));
 

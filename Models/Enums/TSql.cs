@@ -30,6 +30,7 @@ namespace kuarasy.Models.Enums
         CADASTRAR_COMPRA,
         CADASTRAR_COMPRA_PRODUTO,
         ULTIMO_REGISTRO_COMPRA,
-        ATUALIZAR_ESTOQUE
+        ATUALIZAR_ESTOQUE,
+        PESQUISAR_COMPRA
     }
 }

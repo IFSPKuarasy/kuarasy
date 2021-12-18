@@ -22,6 +22,9 @@ namespace kuarasy.Models.SqlManager
                 case TSql.ATUALIZAR_ESTOQUE:
                     sql = "update produto set quantidade = @quantidade where id_produto = @id_produto";
                     break;
+                case TSql.PESQUISAR_COMPRA:
+                    sql = "select id_compra, observacao, valor_total, data_entrega, data_compra from compra where id_compra = @id_compra";
+                    break;
             }
             return sql;
         }
