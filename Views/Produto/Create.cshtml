@@ -1,22 +1,26 @@
-﻿@model kuarasy.Models.Entidades.HomeIndexViewModel
+﻿<style>
+    label{
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+</style>
+
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Cadastrar produto";
 }
 <div class ="container my-5">
 
-<h1>Cadastrar</h1>
-
-<h4>Produto</h4>
-<hr />
- <form asp-action="Create" method="post" enctype="multipart/form-data">
-<div class="row d-flex justify-content-evenly">
-   
-            <div class="col-md-4">
-                
+    <h2 class="fw-bold" style="color:var(--red)">Novo produto</h2>
+    <hr />
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="row d-flex justify-content-between">
+    
+            <div class="col col-auto col-md-6"> 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group mt-3">
                         <label asp-for="Produto.Nome" class="control-label"></label>
-                        <input asp-for="Produto.Nome" class="form-control" />
+                        <input asp-for="Produto.Nome" class="form-control" required/>
                         <span asp-validation-for="Produto.Nome" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-3">
@@ -59,29 +63,28 @@
                     <div class="form-group mt-3">
                         <label class="control-label"> Imagem do Produto</label>
                         <div class="input-group mb-3">
-                            <input type="file" asp-for="Produto.ProfileImage" class="form-control" id="inputGroupFile02">
-                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            <input type="file" asp-for="Produto.ProfileImage" class="form-control" id="inputGroupFile02">                           
                             <span asp-validation-for="Produto.ProfileImage" class="text-danger"></span>
                         </div>
 
                     </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group  mt-3 row d-flex justify-content-around">
+            <div class="col col-auto col-md-6">
+                <div class="form-group  mt-3 row d-flex justify-content-between">
                         <div class = "col-md-3">
-                               <label asp-for="Produto.Altura" class="control-label"></label>
+                                <label asp-for="Produto.Altura" class="control-label"></label>
                             <input asp-for="Produto.Altura" class="form-control" />
                             <span asp-validation-for="Produto.Altura" class="text-danger"></span>
                         </div>
 
-                          <div class = "col-md-3">
-                         <label asp-for="Produto.Largura" class="control-label"></label>
+                            <div class = "col-md-3">
+                            <label asp-for="Produto.Largura" class="control-label"></label>
                             <input asp-for="Produto.Largura" class="form-control" />
                             <span asp-validation-for="Produto.Largura" class="text-danger"></span>
                         </div>
 
-                          <div class = "col-md-3">
-                          <label asp-for="Produto.Comprimento" class="control-label"></label>
+                            <div class = "col-md-3">
+                            <label asp-for="Produto.Comprimento" class="control-label"></label>
                             <input asp-for="Produto.Comprimento" class="form-control" />
                             <span asp-validation-for="Produto.Comprimento" class="text-danger"></span>
                         </div>
@@ -112,15 +115,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                    </div>              
             </div>
-  
+
+            <div class="form-group d-flex justify-content-between mt-3">
+                <a class="btn btn-yellow" asp-action="Index">Cancelar</a>
+                <input type="submit" value="Cadastrar" class="btn btn-success" />
+            </div>              
+        </div>
+    </form>
+
 </div>
-  </form>
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
-<div class ="container">
 

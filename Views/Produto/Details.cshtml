@@ -69,6 +69,13 @@
                              }
                             
                         </div>
+                        <div class="d-flex mt-3">
+                        @* Editar e Deletar *@
+                            <a class="" href="/Produto/Edit/@Model.Produto.Id"><i class="fas fa-edit"
+                                    style="color:var(--yellow); font-size:1.5rem;"></i></a>
+                            <a class="ms-3" href="/Produto/Delete/@Model.Produto.Id"><i class="fas fa-trash-alt" style="color:var(--red);"></i></a>
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -124,9 +131,7 @@
                 </div>
 
                  <div class="d-flex align-items-center justify-content-center my-4">
-                     @Html.ActionLink("Editar", "Edit", new { id = Model.Produto.Id }) | 
-                    
-                    <a class="link" asp-action="Index">Voltar para a lista</a>
+                    <a class="btn btn-yellow" asp-action="Index">Voltar</a>
                 </div>
 
 

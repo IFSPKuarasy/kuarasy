@@ -30,10 +30,10 @@
 
 .owl-carousel .card img{
   max-width: 15rem!important;
-  max-height: 15rem!important;
+  height: 14rem!important;
   align-self: center!important;
   object-fit: cover!important;
-  object-position: bottom;
+  object-position: center!important;
 }
 
 .owl-carousel .card:hover #cart{

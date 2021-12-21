@@ -5,7 +5,7 @@
 }
 
 <div class="container my-5">
-    <main role="main" class="flex-shrink-0">
+    <main role="main" class="needs-validation flex-shrink-0">
         <h2 class="fw-bolder"> Finalização do pedido</h2>
         <div class="row g-3">
             <div class="col my-5">
@@ -14,14 +14,17 @@
                         <h5 class="card-title my-4">Endereço de entrega</h5>
                         <form class="row justify-content-center">
                             <div>
-                                <input type="text" class="form-control mb-4" id="cep" placeholder="CEP">
-                                <input type="text" class="form-control mb-4" id="endereco" placeholder="Endereço">
-                                <input type="text" class="form-control mb-4" id="bairro" placeholder="Bairro">
+                                <div>
+                                    <input type="text" class="form-control mb-0" id="cep" placeholder="CEP" data-js="cep" name="cep" required>
+                                    <span class="my-2 error"></span>
+                                </div>
+                                <input type="text" class="form-control mt-3 mb-4" id="endereco" name="logradouro" placeholder="Endereço">
+                                <input type="text" class="form-control mb-4" id="bairro" name="bairro" placeholder="Bairro">
                                 <input type="text" class="form-control mb-4" id="numero" placeholder="Numero">
                             </div>
 
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-red mb-3">Salvar</button>
+                            <div class="d-flex justify-content-end" >
+                                <input type="button" class="btn btn-red mb-3" id="searchCEP" value="Pesquisar frete"></input>
                             </div>
                         
                         </form>
@@ -29,7 +32,8 @@
 
                 </div>
 
-                <div class="card my-5 bg-red-medium text-light shadow">
+                <div id="frete"></div> 
+                @* <div class="card my-5 bg-red-medium text-light shadow" >
                     <div class="card-body ms-4">
                     <div class="table-responsive">
                         <table class="table table-borderless my-3">
@@ -69,7 +73,7 @@
 
                     </div>
 
-                </div>
+                </div> *@
 
             </div>
 
@@ -94,7 +98,8 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="name">Nome do titular</label>
-                                            <input class="form-control my-2" id="name" type="text" placeholder="FULANO A SILVA">
+                                            <input class="form-control my-2" id="name" type="text" placeholder="FULANO A SILVA" required>
+                                            <span class="error"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -102,12 +107,13 @@
                                 <div class="row mb-3">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="ccnumber">Número do cartão</label>
+                                            <label for="cc">Número do cartão</label>
                                             <div class="input-group my-2">
-                                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000" autocomplete="email">
+                                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000" autocomplete="off" id="cc" name="creditcard" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text" style="font-size:1.5rem;" ><i class="fas fa-credit-card"></i></span>
                                                 </div>
+                                                <span class="error"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -128,14 +134,14 @@
                                         <option>9</option>
                                         <option>10</option>
                                         <option>11</option>
-                                        <option>12</option>
+                                        <option selected>12</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <label for="ccyear">Ano</label>
                                     <select class="form-control my-2" id="ccyear">
                                         <option>2022</option>
-                                        <option>2023</option>
+                                        <option selected>2023</option>
                                         <option>2024</option>
                                         <option>2025</option>
                                         <option>2026</option>
@@ -150,18 +156,26 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="cvv">CVV/CVC</label>
-                                        <input class="form-control my-2" id="cvv" type="text" placeholder="123">
+                                        <input class="form-control my-2" id="cvv" type="text" placeholder="123"  name="cvv" required>
+                                        <span class="error"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-end px-5 mb-4">
-                            <button class="btn btn-success float-right" type="submit" onsubmit="" >Confirmar</button>
-                        </div>
+                        @* <div class="d-flex justify-content-end px-5 mb-4" id="verify">
+                            <button class="btn btn-success float-right" type="submit" disabled>Confirmar</button>
+                        </div> *@
                     </div>
                 </form>
               
+                    
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <div>
+                    <a class="btn btn-yellow" asp-area="" asp-controller="Carrinho" asp-action="Index"> Voltar</a>
+                </div>
                 <form asp-action="Pagamento" method="post">
                     <div class = "d-none">
                         <textarea asp-for="Observacao" id="nome" class="form-control"></textarea>
@@ -170,26 +184,27 @@
                         <input asp-for="Quantidade" id="quantidade" class="form-control" />
                         <input asp-for="Id_produtos" id="idProduto" class="form-control" />
                     </div>
-                     <div class="row  my-3">
-                    <button onclick="Produto.limparCarrinho()" class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" type="submit"> Finalizar pedido</button>
-                    </div>
+                     <div class="row my-3" id="verify">
+                        <button onclick="Produto.limparCarrinho()" class="btn bg-yellow text-light mb-3 px-3 rounded-3 fw-bolder shadow" type="submit" data-bs-toggle="modal" data-bs-target="#pedidoModal" disabled> Fazer pedido</button>
+                    </div>  
                 </form>
-                    
-
-               
-
-            </div>
-
-            <div class="d-flex justify-content-start my-3">
-                    <a class="btn btn-yellow" asp-area="" asp-controller="Carrinho" asp-action="Index"> Voltar</a>
             </div>
 
         </div>
-
-
-        
+  
     </main>
+    <!-- Modal -->
+    <div class="modal fade" id="pedidoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="pedidoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 <script>
 
@@ -238,3 +253,11 @@
 
     Produto.inserir()
 </script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" language="javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="~/assets/js/Carrinho/pagamento.js"></script>
+<script type="text/javascript" language="javascript" src="~/assets/js/Carrinho/validacao.js"></script>
+<script type="text/javascript" language="javascript"  src="/scripts/correios.js"></script>
+<script type="module" language="javascript" src="~/assets/js/Carrinho/freteAPI.js"></script>

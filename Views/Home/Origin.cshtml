@@ -54,15 +54,24 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <figure class="figure mb-0">
+      <figure class="figure">
         <img src="~/assets/img/origin/comunidades.png" alt="" class="figure-img img-fluid mb-0">
       </figure>
 
-        <ul class="list-group mt-5" aria-labelledby="dropdownMenuButton">
+        <ul class="list-group mt-5">
           @foreach (var item in Model.ListOrigem)
           {
             @if(item.Continente == continente){
-              <li class="text-center"><a class="dropdown-item mb-3" href = "#@item.Pais" ><h2 class = "mb-0">@item.Pais</h2></a></li>
+              string heading = "flush-heading"+item.Pais;
+              string collapse1 = "#flush-collapse"+item.Pais;
+              string collapse2 = "flush-collapse"+item.Pais;
+              string id_pais = "#"+item.Pais;
+
+              <li class="text-center">
+                <a class="dropdown-item" href = @id_pais>
+                     <h2 class = "mb-0"  data-bs-toggle="collapse" data-bs-target=@collapse1 aria-expanded="false" aria-controls=@collapse2>@item.Pais</h2>               
+                </a>
+              </li>
             }
           }
         </ul>
@@ -138,12 +147,12 @@
                                       preco_antigo = (item2.Preco + item2.DescontoCheio);
                                       <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
                                       <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                      <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                      <a id="cart" asp-area="@item2.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
                                       R$@item2.Preco.ToString("F")
                                   </h4>
                                   }else{
                                       <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                          <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                          <a id="cart" asp-area="@item2.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
                                           R$@item2.Preco.ToString("F")
                                           
                                       </h4>

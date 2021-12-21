@@ -37,6 +37,14 @@ td img{
   object-position: center!important;
 }
 
+#cartEmpty img{
+  max-width: 20rem!important;
+  height: 18rem!important;
+  align-self: center!important;
+  object-fit: cover!important;
+  object-position: center!important;
+}
+
 .subtotal{
     color: var(--red)!important;
 }

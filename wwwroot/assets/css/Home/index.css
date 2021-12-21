@@ -30,6 +30,7 @@
 #destaque  .owl-carousel .owl-nav button{
   text-align:center; 
   border:1px solid var(--white) !important;
+  color: var(--white)!important;
 }
 
 #destaque  .owl-carousel .owl-nav button:hover{

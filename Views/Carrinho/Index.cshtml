@@ -28,54 +28,67 @@
 	<div class="row">
 		<main role="main" class="col flex-shrink-0">
 			@* Resumo dos itens *@
-			<h2 class="fw-bolder"> Carrinho de Compras</h2>
-			<div class="table-responsive">
-				<table class="table table-borderless my-4" id="table">
-					<thead class="my-4">
-						<tr>
-							<th scope="row">
-								<p class="fw-bolder title">Produto</p>
-							</th>
+			<div id ="Exist" class ="d-none">
+				<h2 class="fw-bolder"> Carrinho de Compras</h2>
+				<div class="table-responsive">
+					<table class="table table-borderless my-4" id="table">
+						<thead class="my-4">
+							<tr>
+								<th scope="row">
+									<p class="fw-bolder title">Produto</p>
+								</th>
 
-							<th scope="row">
-								<p class="fw-bolder title">
-									Quantidade
-								</p>
-							</th>
-							<th scope="row">
-								<p class="fw-bolder title">
-									Valor
-								</p>
-							</th>
-							<th scope="row"></th>
-						</tr>
-					</thead>
+								<th scope="row">
+									<p class="fw-bolder title">
+										Quantidade
+									</p>
+								</th>
+								<th scope="row">
+									<p class="fw-bolder title">
+										Valor
+									</p>
+								</th>
+								<th scope="row"></th>
+							</tr>
+						</thead>
 
-					<tbody>
-							
-					</tbody>
+						<tbody>
+								
+						</tbody>
 
 
-					<tfoot class="border-top border-brown">
-						<tr>
-							<td colspan="2">
-								<a class="btn btn-red my-3" asp-area="" asp-controller="Produto"
-									asp-action="Index">Comprar mais</a>
-							</td>
-							<td></td>
-							<td class="subtotal fw-bold"> Subtotal: </td>
-							<td class="subtotal fw-bold" id="subtotal">
-								R$0
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+						<tfoot class="border-top border-brown">
+							<tr>
+								<td colspan="2">
+									<a class="btn btn-red my-3" asp-area="" asp-controller="Produto"
+										asp-action="Index">Comprar mais</a>
+								</td>
+								<td></td>
+								<td class="subtotal fw-bold"> Subtotal: </td>
+								<td class="subtotal fw-bold" id="subtotal">
+									R$0
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+				<div class="d-flex justify-content-end mx-3 my-3">
+					<a class="btn btn-yellow ms-3" asp-area="" asp-controller="Carrinho" asp-action="Pagamento">Finalizar
+						compra</a>
+				</div>
 			</div>
+			<div id="NotExist" class="my-3 d-flex flex-column align-items-center justify-content-center text-center d-none">                    
+                        <h3 class="fw-bolder">Seu carrinho está vazio</h3>
+                        <p>Procure produtos para adicionar!</p>
+                        <figure class="figure" id="cartEmpty">
+                            <img src="~/assets/img/carrinho/empty.png" class="figure-img img-fluid" alt="...">
+                        </figure>
+                        <div>
+                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
+                        </div>
 
-			<div class="d-flex justify-content-end mx-3 my-3">
-				<a class="btn btn-yellow ms-3" asp-area="" asp-controller="Carrinho" asp-action="Pagamento">Finalizar
-					compra</a>
-			</div>
+                </div>
 
 		</main>
 	</div>
@@ -96,16 +109,22 @@
 		all: Storage.get(),
 		
 		add(produto) {
-
-			Produto.all.forEach(produtos => {
-				if(@ViewBag.Id == produtos.id)
-					Produto.all.splice(produtos.indexOf(produtos), 1)
-			})
-
-			if(@ViewBag.Id != 1)
-				Produto.all.push(produto)
 			
-			App.reload()	
+				try{
+					Produto.all.forEach(produtos => {
+					if(produtos.id == @ViewBag.Id){
+						alert(i)
+					}})
+					if(@ViewBag.Id != 1)
+					Produto.all.push(produto)
+					App.reload()
+				
+				}
+				catch{
+					console.log("Já possui produto no carrinho")
+				}
+			
+				
 		}
 		,
 		remove(index) {
@@ -125,11 +144,13 @@
 		produtosContainer: document.querySelector('#table tbody'),
 
 		addProduto(produto, index) {
+			
 			const tr = document.createElement('tr')
 			tr.innerHTML = DOM.innerHTMLProduto(produto, index)
 			tr.dataset.index = index
-
 			DOM.produtosContainer.appendChild(tr)
+			
+			
 		},
 
 		innerHTMLProduto(produto, index) {
@@ -282,15 +303,17 @@
 		submit() {
 			const produto = RescueProduto.formatData()
 			Produto.add(produto)
+			if(localStorage.getItem('Carrinho') !== "[]"){
+				document.querySelector('#Exist').classList.remove("d-none")
+			}
+			
 		}
 	}
 
 
 	const App = {
 		init() {
-			
 			Produto.all.forEach(DOM.addProduto)
-
 			DOM.updateTotal()
 
 			Storage.set(Produto.all)
@@ -300,10 +323,11 @@
 			App.init()
 		}
 	}
+		App.init()	
+		RescueProduto.submit()
+		DOM.updateTotal()
 	
-	App.init()
-	RescueProduto.submit()
-	DOM.updateTotal()
-
-
+	if(localStorage.getItem('Carrinho') === "[]")
+		document.querySelector('#NotExist').classList.remove("d-none")
+	
 </script>

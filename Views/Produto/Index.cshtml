@@ -5,6 +5,7 @@
     decimal preco_padrao = 0;
     string invisible = "";
     string invisible2 = "";
+
     ViewData["Title"] = "Produtos";
 }
 
@@ -38,7 +39,7 @@
                         <strong class="font-monospace" asp-action="Create"> @ViewBag.QtdProduto itens </strong>
                     </li>
                 }
-               <p class = "stringOrdanation mb-0 me-2">Ordernar por:</p> 
+               <p class = "stringOrdanation mb-0 me-2"> Ordenar por:</p> 
                 <li class="nav-item dropdown border bg-white">
                     <a class="nav-link dropdown-toggle text-dark "  data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">@ViewBag.ordem </a>
                     <ul class="dropdown-menu text-dark">
@@ -57,7 +58,6 @@
                         <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
-                            
                             <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
                             
                             @* Preço *@
@@ -75,9 +75,11 @@
                                 R$@item.Preco.ToString("F")
                                 </h4>
                             
-                            <div class="row border">
-                                <a class="col" asp-area="" id="nameLink">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</a>
-                                <a class="col" asp-area="" id="nameLink" data-bs-toggle="modal" data-bs-target="#exampleModal"> @Html.ActionLink("Deletar", "Delete", new { id = item.Id })</a>
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                @* Editar *@
+                                    <a class="btnEdit link"  href="/Produto/Edit/@item.Id"><i class="fas fa-edit" style="color:var(--yellow);"></i></a>
+                                @* Deletar *@
+                                    <a class="btnDelete"  href="/Produto/Delete/@item.Id"><i class="fas fa-trash-alt" style="color:var(--red);"></i></a>
                             </div>
                         </div>
                     </div>
@@ -137,6 +139,3 @@
 
     </div>
 </div>
-
-
-
