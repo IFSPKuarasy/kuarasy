@@ -3,5 +3,5 @@
 - Anai Rojas
 - Gabriela Araujo
 - Jamilli Gioielli
-- Larrissa Souza
+- Larissa Souza
 - Kaiky Matsumoto
