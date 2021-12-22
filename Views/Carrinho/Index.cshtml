@@ -1,0 +1,335 @@
+<link rel="stylesheet" type="text/css" href="~/assets/css/Carrinho/index.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
+@{
+	ViewData["Title"] = "Carrinho";
+	int id = 0;
+	string nome = "";
+	decimal preco = 0;
+	int quantidade = 1;
+	string imagem = "";
+	float altura = 0;
+	float largura = 0;
+	float comprimento = 0;
+	if(ViewBag.Id != 1){
+	id = Model.Produto.Id;
+	nome = Model.Produto.Nome;
+	preco = Model.Produto.Preco;
+	quantidade = Model.Produto.Quantidade;
+	imagem = Model.Produto.Imagem;
+	altura = Model.Produto.Altura;
+	largura = Model.Produto.Largura;
+	comprimento = Model.Produto.Comprimento;
+	}
+}
+
+
+
+<div class="container my-5" oncontextmenu="return false">
+	<div class="row">
+		<main role="main" class="col flex-shrink-0">
+			@* Resumo dos itens *@
+			<div id ="Exist" >
+				<h2 class="fw-bolder"> Carrinho de Compras</h2>
+				<div class="table-responsive">
+					<table class="table table-borderless my-4" id="table">
+						<thead class="my-4">
+							<tr>
+								<th scope="row">
+									<p class="fw-bolder title">Produto</p>
+								</th>
+
+								<th scope="row">
+									<p class="fw-bolder title">
+										Quantidade
+									</p>
+								</th>
+								<th scope="row">
+									<p class="fw-bolder title">
+										Valor
+									</p>
+								</th>
+								<th scope="row"></th>
+							</tr>
+						</thead>
+
+						<tbody>
+								
+						</tbody>
+
+
+						<tfoot class="border-top border-brown">
+							<tr>
+								<td colspan="2">
+									<a class="btn btn-red my-3" asp-area="" asp-controller="Produto"
+										asp-action="Index">Comprar mais</a>
+								</td>
+								<td></td>
+								<td class="subtotal fw-bold"> Subtotal: </td>
+								<td class="subtotal fw-bold" id="subtotal">
+									R$0
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+				<div class="d-flex justify-content-end mx-3 my-3">
+					<a class="btn btn-yellow ms-3" asp-area="" asp-controller="Carrinho" asp-action="Pagamento">Finalizar
+						compra</a>
+				</div>
+			</div>
+			<div id="NotExist">
+				<div  class="my-3 d-flex flex-column align-items-center justify-content-center text-center">                    
+							<h3 class="fw-bolder">Seu carrinho está vazio</h3>
+							<p>Procure produtos para adicionar!</p>
+							<figure class="figure" id="cartEmpty">
+								<img src="~/assets/img/carrinho/empty.png" class="figure-img img-fluid" alt="...">
+							</figure>
+							<div>
+								<a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
+							</div>
+
+					</div>
+			</div>
+
+		</main>
+	</div>
+</div>
+
+<script>
+
+	const Storage = {
+		get() {
+			return JSON.parse(localStorage.getItem("Carrinho")) || []
+		},
+		set(produtos) {
+			localStorage.setItem("Carrinho", JSON.stringify(produtos))
+		}
+	}
+
+	const Produto = {
+		all: Storage.get(),
+		
+		add(produto) {
+			
+				try{
+					Produto.all.forEach(produtos => {
+					if(produtos.id == @ViewBag.Id){
+						alert(i)
+					}})
+					if(@ViewBag.Id != 1)
+					Produto.all.push(produto)
+					App.reload()
+				
+				}
+				catch{
+					console.log("Já possui produto no carrinho")
+				}
+			
+				
+		}
+		,
+		remove(index) {
+			Produto.all.splice(index, 1)
+			App.reload()
+		},
+		total() {
+			let expense = 0
+			Produto.all.forEach(produto => {
+			expense += produto.preco 
+			})
+			return expense
+		}
+	}
+
+	const DOM = {
+		produtosContainer: document.querySelector('#table tbody'),
+
+		addProduto(produto, index) {
+			
+			const tr = document.createElement('tr')
+			tr.innerHTML = DOM.innerHTMLProduto(produto, index)
+			tr.dataset.index = index
+			DOM.produtosContainer.appendChild(tr)
+			
+			
+		},
+
+		innerHTMLProduto(produto, index) {
+
+			const preco = Utils.formatCurrency(produto.preco)
+			
+			const html = `
+			
+									<td id="productInfo">
+										<div class="my-3">
+											<div class="row flex-column flex-md-row align-items-center g-2">
+												<div class="col col-md-2">
+													<img src="/productsImage/${produto.imagem}"
+													class="card-img mb-4 img-fluid" alt="Imagem do produto">
+												</div>
+
+												<div class="col-md-8">
+													<div class="card-body">
+														<h5 class="card-title fw-bolder">${produto.nome}</h5>
+														<div class="row flex-column">
+															<div class="col">
+																<p><small>Tamanho &#40 AxLxC cm &#41: ${produto.altura} x ${produto.largura} x
+																		${produto.comprimento} </small></p>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td class="number fw-bold" id="productQuantity">
+										<div class="my-3 btn-group" role="group" aria-label="Basic example">
+											<button type="button" class="btn btn-yellow"  onclick="RescueProduto.alterarQuantidade(${produto.id}, 0, ${produto.quantidade})">-</button>
+											<button type="button" class="btn btn-yellow" id="qtd"> ${produto.quantidadePadrao}</button>
+											<button type="button" class="btn btn-yellow" onclick="RescueProduto.alterarQuantidade(${produto.id}, 1, ${produto.quantidade})" >+</button>
+
+										</div>
+									</td>
+
+									<td class="number fw-bold" id="productTotal" colspan="2">
+										<div class="my-3" id="preco">
+											${preco}
+										</div>
+									</td>
+
+									<td>
+										<div class="my-3">
+											<a class="text-danger"  href="./Carrinho?"><i onclick="Produto.remove(${index})" class="fas fa-minus-square"></i></a>
+										</div>
+									</td>
+			`
+			return html			
+		},
+		updateTotal() {
+			document.querySelector('#table tfoot #subtotal').innerHTML = Utils.formatCurrency(Produto.total())
+		},
+		clearProdutos() {
+			DOM.produtosContainer.innerHTML = ""
+		}
+	}
+	const Utils = {
+
+		formatValue(value) {
+			value = String(value).replace(",", "")
+			value = Number.parseInt(value)
+			return value
+		},
+		formatCurrency(value) {
+
+			value = String(value).replace(",", "")
+			value = Number(value) / 100
+			value = value.toLocaleString("pt-BR", {
+				style: "currency",
+				currency: "BRL"
+			})
+			return value
+		},
+	}
+
+	
+	let precoFixo = 0 
+
+	const RescueProduto = {
+		getValues() {
+			
+			return {
+				id: '@id',
+				nome: '@nome',
+				preco: '@preco.ToString("F")',
+				quantidade: '@quantidade',
+				imagem: '@imagem', 
+				altura: '@altura',
+				largura: '@largura',
+				comprimento: '@comprimento'
+			}
+			
+		},
+		alterarQuantidade(index, action){
+			if(action == 0){
+				
+				Produto.all.forEach(produtos => {
+					if(index == produtos.id){
+						
+						if(produtos.quantidadePadrao !=1){
+						precoFixo = produtos.preco/produtos.quantidadePadrao
+						produtos.quantidadePadrao -= 1
+
+						produtos.preco = precoFixo * Number(produtos.quantidadePadrao) 
+						console.log(precoFixo, produtos.quantidadePadrao)
+						App.reload()
+						}
+					}
+				})
+			}
+			else{
+				Produto.all.forEach(produtos => {
+				if(index == produtos.id){
+						if(produtos.quantidadePadrao < produtos.quantidade ){
+							precoFixo = produtos.preco/produtos.quantidadePadrao
+							produtos.quantidadePadrao += 1
+						
+						produtos.preco = precoFixo * Number(produtos.quantidadePadrao) 
+						console.log(precoFixo, produtos.quantidadePadrao)
+						App.reload()
+						}
+					}
+				})
+			}
+			
+		},	
+		formatData() {
+			let { id, nome, preco, quantidade, imagem, largura, altura, comprimento } = RescueProduto.getValues()
+			quantidade  = Number(quantidade)
+			var quantidadePadrao = 1; 
+			preco = Utils.formatValue(preco) 
+			return {
+				id,
+				nome,
+				preco,
+				quantidade,
+				imagem,
+				quantidadePadrao,
+				largura, 
+				altura, 
+				comprimento
+			}
+		},
+		submit() {
+			const produto = RescueProduto.formatData()
+			Produto.add(produto)
+			if(localStorage.getItem('Carrinho') !== "[]"){
+				document.getElementById('NotExist').hidden = true
+			}
+			
+		}
+	}
+
+
+	const App = {
+		init() {
+			Produto.all.forEach(DOM.addProduto)
+			DOM.updateTotal()
+
+			Storage.set(Produto.all)
+		},
+		reload() {
+			DOM.clearProdutos()
+			App.init()
+		}
+	}
+		App.init()	
+		RescueProduto.submit()
+		DOM.updateTotal()
+	
+	if(localStorage.getItem('Carrinho') === "[]")
+		document.getElementById('Exist').hidden = true
+		
+</script>

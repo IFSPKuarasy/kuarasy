@@ -1,55 +1,150 @@
-﻿@model kuarasy.Models.Entidades.Produto
+﻿<link rel="stylesheet" type="text/css" href="~/assets/css/Produto/details.css" />
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 
 @{
-    string nome = Model.Nome;
+    decimal preco_padrao = 0;
+    string nome = Model.Produto.Nome;
     ViewData["Title"] = nome;
+    
 }
 
-<h1>Details</h1>
+<main role="main" class="flex-shrink-0" >
+    <div class="container my-5">
+        @* Produto *@
+        <section id="product">
+            <div class="row flex-column flex-md-row">
+                <div class="col" id="image"> 
+                    <figure class="figure">
+                        @* Imagem do produto *@
+                        <div class="img-hover-zoom">
+                            <img src="/productsImage/@Model.Produto.Imagem" class="figure-img img-fluid border rounded-3 w-100 h-100" alt="Imagem do produto">
+                        </div>
+                        <figcaption class="figure-caption text-center">Nossos produtos são artesanais. Sendo assim, pequenas alterações nas cores, desenhos, tamanhos, pesos e formatos das peças podem ocorrer</figcaption>
+                    </figure>
+                </div>
+                
+                @* Informações básicas *@
+                <div class="col my-5 mx-3" id="detail">
+                    @* Nome do produto*@
+                    <h2 class="fw-bolder">
+                        @Html.DisplayFor(model => model.Produto.Nome) 
+                    </h2> 
+                    <div class="row row-cols-auto">
+                        @* Código do produto *@
+                        <p class="col fs-6 font-monospace"> CÓD:@Model.Produto.Id </p>
+                        @* Estoque do produto *@
+                        <p class="col fs-6 font-monospace align ">Quantidade em estoque:@Model.Produto.Quantidade </p>
+                    </div>
+                    <div class="row mt-3 buy">
+                        <div class="row align-items-center">
+                        @if(Model.Produto.Desconto != 0){
+                            preco_padrao = (Model.Produto.Preco + Model.Produto.DescontoCheio);
+                            <div class="d-flex align-items-center"> 
+                                <p>De: </p>
+                                <p class="ms-3 text-decoration-line-through text-secondary">@preco_padrao.ToString("F")</p>
+                            </div>
+                        }
+                             <p>por: </p>
+                                <div class="d-flex">
+                                    @* Preço *@
+                                    
+                                    <h4 class="fw-bold fs-2 me-3" id="preco">
+                                    R$@Model.Produto.Preco.ToString("F")
 
-<div>
-    <h4>ProdutoDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Quantidade)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Peso)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Peso)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @nome
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="List">Back to List</a>
-</div>
+                                    </h4>
+                                
+                                    <p> à vista</p>
+                                </div> 
+                            
+                                <p class="fs-6 fst-italic" style="color: var(--brown-medium);"> Compra disponível somente por cartão de crédito.</p>
+                        </div>
+                       
+                         <div class="row mt-3">
+                             @* Comprar - adicionar ao carrinho *@
+                             @if(Model.Produto.Quantidade == 0 ){
+                                    <a class="pe-none btn bg-secondary text-light mb-3 rounded-3 fw-bolder shadow">Fora de estoque</a>
+                             }
+                             else{
+                                  <a class="btn bg-yellow text-light mb-3 rounded-3 fw-bolder shadow" asp-area="@Model.Produto.Id" asp-controller="Carrinho" asp-action="Index">Comprar</a>
+                             }
+                            
+                        </div>
+                        <div class="d-flex mt-3">
+                        @* Editar e Deletar *@
+                            <a class="" href="/Produto/Edit/@Model.Produto.Id"><i class="fas fa-edit"
+                                    style="color:var(--yellow); font-size:1.5rem;"></i></a>
+                            <a class="ms-3" href="/Produto/Delete/@Model.Produto.Id"><i class="fas fa-trash-alt" style="color:var(--red);"></i></a>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        @* Informações *@
+        <section class= "my-5" id="info">
+                <nav class="nav nav-pills flex-column flex-sm-row">
+                <a class="flex-fill link ps-sm-0" aria-current="page" href="#">
+                    <h3 class="fw-bolder text-decoration-underline">Informações</h3>
+                </a>
+                @* <a class="link disabled" aria-current="page" href="#">
+                    <h3 class="fw-bolder">Avalie o produto</h3>
+                </a> *@
+                </nav>
+
+                 <div class="row flex-column flex-md-row mt-4" id="ficha">
+                     <div class="col mx-3 mx-md-0">
+                        <h4 class="fw-bolder">Ficha técnica</h4>
+                        <p class="text-uppercase">Origem: @Model.Origem.Pais </p> 
+                        <p class="text-uppercase">Continente: @Model.Origem.Continente </p>   
+                        <p class="text-uppercase">Tamanho &#40 AxLxC cm &#41: @Model.Produto.Altura x @Model.Produto.Largura x @Model.Produto.Comprimento </p> 
+                        <p class="text-uppercase">Peso &#40 kg &#41: @Model.Produto.Peso  </p> 
+                     </div>
+
+                    <div class="col mt-4 mt-md-0" id="description">
+                        <h4 class="fw-bolder ms-3 ms-md-0">Descrição</h4>
+                        <div class="text mt-2 mx-3 mx-md-0">
+                            @Html.DisplayFor(model => model.Produto.Descricao)
+                        </div>
+                    </div>
+
+                 </div>
+
+                @* História *@
+                <div class="row flex-column flex-md-row mt-5" id="history">
+                     <div class="col">
+                        <h3 class="fw-bolder text-decoration-underline mx-3 mx-md-0">História do Produto</h3>
+                        <div class="text mt-2 mx-3 mx-md-0 text-more">
+                            @Html.DisplayFor(model => model.Produto.Historia)
+                        </div>
+                        
+                    </div>
+                    @* Imagem da origem do produto *@
+                    <div class="col mt-4 mt-md-0" id="image">
+                        <figure class="figure mx-3 mx-md-0">
+                            <div class="img-hover-shadow">
+                                <img src="/assets/img/origin/comunidades/@Model.Origem.Imagem_origem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+
+                 <div class="d-flex align-items-center justify-content-center my-4">
+                    <a class="btn btn-yellow" asp-action="Index">Voltar</a>
+                </div>
+
+
+        </section>
+    </div>
+</main>
+
+<script type="text/javascript" language="javascript" src="~/assets/js/Produto/details.js"></script>
+
+
+
+
+
+
+
+

@@ -1,10 +1,167 @@
 
-.banner{
-    background-color: #F3B271;
+:root {
+	--yellow: #e28d26;
+    --yellow-medium: #eb9f4e;
+    --yellow-light: #f3b271;
+    --red-medium: #b84132;
+	--brown: #651e15;
+	--brown-medium: #814236;
+	--brown-light: #9d655a;
+    --black: #000;
+    --background-color: #fafafa;
 }
 
-.bg-red-medium h3{
+.banner{
+    background-color: var(--yellow-light);
+}
+
+.banner figure img{
+  max-width: 60rem!important;
+  max-height: 25rem!important;
+  align-self: center!important;
+  object-fit: cover!important;
+  object-position: center!important;
+}
+
+.offcanvas .offcanvas-body figure img{
+    max-width: 22rem!important;
+    max-height: 25rem!important;
+    align-self: center!important;
+    object-fit: cover!important;
+    object-position: center!important;
+}
+
+.row.mb-0{
+    align-items: center;
+}
+
+.row p{
+    text-align: justify;
+}
+
+.btn-origin h3{
     font-weight: bold;
     font-size: calc(1rem + .6vw);
-    max-width: 338px;
+}
+
+.offcanvas-title {
+    font-weight: 600;
+    color: var(--red-medium);
+}
+
+#dropdownMenuButton {
+    background-color: var(--yellow-medium);
+    border-color: var(--yellow);
+}
+
+.accordion-item{
+    margin: 5rem 0;
+}
+
+.accordion-button h2{
+    color:  var(--yellow)!important;
+}
+
+.accordion-button::after {
+    content: none;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: #fff;
+}
+
+.accordion-button .icon-sort-down {
+    color: var(--yellow)!important;
+    font-size: 3.5rem;
+    flex-shrink: 0;
+    margin-right: 2rem;
+    transition: transform .35s ease-in-out;
+}
+
+.accordion-button:not(.collapsed) .icon-sort-down{
+    transform: rotate(-180deg);
+}
+
+.accordion-body {
+    padding: 4rem 0 0;
+    background: var(--background-color);
+}
+
+.information{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history p{
+    text-align: justify;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.accordion-body .information h2{
+    color:  var(--black)!important;
+}
+
+.accordion-body h2{
+    color:  var(--red-medium)!important;
+}
+
+/* History section */
+#history .text{
+    text-align: justify!important;
+}
+
+#history #image .img-hover-shadow{
+    overflow: hidden; 
+}
+
+#history #image .img-hover-shadow img{
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+#history #image .img-hover-shadow:hover img{
+    border: 3px solid var(--yellow)!important;
+}
+
+/* Links */
+#history h3,
+#history a{
+  color: var(--red)!important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+#history h3:hover{
+  color: var(--red-medium)!important;
+}
+
+
+
+/* Responsivity */
+@media (max-width: 991.98px) {
+    .information{
+        flex-direction: column;
+    }
+    .history p{
+        margin-bottom: 2rem;
+    }
+ }
+
+ @media (min-width: 992px) {
+    .history {
+        margin-right: 2.875rem;
+        width: 528px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .history {
+        width: 618px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .history {
+        width: 710px;
+    }
 }

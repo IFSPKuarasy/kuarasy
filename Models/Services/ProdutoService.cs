@@ -52,12 +52,12 @@ namespace kuarasy.Models.Services{
             }
         }
 
-        public List<Produto> Listar()
+        public List<Produto> Listar(int porPaginas, int paginaAtual, string Order, string By)
         {
             try
             {
                 var produtos = new List<Produto>();
-                produtos = _produtoRepository.Listar();
+                produtos = _produtoRepository.Listar(porPaginas, paginaAtual, Order, By);
                 return produtos;
             }
             catch (Exception)
@@ -65,12 +65,25 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
-
-        public List<Produto> Pesquisar(string inputSearch)
+         public int Contagem(string inputSearch)
         {
             try
             {
-                var produtos = _produtoRepository.Pesquisar(inputSearch);
+                
+                int qtd = _produtoRepository.Contagem(inputSearch);
+                return qtd;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<Produto> Pesquisar(string inputSearch, int porPaginas, int paginaAtual, string Order, string By)
+        {
+            try
+            {
+                var produtos = _produtoRepository.Pesquisar(inputSearch, porPaginas, paginaAtual, Order, By);
                 return produtos;
             }
             catch (Exception)
@@ -90,6 +103,31 @@ namespace kuarasy.Models.Services{
             {
                 throw;
             }
+        }
+        public List<Tipo> ListarTipo(string area)
+        {
+            try
+            {
+                var tipos = _produtoRepository.ListarTipo(area);
+                return tipos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public string Categoria(string tipo)
+        {
+            try
+            {
+                var categoria = _produtoRepository.Categoria(tipo);
+                return categoria;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

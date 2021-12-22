@@ -22,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="~/lib/owlcarousel/dist/assets/owl.theme.default.min.css">
 
     <link rel="stylesheet" type="text/css" href="~/assets/css/common.css" />
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/1000f9c287.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -48,27 +51,40 @@
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
 
-                    <ul class="navbar-nav mb-md-0 mx-3 fw-bold">             
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                    <ul class="navbar-nav mb-md-0 mx-3 fw-bold">    
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index"> Produtos</a>
+                        </li>         
                          
                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categorias
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="">Categoria1</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="" >Categoria2</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategory">
+                                <li><a class="dropdown-item" asp-area="Vestuários" asp-controller="Produto" asp-action="Index">Vestuários</a></li>
+                                <li><a class="dropdown-item" asp-area="Instrumentos" asp-controller="Produto" asp-action="Index">Instrumentos</a></li>
+                                <li><a class="dropdown-item" asp-area="Decorações" asp-controller="Produto" asp-action="Index">Decorações</a></li>
+                                <li><a class="dropdown-item" asp-area="Acessórios" asp-controller="Produto" asp-action="Index">Acessórios</a></li>
+                                <li><a class="dropdown-item" asp-area="Crenças" asp-controller="Produto" asp-action="Index">Crenças</a></li>
+                                <li><a class="dropdown-item" asp-area="Aromaterapia" asp-controller="Produto" asp-action="Index">Aromaterapia</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="Home" asp-action="" id="navbarDropdownOrigin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Origens
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrigin">
+                                <li><a class="dropdown-item" asp-area="América" asp-controller="Home" asp-action="Origin">América</a></li>
+                                <li><a class="dropdown-item" asp-area="Ásia" asp-controller="Home" asp-action="Origin">Ásia</a></li>
+                                <li><a class="dropdown-item" asp-area="África" asp-controller="Home" asp-action="Origin">África</a></li>
+
                             </ul>
                         </li>
                          
+                       
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="List"> Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action=""> Contato</a>
+                            <a class="nav-link text-dark" href="#footer"> Contato</a>
                         </li>
                     </ul>
                       <form asp-controller="Produto" asp-action="index" method="get" class="d-flex flex-fill me-2" id="Pesquisa">
@@ -77,7 +93,7 @@
                             <button class="btn bg-yellow" type="submit" form="Pesquisa"> <span class="icon-search size-icons text-white">  </span> </button>
                         </div>
                     </form>
-                    <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
+                    <a id="cart" asp-action="Index" asp-controller="Carrinho" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Carrinho de Compras"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
                 </div>
             </div>
         </nav>
@@ -89,7 +105,7 @@
 
 <!-- End page content -->
 
- <footer class="footer mt-auto pt-3 border-top" id="footer">
+ <footer class="footer mt-auto pt-3 border-top bg-white" id="footer">
     <div class="container">
       <div class="row footer-align d-flex justify-content-between align-items-center" id="lists">
         @* Figura *@
@@ -108,16 +124,13 @@
                         <strong class="nav-link" asp-controller="" asp-action="">Atendimento</strong>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">FAQ</a>
-                        </li>
-                        <li class="nav-item">
                         <a class="nav-link" href="https://github.com/IFSPKuarasy" target="_blank" >Entrar em contato</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" asp-controller="" asp-action="">Políticas do Kuarasy </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" asp-controller="" asp-action="">Termos de Uso</a>
+                        <a class="nav-link" href="https://github.com/IFSPKuarasy" target="_blank">Quem somos</a>
                         </li>
                     </ul>
                 </div>
@@ -136,9 +149,7 @@
                         <li class="nav-item">
                         <a class="nav-link" asp-controller="" asp-action="">Categorias</a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link" asp-controller="" asp-action="">Quem somos</a>
-                        </li>
+                        
                     </ul>
                 </div>           
             </div>
@@ -167,7 +178,7 @@
           </div>
 
           <div class="col col-sm d-flex justify-content-end">
-            <a href="mailto:kuarasy@contato.com">kuarasy&#64contato.com</a>
+            <a href="mailto:kuarasy@contato.com">kuarasyOficial&#64gmail.com</a>
           </div>
 
         </div>
@@ -185,9 +196,9 @@
     <!-- Owl Carousel -->
     <script type="text/javascript" src="~/lib/owlcarousel/dist/owl.carousel.min.js"></script>
     <script>
-        $(document).ready(function (e) {
+    $(document).ready(function (e) {
        $('.owl-carousel').owlCarousel({
-            loop:true,
+            loop:false,
             margin:15,
             nav: true,
             dots: false,
@@ -216,10 +227,10 @@
                 }
             }
         });
-      });
+      });  
     </script> 
 
-    <script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>
+    <!-- <script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script> -->
     @* @await RenderSectionAsync("Scripts", required: false) *@
 </body>
 </html>

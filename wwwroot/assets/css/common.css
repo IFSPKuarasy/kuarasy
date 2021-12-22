@@ -10,6 +10,7 @@
 	--brown: #651e15;
 	--brown-medium: #814236;
 	--brown-light: #9d655a;
+	--light: #FAECD2;
 
 	--black: #000;
 	--white: #fff;
@@ -53,7 +54,13 @@ li{
     padding: 4.5rem  0;
 }
 
+
 /* Backgrounds */
+.bg-white{
+	--bs-bg-opacity: 1;
+    background-color: var(--white)!important;
+}
+
 .bg-red {
 	background: var(--red);
 }
@@ -62,9 +69,69 @@ li{
 	background: var(--red-medium);
 }
 
+.bg-red-light {
+	background: var(--red-light);
+}
+
 .bg-yellow {
 	background-color: var(--yellow);
 }
+
+.bg-yellow-medium {
+	background-color: var(--yellow-medium)!important;
+}
+
+.bg-yellow-light {
+	background-color: var(--yellow-light)!important;
+}
+
+.bg-light{
+	background-color: var(--light)!important;
+}
+
+/* Borders */
+.border-brown{
+	border-color: var(--brown-light)!important;
+}
+
+/* Buttons */
+/* Yellow */
+.btn-yellow {
+  color: #fff;
+  background-color: var(--yellow-medium)!important;
+  border-color: var(--yellow);
+}
+.btn-yellow:hover {
+  color: #fff;
+  background-color: var(--yellow-light);
+  border-color: var(--yellow-medium);
+}
+
+.btn-check:focus + .btn-yellow, .btn-yellow:focus {
+  color: #fff;
+  background-color: var(--yellow-light);
+  border-color: var(--yellow-medium);
+  box-shadow: 0 0 0 0.1rem var(--yellow);
+}
+/* Red */
+.btn-red {
+  color: #fff;
+  background-color: var(--red-medium)!important;
+  border-color: var(--red);
+}
+.btn-red:hover {
+  color: #fff;
+  background-color: var(--red-light);
+  border-color: var(--red-medium);
+}
+
+.btn-check:focus + .btn-red, .btn-red:focus {
+  color: #fff;
+  background-color: var(--red-light);
+  border-color: var(--red-medium);
+  box-shadow: 0 0 0 0.1rem var(--red);
+}
+
 
 /* Header */
 .divider{
@@ -73,7 +140,16 @@ li{
 }
   
 .icon-fluentCart {
+	cursor: pointer;
 	color: var(--red);
+}
+
+#cart{
+    transition: color 0.25s ease-in-out;
+}
+
+#cart:hover{
+    transform: translateY(-3px);
 }
 
 .size-icons-sm{
@@ -87,11 +163,15 @@ li{
 .size-icons-lg{
 	font-size: 2.5rem;
 }
-
+/* Links */
 .dropdown-item{
-	color: var(--brown);
+	color: var(--black)!important;
 }
-
+.dropdown-item:focus,
+.dropdown-item:hover{
+	color: var(--white)!important;
+	background-color: var(--red-light)!important;
+}
 /* Input Search Icon */
 .has-search .form-control {
 	height: 100%!important;
@@ -117,6 +197,10 @@ header form .btn{
 }
 
 /* Footer */
+footer .footer{
+	background-color: var(--white)!important;
+}
+
 footer .nav-item .nav-link{
     color: var(--black)!important;
 }
@@ -154,7 +238,6 @@ footer .nav-item .nav-link:hover{
 	nav .collapse #cart{
 		display: block !important;
 		/* text-align: center!important; */
-
 	}
 
     nav .collapse #cart,

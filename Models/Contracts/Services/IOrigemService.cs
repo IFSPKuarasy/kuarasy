@@ -9,5 +9,7 @@ namespace kuarasy.Models.Contracts.Services
     public interface IOrigemService
     {
         List<Origem> Listar();
+        Origem Pesquisar(int id);
+        List<Produto> ListarProdutos(string continente);
     }
 }

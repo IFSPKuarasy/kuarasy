@@ -30,10 +30,10 @@
 
 .owl-carousel .card img{
   max-width: 15rem!important;
-  max-height: 15rem!important;
+  height: 14rem!important;
   align-self: center!important;
   object-fit: cover!important;
-  object-position: bottom;
+  object-position: center!important;
 }
 
 .owl-carousel .card:hover #cart{
@@ -50,9 +50,9 @@
 
 
 /* Owl carousel arrows  - Default option*/
-/* Rembember that it only works if you have more than 1 product */
-.owl-carousel .owl-nav button{
-  width:1.55rem; text-align:center; 
+/* Remember that it only works if you have more than 1 product */
+.owl-carousel .owl-nav button{ 
+  text-align:center; 
   border:1px solid var(--red-light) !important;
 }
 

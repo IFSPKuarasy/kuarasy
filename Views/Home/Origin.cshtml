@@ -1,41 +1,178 @@
 <link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
 <link rel="stylesheet" href="~/assets/css/Home/origin.css" />
-
+@model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
-    ViewData["Title"] = "Origin";
+  ViewData["Title"] = "Origin";
+  string continente = ViewBag.Continente;
+   decimal preco_antigo = 0;
 }
 
 
 <section class="banner py-2">
-    <div class="container text-light">
+  <div class="container text-light">
     <div class="row mb-0">
-    <div class="col-sm d-flex align-items-center">
+      <div class="col-sm d-flex align-items-center">
         <div class="row py-3">
-        <h1 class="fw-bold mt-3"> 
-        Conheça as comunidades da América!
-        </h1>
-        <p class="my-4"> 
-        A cultura é um dos bens mais importantes para humanidade, e é por isso que nesta página faremos junto com você uma imersão cultural na história das comunidades imigrantes que queros que você conheça melhor. E é isto que move o Kuarasy!
-        </p>
-        <a class="btn bg-red-medium text-light my-2" asp-area="" asp-controller="" asp-action="">
-        <h3>Menu de Comunidades</h3>
-        </a>
-        </div> 
+          <h1 class="fw-bold mt-3">
+            @* America - Variavel Continente *@
+            Conheça as comunidades da @continente!
+          </h1>
+          <p class="my-4">
+                A cultura é um dos bens mais importantes para humanidade, e é por isso que nesta página faremos junto com
+                você uma imersão cultural na história das comunidades imigrantes que queros que você conheça melhor. E é
+                isto que move o Kuarasy!
+          </p>
+          <a class="btn-origin bg-red-medium text-light rounded-3 text-center col-md-7 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <h3 class = "mb-0 pt-2 pb-2"> Menu de Comunidades</h3>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-sm my-2">
+        @if(continente == "América"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/america.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
+        @if(continente == "Ásia"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/asia.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
+        @if(continente == "África"){
+          <figure class="figure mb-0">
+            <img src="~/assets/img/origin/africa.png" alt="" class="figure-img img-fluid mb-0">
+          </figure>
+        }
+      </div>
     </div>
+  </div>
 
-    <div class="col-sm">
-        <figure class="figure mb-0">
-        <img src="" alt="" class="figure-img img-fluid mb-0">
-        </figure>
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu de Comunidades</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+    <div class="offcanvas-body">
+      <figure class="figure">
+        <img src="~/assets/img/origin/comunidades.png" alt="" class="figure-img img-fluid mb-0">
+      </figure>
 
-    </div>  
+        <ul class="list-group mt-5">
+          @foreach (var item in Model.ListOrigem)
+          {
+            @if(item.Continente == continente){
+              string heading = "flush-heading"+item.Pais;
+              string collapse1 = "#flush-collapse"+item.Pais;
+              string collapse2 = "flush-collapse"+item.Pais;
+              string id_pais = "#"+item.Pais;
+
+              <li class="text-center">
+                <a class="dropdown-item" href = @id_pais>
+                     <h5 class = "mb-0"  data-bs-toggle="collapse" data-bs-target=@collapse1 aria-expanded="false" aria-controls=@collapse2>@item.Pais</h5>               
+                </a>
+              </li>
+            }
+          }
+        </ul>
+
     </div>
-    </section>
+  </div>
+  
+</section>
 
+            
 
+<main role="main" class="flex-shrink-0 my-4">
+  <div class="container">
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        @foreach (var item in Model.ListOrigem)
+        {
+          @if(item.Continente == continente){
+            string heading = "flush-heading"+item.Pais;
+            string collapse1 = "#flush-collapse"+item.Pais;
+            string collapse2 = "flush-collapse"+item.Pais;
+            string id_pais = "#"+item.Pais;
+      
+            <div class="accordion-item" >
+              <div class="accordion-header" id=@heading>
+                <a href = @id_pais>
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=@collapse1 aria-expanded="false" aria-controls=@collapse2>
+                    <i class="icon-sort-down"></i>
 
-<main role="main" class="flex-shrink-0" >
-    <div class="container">
+                    <h2 class="fw-bold">@item.Pais</h2>
+                  </button>
+                </a>
+              </div>
+
+              <div id=@collapse2 class="accordion-collapse collapse" aria-labelledby=@heading data-bs-parent="#accordionFlushExample" style="">
+                <div class="accordion-body" id=@item.Pais>
+                
+                  <div class="information">
+                       <div class="row flex-column flex-md-row mt-5" id="history">
+                     <div class="col">
+                        <h3 class="fw-bolder text-decoration-underline mx-3 mx-md-0">Origens</h3>
+                        <div class="text mt-2 mx-3 mx-md-0 text-more">
+                          @item.Descricao_origem
+                        </div>
+                        
+                    </div>
+                    @* Imagem da origem do produto *@
+                    <div class="col mt-4 mt-md-0" id="image">
+                        <figure class="figure mx-3 mx-md-0">
+                            <div class="img-hover-shadow">
+                                <img src="/assets/img/origin/comunidades/@item.Imagem_origem" class="figure-img img-fluid w-100 h-100 border" alt="Imagem da comunidade">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+                  </div>
+
+                  <section id="carouselProducts" class="section">
+                      <h2 class="fw-bold text-center">Compre seus produtos</h2>
+                      <div class="owl-carousel owl-theme d-flex flex-column justify-content-around">
+                              
+                        @foreach (var item2 in Model.ListProduto) {
+                          @if(item2.Pais == item.Pais){
+                            <div class="item card text-center border-0" style="width: 18rem;">
+                                @* Imagem do Produto *@
+                                <img src="/productsImage/@Html.DisplayFor(modelItem => item2.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
+                                <div class="card-body">
+                                    @* Nome do Produto*@
+                                    
+                                    <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item2.Nome,"Details", "Produto", new { id = item2.Id })</a>
+                                    
+                                    @* Preço *@
+                                    @if(item2.Desconto != 0){
+                                      preco_antigo = (item2.Preco + item2.DescontoCheio);
+                                      <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
+                                      <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                      <a id="cart" asp-area="@item2.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                      R$@item2.Preco.ToString("F")
+                                  </h4>
+                                  }else{
+                                      <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                          <a id="cart" asp-area="@item2.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                          R$@item2.Preco.ToString("F")
+                                          
+                                      </h4>
+                                  }
+                                </div>
+                            </div>
+                            }
+                          }
+                      
+                    </div>
+                  </section>
+                </div>
+              </div>
+        
+            </div>
+          }
+        }
+      </div>
     </div>
+  </div>
 </main>
+
+<script type="text/javascript" language="javascript" src="~/assets/js/common.js"></script>

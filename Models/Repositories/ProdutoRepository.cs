@@ -31,18 +31,30 @@ namespace kuarasy.Models.Repositories
             _contextData.ExcluirProduto(id);
         }
 
-        public List<Produto> Listar()
+        public List<Produto> Listar(int porPaginas, int paginaAtual, string Order, string By)
         {
-            return _contextData.ListarProduto();
+            return _contextData.ListarProduto(porPaginas, paginaAtual, Order, By);
+        }
+        public int Contagem(string inputSearch)
+        {
+            return _contextData.ContagemProduto(inputSearch);
         }
         public Produto PesquisarPorId(int id)
         {
             return _contextData.PesquisarProdutoPorId(id);
         }
 
-        public List<Produto> Pesquisar(string inputSearch)
+        public List<Produto> Pesquisar(string inputSearch, int porPaginas, int paginaAtual, string Order, string By)
         {
-            return _contextData.PesquisarProduto(inputSearch);
+            return _contextData.PesquisarProduto(inputSearch, porPaginas, paginaAtual,  Order, By);
+        }
+        public List<Tipo> ListarTipo(string area)
+        {
+            return _contextData.ListarTipoDaCategoria(area);
+        }
+        public string Categoria(string tipo)
+        {
+            return _contextData.BuscarCategoria(tipo);
         }
     }
 }

@@ -1,0 +1,28 @@
+/* Botão de mostrar mais */
+.read-more{
+  color: var(--red)!important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out!important;
+}
+
+.read-more:hover{
+  color: var(--red-medium)!important;
+}
+
+
+.text-more {
+  height: 100%!important;
+  max-height: 100px!important;
+  overflow: hidden!important;
+  -webkit-transition: max-height .75s!important;
+  transition: max-height .75s!important;
+}
+
+.read-more {
+  cursor: pointer!important;
+  font-size: 1em!important;
+  padding: 0!important;
+}
+
+.hide {
+  display: none!important;
+}

@@ -1,14 +1,11 @@
 ﻿@model kuarasy.Models.Entidades.Produto
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Deletar produto";
 }
-
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<div class = "container my-5">
+<h3>Deletar este produto permanentemente?</h3>
 <div>
-    <h4>ProdutoDto</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -36,12 +33,6 @@
             @Html.DisplayFor(model => model.Quantidade)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Peso)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Peso)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
         <dd class = "col-sm-10">
@@ -49,8 +40,11 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="List">Back to List</a>
+    <form class="d-flex justify-content-end" asp-action="Delete">
+        <div>
+            <input type="submit" value="Deletar" class="btn btn-red" /> |
+            <a class="btn btn-yellow" asp-action="Index">Cancelar</a>
+        </div>
     </form>
+</div>
 </div>

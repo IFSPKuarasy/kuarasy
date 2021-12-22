@@ -1,7 +1,9 @@
-﻿<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
+<link rel="stylesheet" type="text/css" href="~/assets/css/owlcarousel.css" />
 <link rel="stylesheet" type="text/css" href="~/assets/css/Home/index.css" />
+
 @model kuarasy.Models.Entidades.HomeIndexViewModel
 @{
+    decimal preco_antigo = 0;
     ViewData["Title"] = "Home";
 }
 
@@ -23,7 +25,7 @@
                         <div class="col col-lg-6">
                             <p>Os melhores artesanatos para você!</p>
                             <h1 class="fw-bold">Produtos artesanais já disponíveis. Confira!</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -39,7 +41,7 @@
                         <div class="col col-lg-6">
                             <p>Confira aqui os artesanatos únicos das comunidades imigrantes brasileiras!</p>
                             <h1 class="fw-bold">Aprenda mais sobre suas culturas</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Veja as origens</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="América" asp-controller="Home" asp-action="Origin">Veja as origens</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -53,9 +55,9 @@
                 <div class="carousel-item h-100" data-bs-interval="30000">
                     <div class="row align-items-center justify-content-between ">
                         <div class="col col-lg-6">
-                            <p>Entenda mais sobre a história dos produtos e seus vendedores</p>
+                            <p>Entenda mais sobre a história dos produtos</p>
                             <h1 class="fw-bold">Um espaço para trocas culturais</h1>
-                            <a class="btn bg-red-medium text-light my-3 px-4" asp-area="" asp-controller="" asp-action="">Comprar agora</a>
+                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar agora</a>
                         </div>
                         <div class="col col-lg-5 text-center" id="figure">
                             <figure class="figure">
@@ -67,70 +69,80 @@
                 </div>
 
             </div>
-           
+        </div>
         </section>
-
+            
         @* Produtos em destaque *@
-        <section id="carouselProducts" class="section" data-bs-ride="">
-            <h2 class="fw-bold text-center">Produtos em destaque</h2>
+        <section id="carouselProducts" class="section bg-red-medium">
+            <div class="container" id="destaque">
+            <h2 class="fw-bold text-center text-light"><p class="text-light">Produtos em destaque</p></h2>
                 <div class="owl-carousel owl-theme">
                     @* Produto *@
 
                     @foreach (var item in Model.ListProduto) {
-                    <div class="item card text-center border-0" style="width: 18rem;">
-                        @* Imagem do Produto *@
-                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
-                        <div class="card-body">
-                            @* Nome do Produto*@
-                            
-                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
-                            
-                            @* Preço *@
-                            <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
-                                @{
-                                    string preco = "";
-                                    float x = item.Preco;
-                                    if (x % 1 == 0)
-                                        preco = "R$" + x.ToString() + ",00";
-                                    else
-                                        preco = "R$" + x.ToString();
-                                }   
-                                @preco
+                         @if(item.Desconto == 0){
+                        <div class="item card text-center border-0" style="width: 18rem;">
+                            @* Imagem do Produto *@
+                            <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-fluid" alt="...">
+                            <div class="card-body">
+                                @* Nome do Produto*@
                                 
-                            </h4>
-                        </div>
-                    </div>
-                    }
+                                <a class="card-text " asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
+                                
+                                @* Preço *@
+                                
+                                    <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3 text-light">
+                                    <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "text-light icon-fluentCart size-icons-lg"></i> </a>
+                                    R$@item.Preco.ToString("F")
+                                </h4>
 
+                            </div>
+                        </div>
+                        }
+                    }
                 </div>
-             
+            </div>
+            </div>
         </section>
 
         @* Promoções *@
-         <section id="carouselPromotions" class="section carousel carousel-dark slide" data-bs-ride="carouselPromotions">
+         <section id="carouselPromotions" class="section">
+             <div class="container" id="promocao">
             <h2 class="fw-bold text-center">Promoções</h2>
             <div class="owl-carousel owl-theme">
-                    <div class="card text-center border-0" style="width: 18rem;">
+                @foreach (var item in Model.ListProduto) {
+                    if(item.Desconto != 0){
+                    preco_antigo = (item.Preco + item.DescontoCheio);
+                    decimal desconto = item.Desconto * 100;
+                     <div class="card text-center border-0" style="width: 18rem;">
+                         <div class="d-flex justify-content-end">
+                            <div class = "Desconto bg-yellow d-flex align-items-center justify-content-center mb-2">
+                                <span class = "align-middle text-light">@Convert.ToInt32(desconto)% OFF </span>
+                            </div>
+                        </div>
                         @* Imagem do Produto *@
-                        <img src="~/assets/img/produtos/dancarino.png" class="card-img-top mb-4 img-hover-zoom" alt="...">
+                        <img src="/productsImage/@Html.DisplayFor(modelItem => item.Imagem)" class="card-img-top mb-4 img-hover-zoom" alt="...">
                         <div class="card-body">
                             @* Nome do Produto*@
-                            <a class="card-text" asp-area="" id="nameLink" >Dançarino Bermandes</a>
-                            <p class="text-decoration-line-through text-secondary">R$3.700,00</p>
+                            <a class="card-text" asp-area="" id="nameLink">@Html.ActionLink(item.Nome,"Details", "Produto", new { id = item.Id })</a>
                             @* Preço *@
-                            <h4 class="fw-bolder d-flex align-items-center justify-content-center">
-                                <a id="cart"> <i class = "icon-fluentCart size-icons-lg"></i> </a>                        
-                                R$3.250,00
+                                <p class="text-decoration-line-through text-secondary">@preco_antigo.ToString("F")</p>
+                         
+                                <h4 class="fw-bolder d-flex align-items-center justify-content-center my-3">
+                                <a id="cart" asp-area="@item.Id" asp-action = "Index" asp-controller="Carrinho"> <i class = "icon-fluentCart size-icons-lg"></i> </a>
+                                R$@item.Preco.ToString("F")
                             </h4>
                         </div>
                     </div>
-                    
+                        }
+                    }
+            </div>
             </div>
         </section>
 
         @* Origens *@
         <section class="section" id="origin">
+            <div class="container">
             <h2 class="fw-bold text-center">Origens</h2>
             @* Cards *@
             <div class="row row-cols-1 row-cols-md-3 g-4 mx-4">
@@ -138,14 +150,14 @@
                 @* África *@
                 <div class="col">
                    <div class="content"> 
-                        <div class="card bg-white text-white h-100">
+                        <div class="card bg-white text-white h-100" asp-area="África" asp-controller="Home" asp-action="Origin">
                             <div class="content-overlay"></div>
 
                             <img src="~/assets/img/home/africa.png" class="card-img" alt="Imagem ilustrativa sobre continente Africano">
 
                             <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                 @* Título - variavel *@
-                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">África</a></h3>
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="África" asp-controller="Home" asp-action="Origin">África</a></h3>
                             </div>
                         </div>
 
@@ -159,7 +171,6 @@
                                    <p class="content-text text-light"> @item.Pais</p>
                                }
 
-
                            }
                        }
                    </div>
@@ -169,14 +180,14 @@
                 @* Ásia *@
                 <div class="col">
                    <div class="content"> 
-                        <div class="card bg-white text-white h-100">
+                        <div class="card bg-white text-white h-100" asp-area="Ásia" asp-controller="Home" asp-action="Origin">
                             <div class="content-overlay"></div>
 
                             <img src="~/assets/img/home/asia.png" class="card-img" alt="Imagem ilustrativa sobre continente Asiatico">
 
                             <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                 @* Título - variavel *@
-                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
+                                <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="Ásia" asp-controller="Home" asp-action="Origin">Ásia</a></h3>
                             </div>
                         </div>
 
@@ -189,8 +200,6 @@
                                {
                                    <p class="content-text text-light"> @item.Pais</p>
                                }
-
-
                            }
                        }
                    </div>
@@ -200,15 +209,16 @@
                  @* America *@
                <div class="col">
                    <div class="content">
-                       <div class="card bg-white text-white h-100">
+                       <div class="card bg-white text-white h-100" asp-area="América" asp-controller="Home" asp-action="Origin">
                            <div class="content-overlay"></div>
 
                            <img src="~/assets/img/home/america.png" class="card-img" alt="Imagem ilustrativa sobre o continente Americano">
 
                            <div class="card-img-overlay d-flex align-items-end justify-content-center">
                                @* Título - variavel *@
-                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="" asp-controller="Home" asp-action="Origin">América</a></h3>
+                               <h3 class="card-title fw-bolder text-center"><a class="text-light" asp-area="América" asp-controller="Home" asp-action="Origin">América</a></h3>
                            </div>
+
                        </div>
                        @* Lista de comunidades - variavel *@
                    <div class="content-details fadeIn-bottom">
@@ -223,15 +233,13 @@
 
                                }
                         }
-
                    </div>
                    </div>
                 </div>
 
             </div>
-
+            </div>
         </section>
-    </div>
 </main>
 
 

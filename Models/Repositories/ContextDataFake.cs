@@ -1,4 +1,4 @@
-using kuarasy.Models.Contracts.Context;
+/*using kuarasy.Models.Contracts.Context;
 using kuarasy.Models.Entidades;
 using System;
 using System.Collections.Generic;
@@ -107,4 +107,4 @@ namespace kuarasy.Models.Repositories
         }
     }
 
-}
+}*/

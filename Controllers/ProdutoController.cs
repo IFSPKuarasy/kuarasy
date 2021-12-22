@@ -17,58 +17,141 @@ namespace kuarasy.Controllers
     public class ProdutoController : Controller
     {
         private readonly IProdutoService _produtoService;
+        private readonly IOrigemService _origemService;
         private readonly IWebHostEnvironment WebHostEnvironment;
 
-        public ProdutoController(IProdutoService produtoService, IWebHostEnvironment webHostEnvironment)
+        public ProdutoController(IProdutoService produtoService, IOrigemService origemService, IWebHostEnvironment webHostEnvironment)
         {
             _produtoService = produtoService;
+            _origemService = origemService;
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
-        public IActionResult Index(string InputSearch)
+        public IActionResult Index(string InputSearch, string area, string tipo, string Order, string By, int? pagina)
         {
+            var model = new HomeIndexViewModel();
+            var all = "tudo";
+            switch(By)
+            {  
+                case "preco":
+                    if(Order == "asc")
+                        ViewBag.ordem = "Menor Preço";
+                    else
+                        ViewBag.ordem = "Maior Preço";
+                    break;
+                 case "p.nome":
+                    if(Order == "asc")
+                        ViewBag.ordem = "A - Z";
+                    else
+                        ViewBag.ordem = "Z - A";
+                    break;
+                case "desconto":
+                        ViewBag.ordem = "Desconto";
+                        break;
+            }
             try
             {
-                var produtos = _produtoService.Pesquisar(InputSearch);
-                return View(produtos);
+                var paginaAtual = 0;
+                if (pagina == null)
+                {
+                    paginaAtual = 1;
+                }
+                else
+                {
+                    paginaAtual = Convert.ToInt32(pagina);
+                }
+                ViewBag.paginaAtual = paginaAtual;
+                ViewBag.porPagina = 10;
+                ViewBag.Order = "Order=" + Order + "&By=" + By+"";
+                if (Order == null)
+                    ViewBag.Order = " ";
+
+                if (area != null)
+                {
+                    ViewBag.porPagina = 8;
+                    ViewBag.Categoria = area;
+                    ViewBag.Filtro = "?area="+area+"";
+                    ViewBag.QtdProduto = _produtoService.Contagem(area);
+                    model.ListTipo = _produtoService.ListarTipo(area);
+                    model.ListProduto = _produtoService.Pesquisar(area, ViewBag.porPagina, paginaAtual, Order, By);
+
+                    return View(model);
+                }
+                if (InputSearch != null)
+                {
+                    ViewBag.porPagina = 8;
+                    ViewBag.Pesquisa = InputSearch;
+                    ViewBag.Filtro = "?InputSearch=" + InputSearch + "";
+                    model.ListTipo = _produtoService.ListarTipo(InputSearch);
+                    ViewBag.QtdProduto = _produtoService.Contagem(InputSearch);
+              
+                        ViewBag.Categoria = InputSearch;
+                        ViewBag.Pesquisa = "";
+                  
+                    model.ListProduto = _produtoService.Pesquisar(InputSearch, ViewBag.porPagina, paginaAtual, Order, By);
+                    if(model.ListProduto.Any()){
+                        return View(model);
+                    }
+                       return View(model);
+                    
+                        
+                }
+                if(tipo != null)
+                {
+                    ViewBag.porPagina = 8;
+                    ViewBag.Categoria = _produtoService.Categoria(tipo);
+                    model.ListTipo = _produtoService.ListarTipo(ViewBag.Categoria);
+                    model.ListProduto = _produtoService.Pesquisar(tipo, ViewBag.porPagina, paginaAtual, Order, By);
+                    ViewBag.QtdProduto = _produtoService.Contagem(tipo);
+                    ViewBag.Filtro = "?Tipo=" + tipo + "";
+                    if(model.ListProduto.Any()){
+                        return View(model);
+                    }
+                       return View(model);
+                }
+                else
+                {
+                    ViewBag.Filtro = "?";
+                    ViewBag.QtdProduto = _produtoService.Contagem(all);
+                    model.ListProduto = _produtoService.Listar(ViewBag.porPagina, paginaAtual, Order, By);
+                    return View(model);
+                }
+
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
         public IActionResult List()
         {
-            try
-            {
-                var produtos = _produtoService.Listar();
-                return View(produtos);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return null;
         }
 
         public IActionResult Create()
         {
-            return View();
+            var area = "create";
+            var model = new HomeIndexViewModel();
+            model.ListOrigem = _origemService.Listar();
+            model.ListTipo = _produtoService.ListarTipo(area);
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Produto pd)
+        public IActionResult Create(HomeIndexViewModel pd)
         {
             try
             {
-                string stringFileName = UploadFile(pd);
-                pd.Imagem = stringFileName;
-                _produtoService.Cadastrar(pd);
+                string stringFileName = UploadFile(pd.Produto);
+                pd.Produto.Imagem = stringFileName;
+                _produtoService.Cadastrar(pd.Produto);
             }
             catch (Exception)
             {
                 throw;
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
         private string UploadFile(Produto pd)
         {
@@ -82,6 +165,9 @@ namespace kuarasy.Controllers
                 {
                     pd.ProfileImage.CopyTo(fileStream);
                 }
+            }
+            else{
+                fileName = pd.Imagem;
             }
             return fileName;
         }
@@ -98,16 +184,18 @@ namespace kuarasy.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, ")] Produto produto)
+        public IActionResult Edit([Bind("Id, Nome, Preco, Descricao, Quantidade, Peso, ProfileImage, Imagem, Historia, Desconto")] Produto pd)
         {
-            int? id = produto.Id;
+            int? id = pd.Id;
             if (id == null)
                 return NotFound();
 
             try
             {
-                _produtoService.Atualizar(produto);
-                return RedirectToAction("List");
+                string stringFileName = UploadFile(pd);
+                pd.Imagem = stringFileName;
+                _produtoService.Atualizar(pd);
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
@@ -117,13 +205,17 @@ namespace kuarasy.Controllers
         }
         public IActionResult Details(int? id)
         {
+           var model = new HomeIndexViewModel();
             if (id == null)
                 return NotFound();
 
-            var produto = _produtoService.PesquisarPorId(Convert.ToInt32(id));
-            if (produto == null)
+            model.Produto = _produtoService.PesquisarPorId(Convert.ToInt32(id));
+            if (model.Produto == null)
                 return NotFound();
-            return View(produto);
+
+            model.Origem = _origemService.Pesquisar(Convert.ToInt32(id));
+
+            return View(model);
         }
         public IActionResult Delete(int? id)
         {
@@ -139,7 +231,7 @@ namespace kuarasy.Controllers
         public IActionResult Delete([Bind("Id")] Produto produto)
         {
             _produtoService.Excluir(produto.Id);
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
 
         }
     }

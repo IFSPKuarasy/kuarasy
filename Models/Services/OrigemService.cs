@@ -28,6 +28,30 @@ namespace kuarasy.Models.Services{
                 throw;
             }
         }
+        public Origem Pesquisar(int id)
+        {
+            try
+            {
+                var origem = _origemRepository.Pesquisar(id);
+                return origem;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<Produto> ListarProdutos(string continente)
+        {
+            try
+            {
+                var produtos = _origemRepository.ListarProdutos(continente);
+                return produtos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         
     }
 }
