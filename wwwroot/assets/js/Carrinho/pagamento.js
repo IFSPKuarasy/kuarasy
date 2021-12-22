@@ -10,15 +10,11 @@ var acceptedCreditCards = {
 }
 
 $('#cc, #cvv').on('input', function () {
-	if (
-		validateCard($('#cc').val()) &&
-		validateCVV($('#cc').val(), $('#cvv').val())
-	) {
-        $('#verify button[type="submit"]').prop('disabled', false)
+	if (validateCard($('#cc').val()) && validateCVV($('#cc').val(), $('#cvv').val()) ) {
+        // $('#verify button[type="submit"]').prop('disabled', false)
         displayModals($('#cc').val(), $('#cvv').val())
 	} else {
         $('#verify button[type="submit"]').prop('disabled', true)
-        $('#status').html('invalid')
 	}
 
 	var node = $('#cc')[0] // vanilla javascript element
@@ -137,9 +133,14 @@ function validateCVV(creditCard, cvv) {
 }
 
 function displayModals(creditCard, cvv) {
-	const modalContainer = document.querySelector('.modal .modal-content')
+	const modalContainer = document.querySelector('.modal .modal-content');
+	const cep = document.querySelector('cep');
+	document.getElementById("Confirmar").addEventListener("click", function(event){
+		
 	if (creditCard == '5577 0000 5577 0004' && cvv == '737') {
-		modalContainer.innerHTML = `<div class="modal-header">
+	
+		modalContainer.innerHTML = `
+		 <div class="modal-header">
         	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       	</div>
       <div class="modal-body d-flex flex-column align-items-center justify-content-center">
@@ -148,25 +149,21 @@ function displayModals(creditCard, cvv) {
           <img src="/assets/img/carrinho/check.png" class="figure-img img-fluid" alt="..." style="max-width: 10rem; max-height: 10rem;">
         </figure>
       </div>
-      <div class="modal-footer">
-	  	<button type="button" data-bs-dismiss="modal" class="btn btn-yellow">Prosseguir</button>
-      </div>`
+      `,
+	  localStorage.clear(localStorage.getItem("Carrinho"))
 	} else {
-		modalContainer.innerHTML = `<div class="modal-header">
-        <h5 class="modal-title" id="pedidoModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
+		event.preventDefault() 
+		modalContainer.innerHTML = `
+		 <div class="modal-header">
+        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
 		<div class="modal-body d-flex flex-column align-items-center justify-content-center">
 		<h5 class="modal-title text-danger" >Pagamento reprovado</h5>
 		<figure class="figure my-3">
           <img src="/assets/img/carrinho/rejected.png" class="figure-img img-fluid" alt="..." style="max-width: 10rem; max-height: 10rem;">
         </figure>
       </div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-yellow" data-bs-dismiss="modal">Voltar</button>
-		</div>`
+		`
 	}
-
+});
 }
-
-// Thanks to ClelsonTechInfo for this function

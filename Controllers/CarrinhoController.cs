@@ -68,7 +68,6 @@ namespace kuarasy.Controllers
                 throw;
             }
         }
-
          public bool SendMail(Compra compra)
         {
             try
@@ -79,7 +78,7 @@ namespace kuarasy.Controllers
                 _mailMessage.From = new MailAddress("kuarasyOficial@gmail.com");
 
                 string body = System.IO.File.ReadAllText("wwwroot/assets/html/Email.htm");
-                body = body.Replace("#Id_compra#", compra.Id_compra.ToString()).Replace("#Nome#", "Kaiky").Replace("#Total#",compra.Valor_total);
+                body = body.Replace("#Id_compra#", compra.Id_compra.ToString()).Replace("#Nome#", "Kaiky").Replace("#Total#",compra.Valor_total).Replace("#Frete#", "R$ 30,00");
                 //Contrói o MailMessage
                 _mailMessage.CC.Add("kaiky.br34@gmail.com");
                 _mailMessage.Subject = "Confirmação de compra";
@@ -107,5 +106,7 @@ namespace kuarasy.Controllers
                 throw ex;
             }
         }
+
+        
     }
 }

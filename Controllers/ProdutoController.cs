@@ -92,7 +92,7 @@ namespace kuarasy.Controllers
                     if(model.ListProduto.Any()){
                         return View(model);
                     }
-                       return NotFound();
+                       return View(model);
                     
                         
                 }
@@ -107,7 +107,7 @@ namespace kuarasy.Controllers
                     if(model.ListProduto.Any()){
                         return View(model);
                     }
-                       return NotFound();
+                       return View(model);
                 }
                 else
                 {

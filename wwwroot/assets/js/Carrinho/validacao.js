@@ -11,7 +11,6 @@ function ValidateField(field) {
 				foundError = error
 			}
 		}
-
 		return foundError
 	}
 	
@@ -64,9 +63,9 @@ function ValidateField(field) {
 
 		if (verifyErrors()) {
 			form.classList.add('was-validated')
-
 			const message = customMessage(error)
 			setCustomMessage(message)
+			$('#verify button[type="submit"]').prop('disabled', true)
 		} else {
 			setCustomMessage()
 		}
@@ -106,6 +105,11 @@ let inputs = document.querySelectorAll('input')
 		'input',
 		e => {
 			e.target.value = masks[field](e.target.value)
+			if ((e.target.value == "") || (e.target.value == null)) {
+				$('#verify button[type="submit"]').prop('disabled', true)
+			}else{
+				$('#verify button[type="submit"]').prop('disabled', false)
+			}
 		},
 		false
 	)

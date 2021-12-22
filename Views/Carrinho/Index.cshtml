@@ -24,11 +24,11 @@
 
 
 
-<div class="container my-5">
+<div class="container my-5" oncontextmenu="return false">
 	<div class="row">
 		<main role="main" class="col flex-shrink-0">
 			@* Resumo dos itens *@
-			<div id ="Exist" class ="d-none">
+			<div id ="Exist" >
 				<h2 class="fw-bolder"> Carrinho de Compras</h2>
 				<div class="table-responsive">
 					<table class="table table-borderless my-4" id="table">
@@ -78,17 +78,19 @@
 						compra</a>
 				</div>
 			</div>
-			<div id="NotExist" class="my-3 d-flex flex-column align-items-center justify-content-center text-center d-none">                    
-                        <h3 class="fw-bolder">Seu carrinho está vazio</h3>
-                        <p>Procure produtos para adicionar!</p>
-                        <figure class="figure" id="cartEmpty">
-                            <img src="~/assets/img/carrinho/empty.png" class="figure-img img-fluid" alt="...">
-                        </figure>
-                        <div>
-                            <a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
-                        </div>
+			<div id="NotExist">
+				<div  class="my-3 d-flex flex-column align-items-center justify-content-center text-center">                    
+							<h3 class="fw-bolder">Seu carrinho está vazio</h3>
+							<p>Procure produtos para adicionar!</p>
+							<figure class="figure" id="cartEmpty">
+								<img src="~/assets/img/carrinho/empty.png" class="figure-img img-fluid" alt="...">
+							</figure>
+							<div>
+								<a class="btn btn-red my-3 px-4" asp-area="" asp-controller="Produto" asp-action="Index">Comprar</a>
+							</div>
 
-                </div>
+					</div>
+			</div>
 
 		</main>
 	</div>
@@ -304,7 +306,7 @@
 			const produto = RescueProduto.formatData()
 			Produto.add(produto)
 			if(localStorage.getItem('Carrinho') !== "[]"){
-				document.querySelector('#Exist').classList.remove("d-none")
+				document.getElementById('NotExist').hidden = true
 			}
 			
 		}
@@ -328,6 +330,6 @@
 		DOM.updateTotal()
 	
 	if(localStorage.getItem('Carrinho') === "[]")
-		document.querySelector('#NotExist').classList.remove("d-none")
-	
+		document.getElementById('Exist').hidden = true
+		
 </script>
